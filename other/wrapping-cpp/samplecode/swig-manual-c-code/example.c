@@ -17,9 +17,9 @@ int my_mod(int n, int m) {
 	return(n % m);
 }
 
-// char *get_time()
-// {
-//     time_t ltime;
-//     time(&ltime);
-//     return ctime(&ltime);
-// }
+char *get_time()
+{
+    time_t ltime;
+    time(&ltime);
+    return ctime(&ltime);
+}

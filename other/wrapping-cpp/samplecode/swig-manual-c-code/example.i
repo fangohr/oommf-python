@@ -7,7 +7,7 @@ File : example.i */
     extern double My_variable;
     extern int    fact(int);
     extern int    my_mod(int n, int m);
-    extern char *get_time();
+    extern char *get_time(); 
 %}
 
 extern double My_variable;

@@ -24,5 +24,6 @@ clean:
 	rm example.o example_wrap.c example_wrap.o _example.so example.py
 
 test:
+	make clean
 	make _example.so
 	py.test -v 

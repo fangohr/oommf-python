@@ -21,7 +21,7 @@ example.o: example.c
 
 
 clean:
-	rm example.o example_wrap.c example_wrap.o _example.so example.py
+	rm -f example.o example_wrap.c example_wrap.o _example.so example.py
 
 test:
 	make clean

@@ -4,8 +4,11 @@ python:
   # - "3.4"
   # - "3.5"
 
+install:
+        - pip install cython
+
 before_script:
-  - sudo apt-get install swig cython
+  - sudo apt-get install swig 
 
 # command to install dependencies
 # install: "pip install -r requirements.txt"

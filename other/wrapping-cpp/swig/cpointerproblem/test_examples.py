@@ -1,3 +1,7 @@
+"""
+The code this example is all based on is from http://tinyurl.com/pmmnbxv
+Some notes on this in the oommf-devnotes repo
+"""
 
 import os
 

@@ -4,9 +4,9 @@ double f(double x) {
   return x*x;
 }
 
-double myfun(double (*f)(double x)) {
+double myfun(double (*f)(double x), double y) {
   fprintf(stdout, "%g\n", f(2.0));
-  return -1.0;
+  return f(y);
 }
 
 typedef double (*fptr_t)(double);

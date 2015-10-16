@@ -5,5 +5,10 @@ def test_sim():
     sim.set_material(omf.material.Permalloy)
     sim.add_atlas(omf.atlas.BoxAtlas(x, y, z))
     sim.set_mesh('rect', [x, y, z])
-    assert sim.mesh() == 'rect'
-    
+    sim.dmdt(0.01)
+    sim.set_uniform_magnetisation([0, 0, 1], 10e-9)
+    sim.set_field([0, 0, -1], 1)
+    sim.addEnergy('exchange')
+    sim.addEnergy('anisotropy')
+    sim.addEnergy('zeeman')
+    sim.addEnergy('DMI')

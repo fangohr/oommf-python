@@ -4,7 +4,7 @@ from PIL import Image
 
 from . import materials
 from . import geometry
-
+from . import mifgen
 oommfpath = ""
 
 class Simulation():

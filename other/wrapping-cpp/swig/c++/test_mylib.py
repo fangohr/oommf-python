@@ -1,14 +1,24 @@
 import os
-import mylib
-os.system('make all')
+
+import pytest
+
+@pytest.fixture
+def setup(request):
+    def teardown():
+        print("Running make clean")
+        os.system('make clean')
+        print("Completed finaliser")
+    request.addfinalizer(teardown)
+    os.system('make clean')
+    os.system('make all')
 
 
-def test_squared():
-    assert mylib.squared(4) - 16.0 <= 10 ** -8
+def test_squared(setup):
+    import mylib
+    assert 16. == mylib.squared(4) 
 
 
-def test_myfunction():
-    assert mylib.myfunction(mylib.squared, 4) - 16.0 <= 10 ** -8
+def test_myfunction(setup):
+    import mylib
+    assert 16. == mylib.myfunction(mylib.squared, 4) 
 
-
-os.system('make clean')

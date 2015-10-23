@@ -5,6 +5,7 @@ from PIL import Image
 from . import materials
 from . import geometry
 from . import mifgen
+
 oommfpath = ""
 
 class Simulation():
@@ -16,7 +17,7 @@ class Simulation():
         self.name = name
         self.t = t0
         self.t0 = t0
-
+	self.mif = ""
     def __repr__(self): 
         cells = self.geometry.get_cells(self.cellsize)
         msg1 = "{}: {}. \n\tGeometry: {}. \n\t          Cells = {}, total={}.".format(self.name, self.material, self.geometry,
@@ -27,9 +28,10 @@ class Simulation():
         return msg1 + msg2 
 
     def advance_time(self, target):
-        print("Integrating ODE from {}s to {}s".format(self.t, target))
+        self.mif = oommf.mifgen.assemble_mif(self)
+	print("Integrating ODE from {}s to {}s".format(self.t, target))
         self.t = target
-        
+	        
 
 class ImageFile(object):
     """Class for storing an image location."""

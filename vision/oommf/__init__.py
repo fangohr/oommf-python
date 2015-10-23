@@ -5,6 +5,8 @@ from PIL import Image
 from . import materials
 from . import geometry
 
+oommfpath = ""
+
 class Simulation():
     pass
     def __init__(self, geometry, cellsize, material, name="Simulation", t0=0.):

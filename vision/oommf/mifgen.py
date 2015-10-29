@@ -1,4 +1,4 @@
-def assemble_mif(sim_object):
+def _assemble_mif(sim_object):
     """
     assemble_mif(sim_object, output)
     
@@ -20,7 +20,7 @@ def assemble_mif(sim_object):
     
     return mif
     
-def save_mif(sim_object, target):
+def _save_mif(sim_object, target):
     """
     save_mif(sim_object)
 

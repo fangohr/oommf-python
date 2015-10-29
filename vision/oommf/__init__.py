@@ -9,6 +9,48 @@ from . import mifgen
 oommfpath = ""
 
 class Simulation():
+    """
+    simulation()
+    
+    Simulation object for oommf-python
+    
+    Parameters
+    ----------
+    geometry : oommf.geometry object
+        An object which defines the geometry of the problem and the length scale.
+    cellsize : float
+        Approx cell size for mesh of geometry. Currently same for all dimensions
+        but should be extended to be different for different dimensions.
+    material : oommf.material object 
+        Details of the material for the simulation. Currently single material,
+        should be extended to allow multiple materials in different regions.
+    name : string
+        Name of simulation object, used later as part of filename. 
+    t0 : float
+        Start time of a simulation.
+    
+    Attributes
+    ----------
+    geometry : oommf.geometry object
+        An object which defines the geometry of the problem and the length scale.
+    cellsize : float
+        Approx cell size for mesh of geometry. Currently same for all dimensions
+        but should be extended to be different for different dimensions.
+    material : oommf.material object 
+        Details of the material for the simulation. Currently single material,
+        should be extended to allow multiple materials in different regions.
+    name : string
+        Name of simulation object, used later as part of filename. 
+    t0 : float
+        Start time of a simulation.
+    mif : string
+        String representation of a mif file for which the simulation is based.
+    N_mifs : int
+        Number of 'advance_time' function calls - in order
+    time_series: list
+        List of time intervals of the format [t_n, t_{n+1}], where the interval
+        covers a single simulation run and set of parameters by OOMMF.
+    """
     pass
     def __init__(self, geometry, cellsize, material, name="Simulation", t0=0.):
         self.geometry = geometry
@@ -30,9 +72,9 @@ class Simulation():
         return msg1 + msg2 
 
     def advance_time(self, target):
-        self.mif = oommf.mifgen.assemble_mif(self)
-	mifpath = oommf.mifgen.save_mif(self, target)
-        oommf.run(mifpath)
+        self.mif = oommf.mifgen._assemble_mif(self)
+	mifpath = oommf.mifgen._save_mif(self, target)
+        oommf._run(mifpath)
         print("Integrating ODE from {}s to {}s".format(self.t, target))
         self.time_series.append([self.t, target])
         self.t = target
@@ -76,7 +118,7 @@ class DataTable():
         return ImageFile("output.png")
 
 
-def run(mifpath, parameters = None, nice=None, pause=None, exitondone=None, kill='all'):
+def _run(mifpath, parameters = None, nice=None, pause=None, exitondone=None, kill='all'):
 
     bashCommand = "tclsh " + oommf.oommfpath + " boxsi"
     if parameters is not None:

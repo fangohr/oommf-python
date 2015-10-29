@@ -18,6 +18,8 @@ class Simulation():
         self.t = t0
         self.t0 = t0
 	self.mif = ""
+        self.N_mifs = 0
+        self.time_series = []
     def __repr__(self): 
         cells = self.geometry.get_cells(self.cellsize)
         msg1 = "{}: {}. \n\tGeometry: {}. \n\t          Cells = {}, total={}.".format(self.name, self.material, self.geometry,
@@ -29,10 +31,12 @@ class Simulation():
 
     def advance_time(self, target):
         self.mif = oommf.mifgen.assemble_mif(self)
-	mifpath = oommf.mifgen.save_mif(self.name + "_" + str(self.t) + str(target))
+	mifpath = oommf.mifgen.save_mif(self, target)
         oommf.run(mifpath)
         print("Integrating ODE from {}s to {}s".format(self.t, target))
+        self.time_series.append([self.t, target])
         self.t = target
+        
     
 
 	        

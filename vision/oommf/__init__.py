@@ -29,8 +29,12 @@ class Simulation():
 
     def advance_time(self, target):
         self.mif = oommf.mifgen.assemble_mif(self)
-	print("Integrating ODE from {}s to {}s".format(self.t, target))
+	mifpath = oommf.mifgen.save_mif(self.name + "_" + str(self.t) + str(target))
+        oommf.run(mifpath)
+        print("Integrating ODE from {}s to {}s".format(self.t, target))
         self.t = target
+    
+
 	        
 
 class ImageFile(object):
@@ -68,6 +72,26 @@ class DataTable():
         return ImageFile("output.png")
 
 
+def run(mifpath, parameters = None, nice=None, pause=None, exitondone=None, kill='all'):
+
+    bashCommand = "tclsh " + oommf.oommfpath + " boxsi"
+    if parameters is not None:
+        bashCommand += " -parameters " + parameters
+    if nice is not None:
+        bashCommand += " -nice " + nice
+    if pause is not None:
+        bashCommand += " -pause " + pause
+    if exitondone is not None:
+        bashCommand += " -exitondone " + exitondone
+    if kill is not None:
+        bashCommand += " -kill " + kill 
+    
+    bashCommand += " " + mifpath
+    
+    os.system(bashCommand)
+
+
+
 def test_Simulation():
     Py = materials.permalloy
     box = geometry.Cuboid((0,0,0), (100, 30, 30))
@@ -75,6 +99,7 @@ def test_Simulation():
     return s
     #s.m = [1, 1, 0]
     #s.advance_time(1e-
+
 
 
 

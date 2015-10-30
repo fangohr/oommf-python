@@ -4,6 +4,9 @@ python:
   # - "3.4"
   # - "3.5"
 
+notifications:
+  slack: finmag:7HxjIcZF9CPe0sIS5CQJGK08
+
 install:
         - pip install cython matplotlib PIL --allow-external PIL --allow-unverified PIL
 

@@ -5,9 +5,8 @@ python:
   # - "3.5"
 
 install:
-        - pip install cython
-	- pip install matplotlib
-	- pip install PIL
+        - pip install cython matplotlib PIL
+
 before_script:
   - sudo apt-get install swig 
 

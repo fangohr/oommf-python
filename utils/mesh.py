@@ -53,7 +53,7 @@ class Mesh(object):
 
     # meshsize and cellsize use XYZ order of coordinates
     # array_order is the order used by the
-    def __init__(self, meshsize, cellsize=None, origin=(0, 0, 0), 
+    def __init__(self, meshsize, cellsize=None, origin=(0, 0, 0),
                  array_order=ZYX, size=None):
         if cellsize is None and size is not None:
             cellsize = np.array(

@@ -7,5 +7,5 @@ class Material():
     def __repr__(self):
         return self.name
 
-Permalloy = Material(name='Py(Fe80Ni20)', A=13.0e-12)
+permalloy = Material(name='Py(Fe80Ni20)', A=13.0e-12)
 #NiFe = Material(name = 'NiFe', A=)

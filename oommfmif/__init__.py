@@ -29,3 +29,7 @@ def get_version():
     stderr = p.stderr.read()     # version is returned in stderr
     s_oommftcl, versionstring = stderr.split()[0:2]
     return versionstring
+
+
+def get_oommf_path():
+    return oommf_path

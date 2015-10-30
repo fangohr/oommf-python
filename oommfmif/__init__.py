@@ -28,7 +28,7 @@ def retrieve_oommf_path():
 oommf_path = retrieve_oommf_path()
 
 
-def call_oommf(argstring):
+def call_oommf(argstring, prefixcommand=""):
     """Convenience function to call OOMMF: Typical usage
 
     p = call_oommf("+version")
@@ -36,9 +36,14 @@ def call_oommf(argstring):
     stdout, stderr = p.stdout.read(), p.stderr.read()
 
     """
+    if prefixcommand:
+        command = prefixcommand + ' && '
+    else:
+        command = ""
 
-    p = subprocess.Popen(os.path.join(oommf_path, 'oommf.tcl') +
-                         ' ' + argstring,
+    command += os.path.join(oommf_path, 'oommf.tcl') + ' ' + argstring
+    print("About to execute: '{}'".format(command))
+    p = subprocess.Popen(command,
                          shell=True, stderr=subprocess.PIPE,
                          stdout=subprocess.PIPE)
     return p

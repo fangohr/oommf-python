@@ -31,13 +31,13 @@ Specify Oxs_EulerEvolve {
 
 
 Specify Oxs_TimeDriver {
- basename bigbar	
+ basename bigbar
  evolver Oxs_EulerEvolve
  stopping_dm_dt 0.01
  mesh :mesh
  stage_count 1
  stage_iteration_limit 550000
- total_iteration_limit 3100 
+ total_iteration_limit 2
  Ms { Oxs_UniformScalarField { value 0.86e6 } }
  m0 { Oxs_UniformVectorField {
   norm 1

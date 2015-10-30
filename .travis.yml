@@ -1,4 +1,9 @@
 language: python
+
+env:
+  global:
+    - OOMMF_PATH=/home/travis/correct/path/to/be/determined/later
+
 python:
   - "2.7"
   # - "3.4"
@@ -11,7 +16,7 @@ install:
         - pip install cython matplotlib PIL --allow-external PIL --allow-unverified PIL
 
 before_script:
-  - sudo apt-get install swig 
+  - sudo apt-get install swig
 
 # command to install dependencies
 # install: "pip install -r requirements.txt"

@@ -6,7 +6,8 @@ python:
 
 install:
         - pip install cython
-
+	- pip install matplotlib
+	- pip install PIL
 before_script:
   - sudo apt-get install swig 
 

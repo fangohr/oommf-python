@@ -2,6 +2,7 @@ import os
 
 import pytest
 
+
 # Need to call Makefile in directory where this test file is
 def call_make(target):
     # where is this file
@@ -14,9 +15,7 @@ def call_make(target):
     os.system(command)
 
 
-
 @pytest.fixture
-
 def setup(request):
     def teardown():
         print("Running make clean")

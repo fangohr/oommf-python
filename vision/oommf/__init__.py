@@ -5,7 +5,7 @@ from PIL import Image
 from . import materials
 from . import geometry
 from . import mifgen
-
+import os
 oommfpath = ""
 
 class Simulation():
@@ -72,9 +72,9 @@ class Simulation():
         return msg1 + msg2 
 
     def advance_time(self, target):
-        self.mif = oommf.mifgen._assemble_mif(self)
-	mifpath = oommf.mifgen._save_mif(self, target)
-        oommf._run(mifpath)
+        self.mif = mifgen._assemble_mif(self)
+	mifpath = mifgen._save_mif(self, target)
+        _run(mifpath)
         print("Integrating ODE from {}s to {}s".format(self.t, target))
         self.time_series.append([self.t, target])
         self.t = target
@@ -95,7 +95,6 @@ class ImageFile(object):
             #return open(self.fpath, 'r').read().decode("ISO-8859-1")
             im = Image.open(self.fpath)
             return im._repr_png_()
-
 class DataTable():
     def __init__(self, name="Simulation"):
         # read data table here
@@ -120,7 +119,7 @@ class DataTable():
 
 def _run(mifpath, parameters = None, nice=None, pause=None, exitondone=None, kill='all'):
 
-    bashCommand = "tclsh " + oommf.oommfpath + " boxsi"
+    bashCommand = "tclsh " + oommfpath + " boxsi"
     if parameters is not None:
         bashCommand += " -parameters " + parameters
     if nice is not None:

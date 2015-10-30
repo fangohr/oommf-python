@@ -28,16 +28,18 @@ def retrieve_oommf_path():
 oommf_path = retrieve_oommf_path()
 
 
-def call_oommf(argstring, prefixcommand=""):
+def call_oommf(argstring, workdir=None):
     """Convenience function to call OOMMF: Typical usage
 
     p = call_oommf("+version")
     p.wait()
     stdout, stderr = p.stdout.read(), p.stderr.read()
 
+    the 'prefixcommand' allows to execute the command in a different directory.
+
     """
-    if prefixcommand:
-        command = prefixcommand + ' && '
+    if workdir:
+        command = "cd {:s} && ".format(workdir)
     else:
         command = ""
 

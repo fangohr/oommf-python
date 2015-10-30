@@ -1,6 +1,21 @@
 import oommfmif as o
 
-bigbar_mif_1 = """# MIF 2.1
+
+def test_get_oommf_version_return_type():
+    assert isinstance(o.get_version(), str)
+
+
+def test_get_oommf_version():
+    assert o.get_version()[0:4] == "1.2."
+
+
+def test_get_oommf_path():
+    assert isinstance(o.get_oommf_path(), str)
+
+
+def test_run_oommf_simulation(tmpdir):
+
+    bigbar_mif_1 = """# MIF 2.1
 # Sample problem description for muMAG Standard Problem #1
 set pi [expr 4*atan(1.0)]
 set mu0 [expr 4*$pi*1e-7]
@@ -53,21 +68,6 @@ Schedule DataTable archive Step 10
 Schedule Oxs_TimeDriver::Magnetization archive Stage 500
 """
 
-
-def test_get_oommf_version_return_type():
-    assert isinstance(o.get_version(), str)
-
-
-def test_get_oommf_version():
-    assert o.get_version()[0:4] == "1.2."
-
-
-def test_get_oommf_path():
-    assert isinstance(o.get_oommf_path(), str)
-
-
-def test_run_oommf_simulation(tmpdir):
-
     print("tmpdir is {}".format(str(tmpdir)))
     print("cwd is")
     import os
@@ -78,7 +78,8 @@ def test_run_oommf_simulation(tmpdir):
     import os.path
     open(os.path.join(str(tmpdir), 'bigbar.mif'), 'w').write(bigbar_mif_1)
 
-    process = o.call_oommf('boxsi bigbar.mif', prefixcommand="cd {}".format(tmpdir))
+    process = o.call_oommf('boxsi bigbar.mif', workdir=tmpdir)
     process.wait()
-    assert os.path.exists(os.path.join(str(tmpdir), 'bigbar-Oxs_TimeDriver-Magnetization-00-0000002.omf'))
-
+    assert os.path.exists(os.path.join(str(tmpdir),
+                          'bigbar-Oxs_TimeDriver-Magnetization-00-0000002.omf')
+                          )

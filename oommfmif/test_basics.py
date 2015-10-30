@@ -68,13 +68,6 @@ Schedule DataTable archive Step 10
 Schedule Oxs_TimeDriver::Magnetization archive Stage 500
 """
 
-    print("tmpdir is {}".format(str(tmpdir)))
-    print("cwd is")
-    import os
-    os.system('pwd')
-    os.system('cd {}'.format(tmpdir))
-    os.system('pwd')
-
     import os.path
     open(os.path.join(str(tmpdir), 'bigbar.mif'), 'w').write(bigbar_mif_1)
 

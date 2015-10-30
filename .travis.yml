@@ -17,5 +17,5 @@ before_script:
 # install: "pip install -r requirements.txt"
 # command to run tests
 
-script: make test-other-wrapping-cpp
-script: make test-vision-oommf
+script: make test
+

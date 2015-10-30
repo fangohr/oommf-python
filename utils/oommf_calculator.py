@@ -22,7 +22,7 @@ from subprocess import check_output, CalledProcessError
 CACHE_DIR = os.environ['HOME'] + "/.oommf_calculator"
 RUN_DIR = tempfile.mkdtemp(suffix='_oommf_calculator')
 
-if os.environ.has_key('OOMMF_COMMAND'):
+if 'OOMMF_COMMAND' in os.environ:
     OOMMF_COMMAND = os.environ['OOMMF_COMMAND']
 else:
     OOMMF_COMMAND = 'oommf'
@@ -68,14 +68,16 @@ def run_oommf(dir, args, **kwargs):
     except OSError, ex:
         sys.stderr.write(ex.strerror + ".\n")
         raise Exception(
-            "Command '{0}' failed. Parameters: '{1}'.".format(cmd[0],  " ".join(cmd[1:])))
+            "Command '{0}' failed. Parameters: '{1}'."
+            .format(cmd[0], " ".join(cmd[1:])))
 
 # Runs an OOMMF mif file contained in str
 # Returns a hashtable of field names mapped to arrays compatible with the
 # given mesh
 
 
-def calculate_oommf_fields(name, s0, Ms, spec=None, alpha=0., gamma_G=0., fields=[]):
+def calculate_oommf_fields(name, s0, Ms, spec=None, alpha=0., gamma_G=0.,
+                           fields=[]):
     assert type(Ms) is float
     assert type(s0) is MeshField and s0.dims == (3,)
 

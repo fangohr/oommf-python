@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from finmag.util.oommf import mesh
+import mesh
 
 
 class TestIterCoordsInt(unittest.TestCase):

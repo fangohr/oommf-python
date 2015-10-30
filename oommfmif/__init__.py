@@ -1,13 +1,35 @@
 import os
 import subprocess
+import sys
 
-# Environment variable OOMMF_PATH should point to the directory which
-# contains 'oommf.tcl'
-oommf_path = os.environ['OOMMF_PATH']
+
+def retrieve_oommf_path():
+
+    # Environment variable OOMMF_PATH should point to the directory which
+    # contains 'oommf.tcl'
+    if 'OOMMF_PATH' not in os.environ:
+        msg = """Please set OOMMF_PATH environment variable to point to
+        the directory that contains oommf.tcl. In bash, you can write
+        export OOMMF_PATH=/yourhome/youpath/to/oommf
+
+    This can be added to the ~/.bashrc, for example, to be executed
+    automatically.
+
+    Cowardly stopping here.
+    """
+
+        print(msg)
+        sys.exit(1)
+    else:
+        oommf_path = os.environ['OOMMF_PATH']
+
+    return oommf_path
+
+oommf_path = retrieve_oommf_path()
 
 
 def call_oommf(argstring):
-    """Convenience function to call OOMMF: Typicallusage
+    """Convenience function to call OOMMF: Typical usage
 
     p = call_oommf("+version")
     p.wait()

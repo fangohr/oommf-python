@@ -28,7 +28,11 @@ class MeshField(object):
 
     def to_xyz_array(self):
         n = len(self.dims)
-        return np.ascontiguousarray(np.transpose(self.nonflat, axes=np.append(np.arange(n), n + np.argsort(self.mesh.array_order))))
+        tmp = np.transpose(self.nonflat,
+                           axes=np.append(
+                               np.arange(n), n + np.argsort(self.mesh.array_order)))
+
+        return np.ascontiguousarray(tmp)
 
     # Only implemented for vector fields, i.e. len(dims) == 1
     def subfield(self, a, b):
@@ -49,7 +53,8 @@ class Mesh(object):
 
     # meshsize and cellsize use XYZ order of coordinates
     # array_order is the order used by the
-    def __init__(self, meshsize, cellsize=None, origin=(0, 0, 0), array_order=ZYX, size=None):
+    def __init__(self, meshsize, cellsize=None, origin=(0, 0, 0), 
+                 array_order=ZYX, size=None):
         if cellsize is None and size is not None:
             cellsize = np.array(
                 size, dtype=float) / np.array(meshsize, dtype=float)

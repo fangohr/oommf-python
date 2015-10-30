@@ -1,7 +1,7 @@
 *.pyc
 __pycache__
 
-
+.hypothesis
 
 # from https://gist.github.com/octocat/9257657
 

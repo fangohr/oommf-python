@@ -15,3 +15,4 @@ before_script:
 # command to run tests
 
 script: make test-other-wrapping-cpp
+script: make test-vision-oommf

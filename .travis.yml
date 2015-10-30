@@ -5,7 +5,7 @@ python:
   # - "3.5"
 
 install:
-        - pip install cython matplotlib pil
+        - pip install cython matplotlib PIL --allow-external PIL --allow-unverified PIL
 
 before_script:
   - sudo apt-get install swig 

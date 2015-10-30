@@ -5,8 +5,8 @@ all:
 	g++ -shared mylib.o mylib_wrap.o -o _mylib.so
 
 clean: 
-	rm *.so
-	rm *.o
-	rm *.cxx
+	rm -f *.so
+	rm -f *.o
+	rm -f *.cxx
 	rm mylib.py
-	rm *.pyc
+	rm -f *.pyc

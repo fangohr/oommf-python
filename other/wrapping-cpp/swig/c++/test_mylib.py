@@ -2,6 +2,7 @@ import os
 
 import pytest
 
+
 # Need to call Makefile in directory where this test file is
 def call_make(target):
     # where is this file
@@ -27,10 +28,9 @@ def setup(request):
 
 def test_squared(setup):
     import mylib
-    assert 16. == mylib.squared(4) 
+    assert 16. == mylib.squared(4)
 
 
 def test_myfunction(setup):
     import mylib
-    assert 16. == mylib.myfunction(mylib.squared, 4) 
-
+    assert 16. == mylib.myfunction(mylib.squared, 4)

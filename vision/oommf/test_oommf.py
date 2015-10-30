@@ -1,3 +1,5 @@
+import pytest
+
 def test_oommf_sim():
     import oommf
     import os.path
@@ -14,6 +16,7 @@ def test_oommf_sim():
     os.system('rm Simulation_0.0_1e-09.mif')
 
 
+@pytest.mark.xfail
 def test_mif_assemble():
     import oommf
     import oommf.mifgen

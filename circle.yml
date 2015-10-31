@@ -1,4 +1,7 @@
 machine:
+  python:
+    version: 2.7.10
+
   environment:
     MINICONDA_ROOT: $HOME/miniconda
     OOMMFTCL: $MINICONDA_ROOT/opt/oommf.tcl
@@ -34,4 +37,3 @@ test:
     - oommf +version
     - echo "OOMMF build succeeded."
     - make test
-  

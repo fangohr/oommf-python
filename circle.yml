@@ -1,0 +1,32 @@
+machine:
+  environment:
+    MINICONDA_ROOT: $HOME/miniconda
+    OOMMFTCL: $MINICONDA_ROOT/opt/oommf.tcl
+    PATH: $MINICONDA_ROOT/bin:$PATH
+
+dependencies:
+  # Note, we used to use the naive caching of docker images, but found that
+  # it was quicker just to pull each time. #rollondockercaching
+  override:
+    # Install conda and add it to PATH
+    - wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+    - bash miniconda.sh -b -p $MINICONDA_ROOT
+    - hash -r
+
+    # Update conda and and print info about the installation (for debugging)
+    - conda config --set always_yes yes
+    - conda update -q conda
+    - conda info -a
+
+    # Install numpy and OOMMF
+    - conda install -c http://conda.anaconda.org/maxalbert numpy oommf=12a6_20150930
+
+test:
+  # This is not a real test suite; for the time being we simply print some info
+  # about the OOMMF installation to see if conda installed it correctly.
+  override:
+    - cat $(which oommf)
+    - echo $PATH
+    - tclsh ${OOMMFTCL} +version
+    - oommf +version
+    - echo "Test build succeeded."

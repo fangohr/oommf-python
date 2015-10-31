@@ -13,10 +13,14 @@ import numpy as np
 import cStringIO
 import sys
 import subprocess
-import shutil
-from finmag.util.oommf import ovf, lattice
-from finmag.util.oommf.mesh import MeshField, Mesh
 from subprocess import check_output, CalledProcessError
+import shutil
+from contextlib import contextmanager
+
+
+import ovf
+import lattice
+from mesh import MeshField, Mesh
 
 CACHE_DIR = os.environ['HOME'] + "/.oommf_calculator"
 RUN_DIR = tempfile.mkdtemp(suffix='_oommf_calculator')

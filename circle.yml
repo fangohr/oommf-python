@@ -1,6 +1,6 @@
 machine:
-  python:
-    version: 2.7.10
+#  python:
+#    version: 2.7.10
 
   environment:
     MINICONDA_ROOT: $HOME/miniconda
@@ -10,8 +10,9 @@ machine:
 
 dependencies:
   pre:
-  - pip install -U pip
-  - pip install pytest cython matplotlib PIL --allow-external PIL --allow-unverified PIL
+  - sudo apt-get install python-pytest python-pil python-cython python-matplotlib
+  #- pip install -U pip
+  #- pip install pytest cython matplotlib PIL --allow-external PIL --allow-unverified PIL
   # Note, we used to use the naive caching of docker images, but found that
   # it was quicker just to pull each time. #rollondockercaching
   override:

@@ -4,7 +4,6 @@ machine:
 
   environment:
     MINICONDA_ROOT: $HOME/miniconda
-    OOMMFTCL: $MINICONDA_ROOT/opt/oommf.tcl
     PATH: $MINICONDA_ROOT/bin:$PATH
     OOMMF_PATH: $MINICONDA_ROOT/opt
 
@@ -32,7 +31,7 @@ test:
   override:
     - cat $(which oommf)
     - echo $PATH
-    - tclsh ${OOMMFTCL} +version
+    - tclsh ${OOMMF_PATH}/oommf.tcl +version
     - oommf +version
     - echo "OOMMF installation succeeded."
     - make test

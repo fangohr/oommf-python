@@ -7,7 +7,7 @@ machine:
 
 dependencies:
   pre:
-  - pip install cython matplotlib PIL --allow-external PIL --allow-unverified PIL
+  - pip install pytest cython matplotlib PIL --allow-external PIL --allow-unverified PIL
   # Note, we used to use the naive caching of docker images, but found that
   # it was quicker just to pull each time. #rollondockercaching
   override:

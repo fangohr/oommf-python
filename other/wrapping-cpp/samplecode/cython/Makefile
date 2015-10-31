@@ -1,4 +1,4 @@
-build_: 
+rect.so:
 	python setup.py build_ext --inplace
 
 clean:
@@ -9,3 +9,5 @@ test:
 	make build_
 	py.test -v 
 
+
+.PHONY: clean test

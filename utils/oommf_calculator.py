@@ -13,10 +13,9 @@ import numpy as np
 import cStringIO
 import sys
 import subprocess
-from subprocess import check_output, CalledProcessError
 import shutil
 from contextlib import contextmanager
-
+from subprocess import check_output, CalledProcessError
 
 import ovf
 import lattice
@@ -75,6 +74,7 @@ def ignored(*exceptions):
         yield
     except exceptions:
         pass
+
 
 def run_oommf(dir, args, **kwargs):
     try:

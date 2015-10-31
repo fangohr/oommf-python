@@ -1,17 +1,15 @@
 machine:
-  python:
-    version: 2.7.10
+#  python:
+#    version: 2.7.10
 
   environment:
     MINICONDA_ROOT: $HOME/miniconda
     OOMMFTCL: $MINICONDA_ROOT/opt/oommf.tcl
     PATH: $MINICONDA_ROOT/bin:$PATH
-    OOMMF_PATH: $MINICONDA_ROOT/opt/oommf.tcl
+    OOMMF_PATH: $MINICONDA_ROOT/opt
 
 dependencies:
   pre:
-  - pip install -U pip
-  - pip install pytest cython matplotlib PIL --allow-external PIL --allow-unverified PIL
   # Note, we used to use the naive caching of docker images, but found that
   # it was quicker just to pull each time. #rollondockercaching
   override:
@@ -25,8 +23,8 @@ dependencies:
     - conda update -q conda
     - conda info -a
 
-    # Install numpy and OOMMF
-    - conda install -c http://conda.anaconda.org/maxalbert numpy oommf=12a6_20150930
+    # Install OOMMF, SWIG and relevant Python packages
+    - conda install -c http://conda.anaconda.org/maxalbert oommf=12a6_20150930 swig cython pillow numpy matplotlib pytest
 
 test:
   # This is not a real test suite; for the time being we simply print some info
@@ -36,5 +34,5 @@ test:
     - echo $PATH
     - tclsh ${OOMMFTCL} +version
     - oommf +version
-    - echo "OOMMF build succeeded."
+    - echo "OOMMF installation succeeded."
     - make test

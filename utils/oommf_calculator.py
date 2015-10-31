@@ -14,7 +14,6 @@ import cStringIO
 import sys
 import subprocess
 import shutil
-from finmag.util.helpers import ignored
 from finmag.util.oommf import ovf, lattice
 from finmag.util.oommf.mesh import MeshField, Mesh
 from subprocess import check_output, CalledProcessError
@@ -56,6 +55,22 @@ Destination archive mmArchive:oommf_calculator
 
 SOURCE = open(os.path.abspath(__file__)).read()
 
+
+@contextmanager
+def ignored(*exceptions):
+    """
+    Ignore the given exceptions within the scope of the context.
+
+    Example::
+
+       with ignored(OSError):
+           os.remove('non_existing_file.txt')
+
+    """
+    try:
+        yield
+    except exceptions:
+        pass
 
 def run_oommf(dir, args, **kwargs):
     try:

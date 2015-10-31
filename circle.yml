@@ -30,5 +30,6 @@ test:
     - echo $PATH
     - tclsh ${OOMMFTCL} +version
     - oommf +version
-    - echo "Test build succeeded."
+    - echo "OOMMF build succeeded."
+    - make test
   

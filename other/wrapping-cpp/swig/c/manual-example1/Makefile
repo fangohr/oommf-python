@@ -1,3 +1,5 @@
+all: _example.so
+
 _example.so: example_wrap.o example.o
 
 	ld -shared example.o example_wrap.o -lpython2.7 -o _example.so 
@@ -26,4 +28,6 @@ clean:
 test:
 	make clean
 	make _example.so
-	py.test -v 
+	py.test -v
+
+.PHONY: all clean test

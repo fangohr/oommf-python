@@ -10,7 +10,7 @@ machine:
 
 dependencies:
   pre:
-  - sude apt-get update
+  - sudo apt-get update
   - sudo apt-get install python-pytest python-pil cython python-matplotlib
   #- pip install -U pip
   #- pip install pytest cython matplotlib PIL --allow-external PIL --allow-unverified PIL

@@ -6,12 +6,12 @@ machine:
     MINICONDA_ROOT: $HOME/miniconda
     OOMMFTCL: $MINICONDA_ROOT/opt/oommf.tcl
     PATH: $MINICONDA_ROOT/bin:$PATH
-    OOMMF_PATH: $MINICONDA_ROOT/opt/oommf.tcl
+    OOMMF_PATH: $MINICONDA_ROOT/opt
 
 dependencies:
   pre:
   - sudo apt-get update
-  - sudo apt-get install python-pytest python-pil cython python-matplotlib
+  - sudo apt-get install python-pytest python-pil cython python-matplotlib swig
   #- pip install -U pip
   #- pip install pytest cython matplotlib PIL --allow-external PIL --allow-unverified PIL
   # Note, we used to use the naive caching of docker images, but found that

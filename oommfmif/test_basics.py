@@ -93,6 +93,7 @@ Schedule Oxs_TimeDriver::Magnetization archive Stage 1
     print("stderr = {}".format(stderr))
 
     files = os.listdir(str(tmpdir))
+    print("Files in tmpdirectory are:\n{}".format(files))
     found_one = False
     for file_ in files:
         if "bigbar-Oxs_TimeDriver-Magnetization" in file_:

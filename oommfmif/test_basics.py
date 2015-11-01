@@ -94,15 +94,13 @@ Schedule Oxs_TimeDriver::Magnetization archive Stage 1
 
     files = os.listdir(str(tmpdir))
     print("Files in tmpdirectory are:\n{}".format(files))
-    found_one = False
-    for file_ in files:
-        if "bigbar-Oxs_TimeDriver-Magnetization" in file_:
-            found_one = True
-            print("Found {}".format(file_))
-            break
+    assert "bigbar-Oxs_TimeDriver-Magnetization-00-0000002.omf" in files or\
+        "bigbar-Oxs_TimeDriver-Magnetization-00-0000001.omf" in files
 
-    assert found_one is True
-    # assert output file has been created
-    # assert os.path.exists(os.path.join(str(tmpdir),
-    #                      'bigbar-Oxs_TimeDriver-Magnetization-00-0000002.omf')
-    #                      )
+    # I would have expected to only get
+    # bigbar-Oxs_TimeDriver-Magnetization-00-0000001.omf as the output,
+    # and this is the case for the
+    # conda-OOMMF install of 1.2.0.6. However, with the from source install of
+    # 1.2.0.5, we get the bigbar-Oxs_TimeDriver-Magnetization-00-0000002.omf
+    # created. So we accept either in this test -- at least OOMMF runs and
+    # does something. HF, 1 Nov 2015

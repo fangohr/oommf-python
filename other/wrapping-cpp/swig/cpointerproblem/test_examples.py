@@ -20,30 +20,44 @@ def call_make(target):
     os.system(command)
 
 
-call_make('all')
-import example1
+@pytest.fixture
+def setup_all(request):
+    call_make('all')
+
+    def fin():
+        print("teardown smtp")
+        call_make('clean')
+    request.addfinalizer(fin)
 
 
-def test_f():
+def test_f(setup_all):
+    import example1
     assert example1.f(1) - 1 <= 10 ** -7
 
 
-def test_myfun():
+def test_myfun(setup_all):
     """Demonstrate that calling code with wrong object type results
     in TypeError exception."""
+    import example1
     with pytest.raises(TypeError):
         assert example1.myfun(example1.f, 2.0) - 4.0 <= 10 ** -7
 
-call_make('alternate')
 
-import example2
+@pytest.fixture
+def setup_alternate(request):
+    call_make('alternate')
+
+    def fin():
+        print("teardown smtp")
+        call_make('clean')
+    request.addfinalizer(fin)
 
 
-def test2_f():
+def test2_f(setup_alternate):
+    import example2
     assert example2.f(1) - 1 <= 10 ** -7
 
 
-def test2_myfun():
+def test2_myfun(setup_alternate):
+    import example2
     assert example2.myfun(example2.f, 2.0) - 4.0 <= 10 ** -7
-
-call_make('clean')

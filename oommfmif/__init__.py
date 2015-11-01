@@ -1,6 +1,7 @@
 import os
 import subprocess
 import sys
+from textwrap import dedent
 
 
 def retrieve_oommf_path():
@@ -8,15 +9,18 @@ def retrieve_oommf_path():
     # Environment variable OOMMF_PATH should point to the directory which
     # contains 'oommf.tcl'
     if 'OOMMF_PATH' not in os.environ:
-        msg = """Please set OOMMF_PATH environment variable to point to
-        the directory that contains oommf.tcl. In bash, you can write
-        export OOMMF_PATH=/yourhome/youpath/to/oommf
+        msg = dedent("""\
+            Please set the OOMMF_PATH environment variable to point to the
+            directory that contains the file 'oommf.tcl'. In bash, you can
+            write:
 
-    This can be added to the ~/.bashrc, for example, to be executed
-    automatically.
+                export OOMMF_PATH=/yourhome/youpath/to/oommf
 
-    Cowardly stopping here.
-    """
+            This can be added to the ~/.bashrc, for example, to be executed
+            automatically.
+
+            Cowardly stopping here.
+            """)
 
         print(msg)
         sys.exit(1)

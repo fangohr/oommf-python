@@ -104,3 +104,5 @@ Schedule Oxs_TimeDriver::Magnetization archive Stage 1
     # 1.2.0.5, we get the bigbar-Oxs_TimeDriver-Magnetization-00-0000002.omf
     # created. So we accept either in this test -- at least OOMMF runs and
     # does something. HF, 1 Nov 2015
+
+    assert 'bigbar.odt' in files

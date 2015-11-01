@@ -30,7 +30,7 @@ def test_get_oommf_path():
 
 def test_run_oommf_simulation(tmpdir):
 
-    bigbar_mif_1 = """# MIF 2.1
+    testsim_mif_1 = """# MIF 2.1
 # Tiny test problem, OOMMF-Python
 
 Specify Oxs_BoxAtlas:atlas {
@@ -57,7 +57,7 @@ Specify Oxs_EulerEvolve {
 Specify Oxs_Demag {}
 
 Specify Oxs_TimeDriver {
- basename bigbar
+ basename testsim
  evolver Oxs_EulerEvolve
  stopping_dm_dt 0.01
  mesh :mesh
@@ -78,10 +78,10 @@ Schedule Oxs_TimeDriver::Magnetization archive Stage 1
 """
 
     # write config file into tmp directory
-    open(os.path.join(str(tmpdir), 'bigbar.mif'), 'w').write(bigbar_mif_1)
+    open(os.path.join(str(tmpdir), 'testsim.mif'), 'w').write(testsim_mif_1)
 
     # call ommff
-    process = o.call_oommf('boxsi bigbar.mif', workdir=tmpdir)
+    process = o.call_oommf('boxsi testsim.mif', workdir=tmpdir)
 
     # wait for oommf to complete
     process.wait()
@@ -94,15 +94,15 @@ Schedule Oxs_TimeDriver::Magnetization archive Stage 1
 
     files = os.listdir(str(tmpdir))
     print("Files in tmpdirectory are:\n{}".format(files))
-    assert "bigbar-Oxs_TimeDriver-Magnetization-00-0000002.omf" in files or\
-        "bigbar-Oxs_TimeDriver-Magnetization-00-0000001.omf" in files
+    assert "testsim-Oxs_TimeDriver-Magnetization-00-0000002.omf" in files or\
+        "testsim-Oxs_TimeDriver-Magnetization-00-0000001.omf" in files
 
     # I would have expected to only get
-    # bigbar-Oxs_TimeDriver-Magnetization-00-0000001.omf as the output,
+    # testsim-Oxs_TimeDriver-Magnetization-00-0000001.omf as the output,
     # and this is the case for the
     # conda-OOMMF install of 1.2.0.6. However, with the from source install of
-    # 1.2.0.5, we get the bigbar-Oxs_TimeDriver-Magnetization-00-0000002.omf
+    # 1.2.0.5, we get the testsim-Oxs_TimeDriver-Magnetization-00-0000002.omf
     # created. So we accept either in this test -- at least OOMMF runs and
     # does something. HF, 1 Nov 2015
 
-    assert 'bigbar.odt' in files
+    assert 'testsim.odt' in files

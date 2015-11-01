@@ -92,7 +92,16 @@ Schedule Oxs_TimeDriver::Magnetization archive Stage 1
     print("stdout = {}".format(stdout))
     print("stderr = {}".format(stderr))
 
+    files = os.listdir(str(tmpdir))
+    found_one = False
+    for file_ in files:
+        if "bigbar-Oxs_TimeDriver-Magnetization" in file_:
+            found_one = True
+            print("Found {}".format(file_))
+            break
+
+    assert found_one is True
     # assert output file has been created
-    assert os.path.exists(os.path.join(str(tmpdir),
-                          'bigbar-Oxs_TimeDriver-Magnetization-00-0000002.omf')
-                          )
+    # assert os.path.exists(os.path.join(str(tmpdir),
+    #                      'bigbar-Oxs_TimeDriver-Magnetization-00-0000002.omf')
+    #                      )

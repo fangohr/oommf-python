@@ -55,6 +55,7 @@ def retrieve_oommf_executable(path):
 
 
 oommf_path = retrieve_oommf_path()
+oommf_executable = retrieve_oommf_executable(oommf_path)
 
 
 def call_oommf(argstring, workdir=None):
@@ -72,7 +73,7 @@ def call_oommf(argstring, workdir=None):
     else:
         command = ""
 
-    command += os.path.join(oommf_path, 'oommf.tcl') + ' ' + argstring
+    command += os.path.join(oommf_path, oommf_executable) + ' ' + argstring
     print("About to execute: '{}'".format(command))
     p = subprocess.Popen(command,
                          shell=True, stderr=subprocess.PIPE,

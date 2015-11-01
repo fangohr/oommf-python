@@ -7,8 +7,15 @@ def test_get_oommf_version_return_type():
     assert isinstance(o.get_version(), str)
 
 
+def test_retrieve_oommf_executable():
+    oommf_path = o.get_oommf_path()
+    executable = o.retrieve_oommf_executable(oommf_path)
+    assert executable in ['oommf', 'oommf.tcl']
+
+
 def test_get_oommf_version():
-    assert o.get_version()[0:4] == "1.2."
+    return_string = o.get_version()
+    assert return_string[0:4] == "1.2."
 
 
 def test_get_oommf_path():

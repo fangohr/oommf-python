@@ -25,6 +25,35 @@ def retrieve_oommf_path():
 
     return oommf_path
 
+
+def retrieve_oommf_executable(path):
+
+    """Given an OOMMF_PATH as path, we either expect 'oommf.tcl' to be the main
+    retrieve_oommf_executable or a script called 'oommf' which may call
+    oommf.tcl internally, and maybe sets some envinorment     variables. The
+    conda oommf installation creates such a 'oommf' shell script."""
+
+    oommf_path = path
+    files = os.listdir(oommf_path)
+    if 'oommf' in files and 'oommf.tcl' not in files:
+        return 'oommf'
+    elif 'oommf.tcl' in files and 'oommf' not in files:
+        return 'oommf.tcl'
+    elif 'oommf' in files and 'oommf.tcl' in files:
+        msg = "There is 'oommf' and 'oommf.tcl' in {}. Don't now which"\
+            " one to use".format(oommf_path)
+        print(msg)
+        raise RuntimeError(msg)
+    elif 'oommf' not in files and 'oommf.tcl' not in files:
+        msg = "Can't find 'oommf' or 'oommf.tcl' in {}. Giving up."\
+            .format(oommf_path)
+        print(msg)
+        raise RuntimeError(msg)
+    else:
+        msg = "Unknown outcome - shoudn't be possible."
+        raise NotImplementedError(msg)
+
+
 oommf_path = retrieve_oommf_path()
 
 

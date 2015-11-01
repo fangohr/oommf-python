@@ -1,5 +1,7 @@
 import os
 
+import pytest
+
 import oommfmif as o
 
 
@@ -7,10 +9,14 @@ def test_get_oommf_version_return_type():
     assert isinstance(o.get_version(), str)
 
 
-def test_retrieve_oommf_executable():
+def test_retrieve_oommf_executable(tmpdir):
     oommf_path = o.get_oommf_path()
     executable = o.retrieve_oommf_executable(oommf_path)
     assert executable in ['oommf', 'oommf.tcl']
+
+    # a directory with no files, should raise an exception
+    with pytest.raises(RuntimeError):
+        executable = o.retrieve_oommf_executable(str(tmpdir))
 
 
 def test_get_oommf_version():

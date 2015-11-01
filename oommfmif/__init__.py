@@ -85,8 +85,11 @@ def get_version():
     """Return OOMMF version as string, something like 1.2.0.5"""
     p = call_oommf('+version')
     p.wait()
-    stderr = p.stderr.read()     # version is returned in stderr
-    s_oommftcl, versionstring = stderr.split()[0:2]
+    stderr = p.stderr.readlines()     # version is returned in stderr
+    # output is something like  "<15330> oommf.tcl 1.2.0.6  info:\noommf.tcl 1.2.0.6"
+    line = stderr[0]
+    assert 'oommf.tcl' in line
+    versionstring = line.split('oommf.tcl')[1].strip()
     return versionstring
 
 

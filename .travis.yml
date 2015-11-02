@@ -19,10 +19,10 @@ install:
         - pip install cython matplotlib PIL --allow-external PIL --allow-unverified PIL
 
 before_script:
-	- sudo apt-get install swig
-        - export OOMMF_PREFIX=${OOMMF_PREFIX:-$HOME}
-        - bash -x .travis/install-oommf.sh
-        - OOMMF_PATH=/home/travis/oommf
+    - sudo apt-get install swig
+    - export OOMMF_PREFIX=${OOMMF_PREFIX:-$HOME}
+    - bash -x .travis/install-oommf.sh
+    - OOMMF_PATH=/home/travis/oommf
 
 # command to run tests
 script:

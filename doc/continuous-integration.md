@@ -6,7 +6,7 @@ We used continuous integration on travis CI and circle CI to automatically execu
 
 To do this, we need an executable version of OOMMF. Tests are run through 'make test' in the top directory.
 
-## OOMMF on travis CI
+## OOMMF-Python on travis CI
 [![Build Status](https://travis-ci.org/fangohr/oommf-python.svg?branch=master)](https://travis-ci.org/fangohr/oommf-python)
 
 OOMMF-Python on our [travis build](https://travis-ci.org/fangohr/oommf-python) is compiled from source, using version 1.2.0.5. See `.travis.yml` for details.

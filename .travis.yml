@@ -1,26 +1,39 @@
+sudo: required
 language: python
-
-env:
-  global:
-    - OOMMF_PATH=/home/travis/correct/path/to/be/determined/later
 
 python:
   - "2.7"
-  # - "3.4"
-  # - "3.5"
 
-notifications:
-  slack: finmag:7HxjIcZF9CPe0sIS5CQJGK08
+env:
+- TCL_VERSION=8.5.0
+
+addons:
+  apt:
+    packages:
+    - tcl8.5
+    - tk8.5
+    - tcl8.5-dev
+    - tk8.5-dev
 
 install:
         - pip install cython matplotlib PIL --allow-external PIL --allow-unverified PIL
 
 before_script:
-  - sudo apt-get install swig
+	- sudo apt-get install swig
+        - export OOMMF_PREFIX=${OOMMF_PREFIX:-$HOME}
+        - bash -x .travis/install-oommf.sh
+        - OOMMF_PATH=/home/travis/oommf
 
-# command to install dependencies
-# install: "pip install -r requirements.txt"
 # command to run tests
+script:
+- which tclsh
+- which oommf
+- $OOMMF_PATH/oommf.tcl +platform
+
 
 script: make test
 
+
+
+notifications:
+  slack: finmag:7HxjIcZF9CPe0sIS5CQJGK08

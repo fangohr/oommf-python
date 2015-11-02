@@ -22,7 +22,7 @@ before_script:
     - sudo apt-get install swig
     - export OOMMF_PREFIX=${OOMMF_PREFIX:-$HOME}
     - bash -x .travis/install-oommf.sh
-    - OOMMF_PATH=/home/travis/oommf
+    - export OOMMF_PATH=/home/travis/oommf
 
 # command to run tests
 script:

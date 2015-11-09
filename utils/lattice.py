@@ -29,6 +29,8 @@ def first_difference(la, lb, reverse=False):
         ra, rb = list(a), list(b)
         ra.reverse(); rb.reverse()
         first_difference(ra, rb)
+
+    Addition: it appears that the lists la and lb should have the same length.
     """
     if reverse:
         len_la = len(la)
@@ -166,6 +168,12 @@ class Lattice(object):
     def get_pos_from_idx(self, idx):
         """Return the position of the point in the lattice which has the given
         index."""
+
+        # only well defined if idx = [A, B] for 2d mesh,
+        #                            [A, B, C] for 3d mesh, etc
+        if len(idx) is not self.dim:
+            raise IndexError("len(idx={}) needs to be self.dim={}"
+                             .format(idx, self.dim))
         pos = []
         for nr, i in enumerate(idx):
             x_min, x_max, x_num = self.min_max_num_list[nr]

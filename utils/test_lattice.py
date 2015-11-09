@@ -151,8 +151,8 @@ def test_lattice_object_2d():
 
     assert l.dim == 2
 
-    # with pytest.raises(IndexError):
-    #    l.get_pos_from_idx([1])  # should raise IndexError for 2d mesh
+    with pytest.raises(IndexError):
+        l.get_pos_from_idx([1])  # should raise IndexError for 2d mesh
 
     l.get_pos_from_idx([0, 0]) == [0., -3.]
     l.get_pos_from_idx([0, 1]) == [0., 1.]

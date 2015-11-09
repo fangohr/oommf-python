@@ -197,3 +197,18 @@ def test_lattice_object_2d_scale():
     l.scale(0.5)
     assert l.max_node_pos == [10, 1]
     assert l.stepsizes == [2, 4]
+
+
+def test_field_lattice_init():
+    fl = lattice.FieldLattice(lattice.Lattice([[0, 10, 6], [-3, 1, 2]]))
+
+    # we want to see numpy.ndarray for the data
+    assert type(fl.field_data) == np.ndarray
+    # and contiguous data
+    assert fl.field_data.flags['F_CONTIGUOUS'] is True
+    # and the right shape
+    assert fl.field_data.shape[1:] == tuple(fl.lattice.get_shape())
+    # and 3d data vectors
+    assert fl.field_data.shape[0] == 3 == fl.field_dim
+    # but the lattice is in 2d only
+    assert fl.lattice.dim == 2

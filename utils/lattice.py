@@ -17,6 +17,8 @@ import numpy
 
 import collections
 
+from functools import reduce
+
 
 def first_difference(la, lb, reverse=False):
     """Given two lists 'la' and 'lb', returns the index at which the two lists

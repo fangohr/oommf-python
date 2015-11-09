@@ -91,6 +91,8 @@ def test_lattice_object_1d():
     assert str(l) == "Lattice([[0, 10, 6]])"
     assert l.stepsizes == [2]
 
+    assert np.allclose(l.get_positions()[:, 0], np.linspace(0, 10, 6))
+
 
 def test_lattice_object_1d_scales():
     l = lattice.Lattice([[0, 10, 6]])
@@ -167,6 +169,20 @@ def test_lattice_object_2d():
     assert l.nodes == [6, 2]
     assert l.order == 'F'
     assert str(l) == "Lattice([[0, 10, 6], [-3, 1, 2]])"
+
+    assert np.allclose(l.get_positions(),
+                       np.array([[[0., -3.],
+                                  [2., -3.],
+                                  [4., -3.],
+                                  [6., -3.],
+                                  [8., -3.],
+                                  [10., -3.]],
+                                 [[0., 1.],
+                                  [2., 1.],
+                                  [4., 1.],
+                                  [6., 1.],
+                                  [8., 1.],
+                                  [10., 1.]]]))
 
 
 def test_lattice_object_2d_scale():

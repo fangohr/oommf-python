@@ -64,13 +64,13 @@ def test_lattice_object_1d():
     check_points_value = []
 
     def f(idx, x):
-        print("idx = {:5} x={}".format(idx, x))
+        print("idx = {} x={}".format(idx, x))
         check_points_index.append(idx[0])
         check_points_value.append(x[0])
 
     l.foreach(f)
 
-    assert check_points_index == range(6)
+    assert check_points_index == list(range(6))
     assert np.allclose(check_points_value, np.linspace(0, 10, 6))
 
     assert l.get_closest([1.01]) == [1]
@@ -114,7 +114,7 @@ def test_lattice_object_2d():
     check_points_value = []
 
     def f(idx, x):
-        print("idx = {:5} x={}".format(idx, x))
+        print("idx = {} x={}".format(idx, x))
         check_points_index.append(idx[:])
         check_points_value.append(x[:])
 

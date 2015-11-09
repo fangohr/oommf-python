@@ -8,4 +8,7 @@
   - [ ] do we actually need first_difference? Then remove
   - [X] test parse_lattice_spec
   - [X] test Lattice
+  - [X] make test_lattice pass with python 3
   - [ ] test FieldLattice
+  - [ ] make test_fieldlattice pass with python 3
+

@@ -1,3 +1,5 @@
+import numpy as np
+
 import lattice
 
 
@@ -51,3 +53,53 @@ def test_parse_lattice_spec():
 
     # spaces
     assert s("0,   10,   11") == [[0., 10., 11]]
+
+
+def test_lattice_object_1d():
+    l = lattice.Lattice([[0, 10, 6]])
+    assert l.dim == 1
+
+    check_points_index = []
+    check_points_value = []
+
+    def f(idx, x):
+        print("idx = {:5} x={}".format(idx, x))
+        check_points_index.append(idx[0])
+        check_points_value.append(x[0])
+
+    l.foreach(f)
+
+    assert check_points_index == range(6)
+    assert np.allclose(check_points_value, np.linspace(0, 10, 6))
+
+    assert l.get_closest([1.01]) == [1]
+    assert l.get_closest([0.99]) == [0]
+
+    assert l.get_num_points() == 6
+
+    assert l.get_pos_from_idx([4]) == [8]
+
+    assert l.get_shape() == [6]
+
+    assert l.max_node_pos == [10]
+    assert l.min_node_pos == [0]
+
+    assert l.min_max_num_list == [[0, 10, 6]]
+    assert l.order == 'F'
+    assert l.nodes == [6]
+    assert str(l) == "Lattice([[0, 10, 6]])"
+    assert l.stepsizes == [2]
+
+
+def test_lattice_object_1d_scales():
+    l = lattice.Lattice([[0, 10, 6]])
+    assert l.dim == 1
+
+    l.scale(0.5)
+
+    assert l.max_node_pos == [5]
+    assert l.stepsizes == [1]
+
+    l.scale(1 / 0.5)
+    assert l.max_node_pos == [10]
+    assert l.stepsizes == [2]

@@ -4,4 +4,8 @@
   - [ ] make compatible with python3
 
 * lattice.py
-  - [ ] start test_lattice.py
+  - [X] start test_lattice.py
+  - [ ] do we actually need first_difference? Then remove
+  - [ ] test parse_lattice_spec
+  - [ ] test Lattice
+  - [ ] test FieldLattice

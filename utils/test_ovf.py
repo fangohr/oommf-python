@@ -1,6 +1,7 @@
 import os
 import sys
 
+import numpy as np
 import pytest
 
 
@@ -21,10 +22,10 @@ def field1():
     from lattice import FieldLattice
 
     # Create the data
-    fl = FieldLattice("2.5e-9,97.5e-9,20/2.5e-9,47.5e-9,10/2.5e-9,7.5e-9,1")
+    fl = FieldLattice("2.5e-9, 97.5e-9, 20/2.5e-9, 47.5e-9, 10/2.5e-9, 7.5e-9, 1")
 
     def setter_function(position):
-        return [1, 0, 0]
+        return [1, 2, 3]
     fl.set(setter_function)
     return fl
 
@@ -67,11 +68,27 @@ def test_example_docstring_write_ovff10(tmpdir, field1):
 # meshunit: 1.0""")
 
 
-def test_example_docstring_read_ovf_file():
-    from ovf import OVFFile
+def test_example_docstring_read_ovf_file_ovf1():
+    from ovf import OVFFile, OVF10
     ovf_file = OVFFile("tmp_test_ovf1.ovf")
+    assert ovf_file.content.ovf_version == OVF10
     fl = ovf_file.get_field()
-    assert fl is not None
+    assert fl.field_dim == 3
+    assert np.allclose(fl.field_data[0, :, :, 0], 1.)
+    assert np.allclose(fl.field_data[1, :, :, 0], 2.)
+    assert np.allclose(fl.field_data[2, :, :, 0], 3.)
+
+
+def test_example_docstring_read_ovf_file_ovf2():
+    from ovf import OVFFile, OVF20
+    ovf_file = OVFFile("tmp_test_ovf2.ovf")
+    assert ovf_file.content.ovf_version == OVF20
+    fl = ovf_file.get_field()
+    assert fl.field_dim == 3
+    assert np.allclose(fl.field_data[0, :, :, 0], 1.)
+    assert np.allclose(fl.field_data[1, :, :, 0], 2.)
+    assert np.allclose(fl.field_data[2, :, :, 0], 3.)
+
     # fl is a FieldLattice object, see module lattice.py
     # fl.lattice is a Lattice object, describing the mesh (lattice.py)
     #  fl.field_data is the numpy array containing the data

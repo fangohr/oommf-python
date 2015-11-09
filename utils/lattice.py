@@ -42,7 +42,7 @@ def first_difference(la, lb, reverse=False):
         for i, a in enumerate(la):
             if a != lb[i]:
                 return i
-        return len(a)
+        return len(la)
 
 
 def parse_lattice_spec(s):

@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 
 import lattice
 
@@ -103,3 +104,80 @@ def test_lattice_object_1d_scales():
     l.scale(1 / 0.5)
     assert l.max_node_pos == [10]
     assert l.stepsizes == [2]
+
+
+def test_lattice_object_2d():
+    l = lattice.Lattice([[0, 10, 6], [-3, 1, 2]])
+    assert l.dim == 2
+
+    check_points_index = []
+    check_points_value = []
+
+    def f(idx, x):
+        print("idx = {:5} x={}".format(idx, x))
+        check_points_index.append(idx[:])
+        check_points_value.append(x[:])
+
+    l.foreach(f)
+
+    assert check_points_index == [[0, 0],
+                                  [1, 0],
+                                  [2, 0],
+                                  [3, 0],
+                                  [4, 0],
+                                  [5, 0],
+                                  [0, 1],
+                                  [1, 1],
+                                  [2, 1],
+                                  [3, 1],
+                                  [4, 1],
+                                  [5, 1]]
+    assert np.allclose(check_points_value, [[0.0, -3.0],
+                                            [2.0, -3.0],
+                                            [4.0, -3.0],
+                                            [6.0, -3.0],
+                                            [8.0, -3.0],
+                                            [10.0, -3.0],
+                                            [0.0, 1.0],
+                                            [2.0, 1.0],
+                                            [4.0, 1.0],
+                                            [6.0, 1.0],
+                                            [8.0, 1.0],
+                                            [10.0, 1.0]])
+
+    assert l.get_closest([1.01, -0.9]) == [1, 1]
+    assert l.get_closest([1.01, -1.0001]) == [1, 0]
+    assert l.get_num_points() == 12
+
+    assert l.dim == 2
+
+    # with pytest.raises(IndexError):
+    #    l.get_pos_from_idx([1])  # should raise IndexError for 2d mesh
+
+    l.get_pos_from_idx([0, 0]) == [0., -3.]
+    l.get_pos_from_idx([0, 1]) == [0., 1.]
+    l.get_pos_from_idx([4, 1]) == [8., 1.]
+
+    assert l.get_shape() == [6, 2]
+
+    l.max_node_pos == [10, 1]
+
+    assert l.min_max_num_list == [[0, 10, 6], [-3, 1, 2]]
+    assert l.min_node_pos == [0, -3]
+    assert l.nodes == [6, 2]
+    assert l.order == 'F'
+    assert str(l) == "Lattice([[0, 10, 6], [-3, 1, 2]])"
+
+
+def test_lattice_object_2d_scale():
+
+    l = lattice.Lattice([[0, 10, 6], [-3, 1, 2]])
+    assert l.dim == 2
+
+    l.scale(2)
+    assert l.max_node_pos == [20, 2]
+    assert l.stepsizes == [4, 8]
+
+    l.scale(0.5)
+    assert l.max_node_pos == [10, 1]
+    assert l.stepsizes == [2, 4]

@@ -540,7 +540,8 @@ class OVFDataSectionNode(OVFSectionNode):
         num_floats = self.num_stored_nodes * self.floats_per_node
         fmt = endianness + float_type * num_floats
         flat_array = self.field.ravel('F')
-        out_data += struct.pack(fmt, *flat_array) + "\n"
+        out_data += struct.pack(fmt, *flat_array)
+        out_data += "\n"
         stream.write(out_data)
 
     def _write_ascii(self, stream, root=None):
@@ -572,7 +573,7 @@ def known_value_node(name, value):
         value = val_type(value)
 
     else:
-        print "Unknown value '%s' while reading OVF file." % name
+        print("Unknown value '%s' while reading OVF file." % name)
 
     return OVFValueNode(data=(name, value))
 
@@ -588,7 +589,7 @@ def known_section_node(action, name):
     elif lname.startswith("data"):
         cls = OVFDataSectionNode
     else:
-        print "Unknown section '%s' while reading OVF file." % name
+        print("Unknown section '%s' while reading OVF file." % name)
         cls = OVFSectionNode
 
     return cls(data=(name, action))
@@ -774,7 +775,7 @@ class OVFFile:
         available_data_types = {"text": "Data Text",
                                 "binary4": "Data Binary 4",
                                 "binary8": "Data Binary 8"}
-        if available_data_types.has_key(data_type):
+        if data_type in available_data_types:
             data_type = available_data_types[data_type]
 
         else:
@@ -898,12 +899,12 @@ class OVFFile:
 
 if __name__ == "__main__no":
     import sys
-    print "Reading"
+    print("Reading")
     ovf = OVFFile(sys.argv[1])
-    print "Writing"
+    print("Writing")
     #ovf.content.a_segment.a_databinary8.name = "Data Binary 4"
     ovf.write(sys.argv[2])
-    print "Done"
+    print("Done")
 
 elif __name__ == "__main__":
     # Here is how to create an OVF file from a FieldLattice object

@@ -1,0 +1,7 @@
+* ovf.py
+  - [ ] test coverage 
+  - [ ] pep8 enhancements
+  - [ ] make compatible with python3
+
+* lattice.py
+  - [ ] start test_lattice.py

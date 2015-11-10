@@ -127,6 +127,16 @@ def test_lattice_object_1d_scales():
     assert l.max_node_pos == [10]
     assert l.stepsizes == [2]
 
+    # scale differently in different directions (silly for 1d)
+    l.scale([0.5])
+
+    assert l.max_node_pos == [5]
+    assert l.stepsizes == [1]
+
+    l.scale(1 / 0.5)
+    assert l.max_node_pos == [10]
+    assert l.stepsizes == [2]
+
 
 def test_lattice_object_2d():
     l = lattice.Lattice([[0, 10, 6], [-3, 1, 2]])

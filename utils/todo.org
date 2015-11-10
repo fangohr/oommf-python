@@ -9,6 +9,7 @@
   - [X] test parse_lattice_spec
   - [X] test Lattice
   - [X] make test_lattice pass with python 3
-  - [ ] test FieldLattice
+  - [X] test FieldLattice
   - [ ] make test_fieldlattice pass with python 3
+  - [ ] check coverage with 'make', then increase
 

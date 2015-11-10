@@ -55,6 +55,10 @@ def test_parse_lattice_spec():
     # spaces
     assert s("0,   10,   11") == [[0., 10., 11]]
 
+    # check error
+    with pytest.raises(ValueError):
+        assert s("0, 10, 11, 42")
+
 
 def test_lattice_object_1d():
     l = lattice.Lattice([[0, 10, 6]])

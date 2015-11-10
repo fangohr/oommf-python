@@ -195,7 +195,7 @@ class OVFSectionNode(OVFNode):
     def read(self, stream, root=None):
         while True:
             node = read_node(stream)
-            if node == None:
+            if node is None:
                 return
 
             node_name = node.name
@@ -224,9 +224,9 @@ class OVFSectionNode(OVFNode):
 
         # We check wether we got all we needed
         missing_value = []
-        if self.required != None:
+        if self.required is not None:
             for required_value in self.required:
-                if not self.received.has_key(required_value):
+                if not required_value in self.received:
                     missing_value.append(required_value)
 
         if missing_value:
@@ -247,7 +247,7 @@ class OVFValueNode(OVFNode):
 
     def write(self, stream, root=None):
         v = self.value
-        if v != None:
+        if v is not None:
             stream.write_line("# %s: %s" % (self.name, self.value))
 
 
@@ -275,7 +275,7 @@ class OVFType:
             version = OVF20
 
         else:
-            print ("Unknown OVF version '%s'. Assuming version 2.0.")
+            print("Unknown OVF version '%s'. Assuming version 2.0.")
             version = OVF20
             version_str = "2.0"
 
@@ -397,7 +397,7 @@ class OVFVersionNode(OVFNode):
 
     def write(self, stream, root=None):
         v = self.value
-        if v != None:
+        if v is not None:
             stream.write_line("# %s" % self.value)
 
 
@@ -568,7 +568,7 @@ def version_node(ver_str):
 
 def known_value_node(name, value):
     lname = name_normalise(name)
-    if known_values.has_key(lname):
+    if lname in known_values:
         val_type = known_values[lname][1]
         value = val_type(value)
 
@@ -599,7 +599,7 @@ def read_node(stream):
     l = None
     while l in ["", "#", None]:
         l = stream.next_line()
-        if l == None:
+        if l is None:
             return None
         else:
             l = remove_comment(l).lstrip()
@@ -766,7 +766,7 @@ class OVFFile:
     def __init__(self, filename=None):
         self.content = OVFRootNode()
 
-        if filename != None:
+        if filename is not None:
             self.read(filename)
 
     def new(self, fieldlattice, version=OVF10, mesh_type="rectangular",

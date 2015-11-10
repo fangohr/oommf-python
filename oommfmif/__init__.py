@@ -1,3 +1,7 @@
+"""
+oommf-python: A module for calling OOMMF from Python.
+
+"""
 import os
 import subprocess
 import sys
@@ -5,9 +9,19 @@ from textwrap import dedent
 
 
 def retrieve_oommf_path():
+    """
+    retrieve_oommf_path()
+    Gets value from the environment variable oommf_path.
 
-    # Environment variable OOMMF_PATH should point to the directory which
-    # contains 'oommf.tcl'
+    Returns
+    -------
+    string
+        Path to folder containing oommf.tcl
+    Notes
+    -----
+    Environment variable OOMMF_PATH should point to the directory which
+    contains 'oommf.tcl'
+    """
     if 'OOMMF_PATH' not in os.environ:
         msg = dedent("""\
             Please set the OOMMF_PATH environment variable to point to the
@@ -26,15 +40,13 @@ def retrieve_oommf_path():
         sys.exit(1)
     else:
         oommf_path = os.environ['OOMMF_PATH']
-
     return oommf_path
 
 
 def retrieve_oommf_executable(path):
-
     """Given an OOMMF_PATH as path, we either expect 'oommf.tcl' to be the main
     retrieve_oommf_executable or a script called 'oommf' which may call
-    oommf.tcl internally, and maybe sets some envinorment     variables. The
+    oommf.tcl internally, and maybe sets some envinorment variables. The
     conda oommf installation creates such a 'oommf' shell script."""
 
     oommf_path = path
@@ -90,7 +102,8 @@ def get_version():
     p = call_oommf('+version')
     p.wait()
     stderr = p.stderr.readlines()     # version is returned in stderr
-    # output is something like  "<15330> oommf.tcl 1.2.0.6  info:\noommf.tcl 1.2.0.6"
+    # output is something like  "<15330> oommf.tcl 1.2.0.6  info:\noommf.tcl
+    # 1.2.0.6"
     line = stderr[0]
     assert 'oommf.tcl' in line
     versionstring = line.split('oommf.tcl')[1].strip()

@@ -16,7 +16,7 @@ addons:
     - tk8.5-dev
 
 install:
-        - pip install cython matplotlib PIL --allow-external PIL --allow-unverified PIL
+        - pip install cython matplotlib PIL --allow-external PIL --allow-unverified PIL pytest-cov coverage
 
 before_script:
     - sudo apt-get install swig

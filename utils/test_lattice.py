@@ -60,6 +60,16 @@ def test_parse_lattice_spec():
         assert s("0, 10, 11, 42")
 
 
+def test_lattice_object():
+    # can call with spec as in min, max, num:
+    l1 = lattice.Lattice([[0., 10., 6]])
+    # or with string
+    l2 = lattice.Lattice("0.,10.,6")
+
+    # should result in the same object
+    assert np.allclose(l1.get_positions(), l2.get_positions())
+
+
 def test_lattice_object_1d():
     l = lattice.Lattice([[0, 10, 6]])
     assert l.dim == 1

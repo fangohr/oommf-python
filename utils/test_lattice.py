@@ -219,6 +219,15 @@ def test_lattice_object_2d_scale():
     assert l.stepsizes == [2, 4]
 
 
+def test_lattice_add():
+    l1 = lattice.Lattice([[0, 10, 6]])
+    l2 = lattice.Lattice([[0, 5, 3]])
+    l_add = l1 + l2
+    assert l1.dim == 1
+    assert l2.dim == 1
+    assert l_add.dim == 2
+
+
 def test_field_lattice_init():
     fl = lattice.FieldLattice(lattice.Lattice([[0, 10, 6], [-3, 1, 2]]))
 

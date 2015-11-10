@@ -212,3 +212,68 @@ def test_field_lattice_init():
     assert fl.field_data.shape[0] == 3 == fl.field_dim
     # but the lattice is in 2d only
     assert fl.lattice.dim == 2
+
+
+def test_field_lattice_set():
+    z_counter = [0]  # cheat to see in which order field vaules are set
+
+    def mydata(pos):
+        print("type of pos = {}".format(type(pos)))
+        print("pos = {}".format(pos))
+        # use position as field data (for our testing here)
+        x, y = pos
+        z = z_counter[0]
+        z_counter[0] += 0.1
+        return [x, y, z]
+
+    fl = lattice.FieldLattice(lattice.Lattice([[0, 5, 6], [-2, -1, 2]]))
+    fl.set(mydata)
+    print(fl.field_data.shape)
+    print(fl.field_data[:, :, :])
+    print("==============")
+    print(fl.field_data[2, :, :])
+    print(np.array([np.linspace(0, 1.1, 12)]))
+    print("==============")
+
+    # check x-component
+    assert np.allclose(fl.field_data[0, :, :],
+                       np.array([[0., 0.],
+                                 [1., 1.],
+                                 [2., 2.],
+                                 [3., 3.],
+                                 [4., 4.],
+                                 [5., 5.]]))
+
+    # check y-component
+    assert np.allclose(fl.field_data[1, :, :],
+                       np.array([[-2., -1.],
+                                 [-2., -1.],
+                                 [-2., -1.],
+                                 [-2., -1.],
+                                 [-2., -1.],
+                                 [-2., -1.]]))
+
+    # check z-component in Fortran ordering
+    assert np.allclose(fl.field_data[2, :, :],
+                       np.array([[0.0, 0.6],
+                                 [0.1, 0.7],
+                                 [0.2, 0.8],
+                                 [0.3, 0.9],
+                                 [0.4, 1.0],
+                                 [0.5, 1.1]]))
+
+    # How does C order differ?
+    # Okay, simplify: establish only that C-order is different from F-order:
+    flf = fl  # FieldLattice Fortran
+
+    # Create FieldLattice C with identical data
+    flc = lattice.FieldLattice(lattice.Lattice([[0, 5, 6], [-2, -1, 2]]),
+                               order="C")
+    z_counter[0] = 0
+    fl.set(mydata)
+
+    # compare values (should be the same)
+    assert np.allclose(flc.field_data, flf.field_data)
+
+    # check that the strides are different (check help(numpy.ndarray))
+    assert flc.field_data.strides != flf.field_data.strides

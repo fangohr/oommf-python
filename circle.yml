@@ -23,7 +23,7 @@ dependencies:
     - conda info -a
 
     # Install OOMMF, SWIG and relevant Python packages
-    - conda install -c http://conda.anaconda.org/maxalbert oommf=12a6_20150930 swig cython pillow numpy matplotlib pytest
+    - conda install -c http://conda.anaconda.org/maxalbert oommf=12a6_20150930 swig cython pillow numpy matplotlib pytest coverage
 
 test:
   # This is not a real test suite; for the time being we simply print some info

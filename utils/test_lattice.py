@@ -69,6 +69,12 @@ def test_lattice_object():
     # should result in the same object
     assert np.allclose(l1.get_positions(), l2.get_positions())
 
+    # only order 'C' and 'F' allowed
+    l2 = lattice.Lattice("0.,10.,6", order='F')
+    l2 = lattice.Lattice("0.,10.,6", order='C')
+    with pytest.raises(ValueError):
+        l2 = lattice.Lattice("0.,10.,6", order='B')
+
 
 def test_lattice_object_1d():
     l = lattice.Lattice([[0, 10, 6]])

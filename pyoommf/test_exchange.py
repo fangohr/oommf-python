@@ -1,6 +1,4 @@
 from exchange import Exchange
-import sys
-import os
 
 def test_exchange_mif():
     A = 1e-11

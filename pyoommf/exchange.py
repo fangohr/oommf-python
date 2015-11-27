@@ -9,7 +9,7 @@ class Exchange(object):
         return exchange_mif
     def _save_exchange_mif(self):
         f = open('exchange.mif', 'w')
-        f.write(self.exchange_mif())
+        f.write(self.get_mif())
         f.close()
 
 if __name__ == '__main__':

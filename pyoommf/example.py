@@ -1,4 +1,4 @@
-from pyoommf import Sim, Mesh
+import sim, mesh
 
 # Mesh specification.
 lx = ly = lz = 50e-9  # x, y, and z dimensions (m)

@@ -25,14 +25,11 @@ sim.add(Exchange(A))
 sim.add(Demag())
 sim.add(Zeeman(H))
 
-sim.create_mif()
-"""
+
 # Set initial magnetisation.
 sim.set_m(m_init)
 
 # Run simulation.
 sim.run_until(t_sim)
 
-# Get the results.
-results = sim.result()
-"""
+sim.execute_mif()

@@ -1,5 +1,5 @@
 class Sim(object):
-    def __init__(mesh, Ms):
+    def __init__(self, mesh, Ms):
         self.mesh = mesh
         self.Ms = Ms
         self.energies = []

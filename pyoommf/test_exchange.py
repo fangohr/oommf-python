@@ -1,10 +1,20 @@
-import exchange
-import sys
-import os
+from exchange import Exchange
 
-def test_exchange():
-    a = exchange.Exchange(1e4)
-    a._save_exchange_mif()
-    assert os.path.isfile('exchange.mif')    
-    f = open('exchange.mif', 'r')
-    print(f.read())
+def test_exchange_mif():
+    A = 1e-11
+    exchange = Exchange(A)
+    mif_string = exchange.get_mif()
+    lines = mif_string.split('\n')
+    assert 'Specify Oxs_UniformExchange {' in lines[0]
+    assert 'A' in lines[1]
+    assert float(lines[1].split()[1]) == A
+    assert '}' in lines[2]
+
+def test_exchange_formatting():
+    A = 1e-11
+    exchange = Exchange(A)
+    mif_string = exchange.get_mif()
+    assert mif_string[0] == 'S'
+    assert mif_string[-1] == '\n'
+    assert mif_string[-2] == '\n'
+    

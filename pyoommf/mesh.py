@@ -8,4 +8,4 @@ class Mesh(object):
         self.dz = dz
 
     def mesh_info(self):
-        return (lx, ly, lz, dx, dy, dz)
+        return (self.lx, self.ly, self.lz, self.dx, self.dy, self.dz)

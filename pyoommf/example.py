@@ -21,6 +21,9 @@ sim.add_exchange(A)
 sim.add_demag()
 sim.add_zeeman(H)
 
+# Set initial magnetisation.
+sim.set_m(m_init)
+
 # Run simulation.
 sim.run_until(t_sim)
 

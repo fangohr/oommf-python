@@ -1,13 +1,18 @@
 class Mesh(object):
-    def __init__(self, lx, ly, lz, dx, dy, dz):
+    def __init__(self, lengths, mesh_spacing, scale=1e-9):
+        assert len(lengths) == 3, "Lengths must contain three values"
+        assert len(mesh_spacing) == 3, "mesh_spacing must contain a value for each coordinate direction"
+        components = ['x', 'y', 'z']
+        for vals, component in zip(lengths, components):
+            assert vals > 0, 'L component {} must be a positive value'.format(component)
         
-        self.lx = lx
-        self.ly = ly
-        self.lz = lz
-        self.dx = dx
-        self.dy = dy
-        self.dz = dz
-
+        self.lx = lengths[0]
+        self.ly = lengths[1]
+        self.lz = lengths[2]
+        self.dx = mesh_spacing[0]
+        self.dy = mesh_spacing[1]
+        self.dz = mesh_spacing[2]
+        self.scale = scale
     def mesh_info(self):
         return (self.lx, self.ly, self.lz, self.dx, self.dy, self.dz)
 

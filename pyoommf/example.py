@@ -11,10 +11,10 @@ m_init = (0, 0, 1)  # initial magnetisation
 t_sim = 1e-9  # simulation time (s)
 
 # Create a mesh.
-mesh = Mesh(lx, ly, lz, dx, dy, dz)
+mesh = mesh.Mesh(lx, ly, lz, dx, dy, dz)
 
 # Create a simulation object.
-sim = Sim(mesh, Ms)
+sim = sim.Sim(mesh, Ms)
 
 # Add energies.
 sim.add_exchange(A)

@@ -38,3 +38,4 @@ class Sim(object):
     def execute_mif(self):
         command = 'tclsh $OOMMFTCL boxsi +fg ' + self.name + '.mif -exitondone 1'
         os.system(command)
+

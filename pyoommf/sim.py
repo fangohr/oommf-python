@@ -22,3 +22,5 @@ class Sim(object):
     def run_until(self, t_sim):
         pass
 
+    def result(self):
+        pass

@@ -1,5 +1,6 @@
 class Mesh(object):
     def __init__(self, lx, ly, lz, dx, dy, dz):
+        
         self.lx = lx
         self.ly = ly
         self.lz = lz

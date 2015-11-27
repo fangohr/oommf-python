@@ -7,6 +7,10 @@ class Exchange(object):
         exchange_mif += '\tA %2e\n' % self.A
         exchange_mif += '}\n\n'
         return exchange_mif
+    def _save_exchange_mif(self):
+        f = open('exchange.mif', 'w')
+        f.write(self.exchange_mif())
+        f.close()
 
 if __name__ == '__main__':
     exchange = Exchange(1e-11)

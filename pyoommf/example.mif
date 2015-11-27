@@ -1,3 +1,5 @@
+# MIF 2.1
+
 Specify Oxs_BoxAtlas:atlas {
     xrange {0  50e-9}
     yrange {0  50e-9}

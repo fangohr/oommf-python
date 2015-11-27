@@ -1,4 +1,8 @@
-import sim, mesh
+from sim import Sim
+from mesh import Mesh
+from exchange import Exchange
+from demag import Demag
+from zeeman import Zeeman
 
 # Mesh specification.
 lx = ly = lz = 50e-9  # x, y, and z dimensions (m)
@@ -11,16 +15,18 @@ m_init = (0, 0, 1)  # initial magnetisation
 t_sim = 1e-9  # simulation time (s)
 
 # Create a mesh.
-mesh = mesh.Mesh(lx, ly, lz, dx, dy, dz)
+mesh = Mesh(lx, ly, lz, dx, dy, dz)
 
 # Create a simulation object.
-sim = sim.Sim(mesh, Ms)
+sim = Sim(mesh, Ms)
 
 # Add energies.
-sim.add_exchange(A)
-sim.add_demag()
-sim.add_zeeman(H)
+sim.add(Exchange(A))
+sim.add(Demag())
+sim.add(Zeeman(H))
 
+sim.create_mif()
+"""
 # Set initial magnetisation.
 sim.set_m(m_init)
 
@@ -29,3 +35,4 @@ sim.run_until(t_sim)
 
 # Get the results.
 results = sim.result()
+"""

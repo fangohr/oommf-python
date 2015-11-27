@@ -21,12 +21,14 @@ class Mesh(object):
         atlas_mif += '\t xrange {0 %2e}\n' % self.lx
         atlas_mif += '\t yrange {0 %2e}\n' % self.ly
         atlas_mif += '\t zrange {0 %2e}\n' % self.lz
+        atlas_mif += '\t multiplier {0 %2e}\n' % self.scale
         atlas_mif += '}\n\n'
         return atlas_mif
 
     def mesh_mif(self):
         mesh_mif = 'Specify Oxs_RectangularMesh:mesh {\n'
         mesh_mif += '\tcellsize {%2e %2e %2e}\n' % (self.dx, self.dy, self.dz)
+        mesh_mif += '\tmultiplier {}\n'.format(self.scale)
         mesh_mif += '\tatlas :atlas\n'
         mesh_mif += '}\n\n'
         return mesh_mif

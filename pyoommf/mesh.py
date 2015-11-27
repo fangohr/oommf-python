@@ -20,7 +20,7 @@ class Mesh(object):
         return atlas_mif
 
     def mesh_mif(self):
-        mesh_mif = 'Specify Oxs_RecatngularMesh:mesh {\n'
+        mesh_mif = 'Specify Oxs_RectangularMesh:mesh {\n'
         mesh_mif += '\tcellsize {%2e %2e %2e}\n' % (self.dx, self.dy, self.dz)
         mesh_mif += '\tatlas :atlas\n'
         mesh_mif += '}\n\n'

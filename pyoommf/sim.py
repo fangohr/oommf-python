@@ -37,5 +37,8 @@ class Sim(object):
 
     def execute_mif(self):
         command = 'tclsh $OOMMFTCL boxsi +fg ' + self.name + '.mif -exitondone 1'
-        os.system(command)
-
+        return_code = os.system(command)
+        if return_code != 0:
+            print("DEBUG: An error calling OOMMF occurred.\n" + \
+                  "       You may need to set the environment variable OOMMFTCL\n")
+               

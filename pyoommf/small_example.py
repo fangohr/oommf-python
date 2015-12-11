@@ -18,7 +18,7 @@ t_sim = 1e-9  # simulation time (s)
 mesh = Mesh((lx, ly, lz), (dx, dy, dz))
 
 # Create a simulation object.
-sim = Sim(mesh, Ms)
+sim = Sim(mesh, Ms, name='small_example')
 
 # Add energies.
 sim.add(Exchange(A))
@@ -32,4 +32,4 @@ sim.set_m(m_init)
 # Run simulation.
 sim.run_until(t_sim)
 
-sim.execute_mif()
+#sim.execute_mif()

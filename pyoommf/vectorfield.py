@@ -54,6 +54,10 @@ class VectorField(object):
                 self.vf[counter, 2] = float(parts[2])
                 counter += 1
 
+    def find_nearest(self, value, array):
+        difference = np.abs(array - value)
+        return array[difference.argmin()]
+
     def get_coords(self):
         return self.coords
 
@@ -61,15 +65,21 @@ class VectorField(object):
         return self.vf
 
     def get_index(self, coord):
+        x = self.find_nearest(coord[0], self.x_array)
+        y = self.find_nearest(coord[1], self.y_array)
+        z = self.find_nearest(coord[2], self.z_array)
         counter = 0
         for i in range(self.nx*self.ny*self.nz):
-            if self.coords[i, 0] == coord[0] and self.coords[i, 1] == coord[1] and \
-               self.coords[i, 2] == coord[2]:
+            if self.coords[i, 0] == x and self.coords[i, 1] == y and \
+               self.coords[i, 2] == z:
                 return counter
             counter += 1
     
     def sample(self, coord):
-        return self.vf[self.get_index(coord), :]
+        x = self.find_nearest(coord[0], self.x_array)
+        y = self.find_nearest(coord[1], self.y_array)
+        z = self.find_nearest(coord[2], self.z_array)
+        return self.vf[self.get_index((x, y, z)), :]
 
     def z_slice(self, z):
         slice_coords = np.zeros([self.nx*self.ny, 2])
@@ -90,12 +100,6 @@ class VectorField(object):
         plt.ylabel('y (nm)')
         plt.grid()
         plt.show()
-                
 
-vf = VectorField('small_example-Oxs_TimeDriver-Magnetization-00-0000725.omf')
-print vf.get_coords()
-print vf.get_vf()
-print vf.get_index((3.75e-8, 3.75e-8, 3.75e-8))
-print vf.sample((3.75e-8, 3.75e-8, 3.75e-8))
-print vf.z_slice(2.5e-9)
-print vf.plot_z_slice(2.5e-9)
+    def average(self):
+        return (np.mean(self.vf[:, 0]), np.mean(self.vf[:, 1]), np.mean(self.vf[:, 2]))

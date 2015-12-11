@@ -311,8 +311,14 @@ def test_field_lattice_set():
     z_counter[0] = 0
     fl.set(mydata)
 
+    print("Fortran field_data:  {}".format(flf.field_data))
+    print("C field_data:  {}".format(flc.field_data))
+
     # compare values (should be the same)
+
+    # Hans: 2015: this passes on OS X (and travis?) but not on Osiris (Ubuntu 64)
     assert np.allclose(flc.field_data, flf.field_data)
 
     # check that the strides are different (check help(numpy.ndarray))
     assert flc.field_data.strides != flf.field_data.strides
+

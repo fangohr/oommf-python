@@ -28,7 +28,7 @@ def retrieve_oommf_path():
             directory that contains the file 'oommf.tcl'. In bash, you can
             write:
 
-                export OOMMF_PATH=/yourhome/youpath/to/oommf
+                export OOMMF_PATH=/yourhome/yourpath/to/oommf
 
             This can be added to the ~/.bashrc, for example, to be executed
             automatically.

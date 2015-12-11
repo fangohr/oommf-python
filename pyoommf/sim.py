@@ -25,11 +25,11 @@ class Sim(object):
     def create_mif(self, overwrite=True):
         if self.name is None:
             self.name = 'unnamed'
-        mif_filename = self.name +  '_iteration' + str(self.N_Sims_Run) + '.mif'
-        if os.path.isfile(mif_filename):
+        self.mif_filename = self.name +  '_iteration' + str(self.N_Sims_Run) + '.mif'
+        if os.path.isfile(self.mif_filename):
             print("DEBUG: This simulation name already exists.")
             print("DEBUG: Overwriting MIF.")
-        mif_file = open(mif_filename, 'w')
+        mif_file = open(self.mif_filename, 'w')
         mif_file.write('# MIF 2.1\n\n')
         mif_file.write(self.mesh.atlas_mif())
         mif_file.write(self.mesh.mesh_mif())
@@ -46,7 +46,7 @@ class Sim(object):
         self.execute_mif()
 
     def execute_mif(self):
-        command = 'tclsh $OOMMFTCL boxsi +fg ' + self.name + '.mif -exitondone 1'
+        command = 'tclsh $OOMMFTCL boxsi +fg ' + self.mif_filename + ' -exitondone 1'
         return_code = os.system(command)
         if return_code != 0:
             print("DEBUG: An error calling OOMMF occurred.\n" + \

@@ -31,5 +31,3 @@ sim.set_m(m_init)
 
 # Run simulation.
 sim.run_until(t_sim)
-
-#sim.execute_mif()

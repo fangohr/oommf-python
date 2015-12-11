@@ -31,7 +31,7 @@ class Sim(object):
         mif_file.close()
 
     def run_until(self, t, alpha=0.1, gamma=2.21e5):
-        self.llg = LLG(t, self.m_init, self.Ms, alpha, gamma)
+        self.llg = LLG(t, self.m_init, self.Ms, alpha, gamma, name=self.name)
         self.create_mif()
         self.execute_mif()
 

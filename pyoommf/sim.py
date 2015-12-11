@@ -8,17 +8,27 @@ class Sim(object):
         self.name = name
         self.gamma = 2.21e5
         self.energies = []
-
+        self.N_Sims_Run = 0 
+        #Want some kind of persistent 'knowledge' of number of runs
+        #and the sequence these occur in for data analysis
+	#when we call a simulation multiple times to either
+        #advance time or change parameters. Will need to think carefully 
+        #about situations such as changing H_applied - should we recreate this
+        #data from the output files?
+        #Advantage of this is recreating sim object if needed.
     def add(self, energy):
         self.energies.append(energy)
 
     def set_m(self, m_init):
         self.m_init = m_init
 
-    def create_mif(self):
+    def create_mif(self, overwrite=True):
         if self.name is None:
             self.name = 'unnamed'
-        mif_filename = self.name + '.mif'
+        mif_filename = self.name +  '_iteration' + str(self.N_Sims_Run) + '.mif'
+        if os.path.isfile(mif_filename):
+            print("DEBUG: This simulation name already exists.")
+            print("DEBUG: Overwriting MIF.")
         mif_file = open(mif_filename, 'w')
         mif_file.write('# MIF 2.1\n\n')
         mif_file.write(self.mesh.atlas_mif())

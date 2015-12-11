@@ -6,8 +6,9 @@ def test_llg_mif():
     Ms = 1e6
     alpha = 0.01
     gamma = 2.21e5
-    
-    llg = LLG(t, m_init, Ms, alpha, gamma)
+    name = 'llgtest'
+
+    llg = LLG(t, m_init, Ms, alpha, gamma, name)
 
     mif_string = llg.get_mif()
 
@@ -33,8 +34,9 @@ def test_llg_formatting():
     Ms = 1e6
     alpha = 0.01
     gamma = 2.21e5
+    name = 'llgtest'
     
-    llg = LLG(t, m_init, Ms, alpha, gamma)
+    llg = LLG(t, m_init, Ms, alpha, gamma, name)
 
     mif_string = llg.get_mif()
 

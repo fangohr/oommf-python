@@ -1,6 +1,6 @@
 import os
 from llg import LLG
-
+import oommfmif as o
 
 class Sim(object):
 
@@ -51,10 +51,7 @@ class Sim(object):
         self.execute_mif()
 
     def execute_mif(self):
-        command = 'tclsh $OOMMFTCL boxsi +fg ' + \
-            self.mif_filename + ' -exitondone 1'
-        return_code = os.system(command)
-        if return_code != 0:
-            print("DEBUG: An error calling OOMMF occurred.\n" +
-                  "       You may need to set the environment" +
-                  " variable OOMMFTCL\n")
+        path = o.retrieve_oommf_path()
+        executable = o.retrieve_oommf_executable(path)
+        process = o.call_oommf('boxsi ' + self.mif_filename)
+        process.wait()

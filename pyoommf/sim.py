@@ -1,5 +1,5 @@
 import os
-from llg import LLG
+from drivers.llg import LLG
 import oommfmif as o
 
 class Sim(object):
@@ -55,3 +55,7 @@ class Sim(object):
         executable = o.retrieve_oommf_executable(path)
         process = o.call_oommf('boxsi ' + self.mif_filename)
         process.wait()
+
+
+
+

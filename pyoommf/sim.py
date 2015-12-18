@@ -1,5 +1,6 @@
 import os
 from drivers.llg import LLG
+
 import oommfmif as o
 
 class Sim(object):

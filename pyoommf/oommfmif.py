@@ -1,5 +1,5 @@
 """
-oommf-python: A module for calling OOMMF from Python.
+oommfmif: A module for calling OOMMF from Python.
 
 """
 import os

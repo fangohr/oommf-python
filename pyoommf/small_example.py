@@ -1,8 +1,8 @@
 from sim import Sim
 from mesh import Mesh
-from exchange import Exchange
-from demag import Demag
-from zeeman import Zeeman
+from energies.exchange import Exchange
+from energies.demag import Demag
+from energies.zeeman import Zeeman
 
 # Mesh specification.
 lx = ly = lz = 50e-9  # x, y, and z dimensions (m)

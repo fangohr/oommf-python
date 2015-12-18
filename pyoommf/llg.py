@@ -1,11 +1,12 @@
 class LLG(object):
+
     def __init__(self, t, m_init, Ms, alpha, gamma, name):
         self.t = t
         self.m_init = m_init
         self.Ms = Ms
         self.alpha = alpha
         self.gamma = gamma
-        self.name=name
+        self.name = name
 
     def get_mif(self):
         llg_mif = 'Specify Oxs_RungeKuttaEvolve {\n'
@@ -21,7 +22,8 @@ class LLG(object):
         llg_mif += '\tmesh :mesh\n'
         llg_mif += '\tMs %2e\n' % self.Ms
         llg_mif += '\tm0 { Oxs_UniformVectorField {\n'
-        llg_mif += '\t\tvector {%.5f %.5f %.5f}\n' % (self.m_init[0], self.m_init[1], self.m_init[2])
+        llg_mif += '\t\tvector {%.5f %.5f %.5f}\n' % (
+            self.m_init[0], self.m_init[1], self.m_init[2])
         llg_mif += '\t} }\n'
         llg_mif += '\tbasename ' + self.name + ' \n'
         llg_mif += 'vector_field_output_format {text \%#.8g}\n'

@@ -1,4 +1,5 @@
 class Exchange(object):
+
     def __init__(self, A):
         self.A = A
 

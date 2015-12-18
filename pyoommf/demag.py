@@ -1,4 +1,5 @@
 class Demag(object):
+
     def __init__(self):
         pass
 

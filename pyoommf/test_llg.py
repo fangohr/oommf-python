@@ -1,5 +1,6 @@
 from llg import LLG
 
+
 def test_llg_mif():
     t = 1.5e-9
     m_init = (0, 1, 0)
@@ -28,6 +29,7 @@ def test_llg_mif():
     assert float(line13[2]) == m_init[1]
     assert float(line13[3][:-1]) == m_init[2]
 
+
 def test_llg_formatting():
     t = 1.5e-9
     m_init = (0, 1, 0)
@@ -35,7 +37,7 @@ def test_llg_formatting():
     alpha = 0.01
     gamma = 2.21e5
     name = 'llgtest'
-    
+
     llg = LLG(t, m_init, Ms, alpha, gamma, name)
 
     mif_string = llg.get_mif()

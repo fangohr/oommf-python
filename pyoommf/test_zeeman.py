@@ -1,5 +1,6 @@
 from zeeman import Zeeman
 
+
 def test_zeeman_mif():
     H = (0.1, -0.5, -8.9e6)
     zeeman = Zeeman(H)
@@ -12,6 +13,7 @@ def test_zeeman_mif():
     assert float(line2[1][1:]) == H[0]
     assert float(line2[2]) == H[1]
     assert float(line2[3][0:-1]) == H[2]
+
 
 def test_zeeman_formatting():
     H = (0.1, -0.5, -8.9e6)

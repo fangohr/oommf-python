@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 
 
 class VectorField(object):
+
     def __init__(self, filename):
         f = open(filename, 'r')
         lines = f.readlines()
@@ -74,7 +75,7 @@ class VectorField(object):
                self.coords[i, 2] == z:
                 return counter
             counter += 1
-    
+
     def sample(self, coord):
         x = self.find_nearest(coord[0], self.x_array)
         y = self.find_nearest(coord[1], self.y_array)
@@ -102,4 +103,6 @@ class VectorField(object):
         plt.show()
 
     def average(self):
-        return (np.mean(self.vf[:, 0]), np.mean(self.vf[:, 1]), np.mean(self.vf[:, 2]))
+        return (np.mean(self.vf[:, 0]),
+                np.mean(self.vf[:, 1]),
+                np.mean(self.vf[:, 2]))

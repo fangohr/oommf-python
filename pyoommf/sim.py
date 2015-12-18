@@ -1,21 +1,24 @@
 import os
 from llg import LLG
 
+
 class Sim(object):
+
     def __init__(self, mesh, Ms, name=None):
         self.mesh = mesh
         self.Ms = Ms
         self.name = name
         self.gamma = 2.21e5
         self.energies = []
-        self.N_Sims_Run = 0 
-        #Want some kind of persistent 'knowledge' of number of runs
-        #and the sequence these occur in for data analysis
-	#when we call a simulation multiple times to either
-        #advance time or change parameters. Will need to think carefully 
-        #about situations such as changing H_applied - should we recreate this
-        #data from the output files?
-        #Advantage of this is recreating sim object if needed.
+        self.N_Sims_Run = 0
+        # Want some kind of persistent 'knowledge' of number of runs
+        # and the sequence these occur in for data analysis
+        # when we call a simulation multiple times to either
+        # advance time or change parameters. Will need to think carefully
+        # about situations such as changing H_applied - should we recreate this
+        # data from the output files?
+        # Advantage of this is recreating sim object if needed.
+
     def add(self, energy):
         self.energies.append(energy)
 
@@ -25,7 +28,8 @@ class Sim(object):
     def create_mif(self, overwrite=True):
         if self.name is None:
             self.name = 'unnamed'
-        self.mif_filename = self.name +  '_iteration' + str(self.N_Sims_Run) + '.mif'
+        self.mif_filename = self.name + '_iteration' + \
+            str(self.N_Sims_Run) + '.mif'
         if os.path.isfile(self.mif_filename):
             print("DEBUG: This simulation name already exists.")
             print("DEBUG: Overwriting MIF.")
@@ -37,7 +41,8 @@ class Sim(object):
             mif_file.write(energy.get_mif())
         mif_file.write(self.llg.get_mif())
         mif_file.write('Destination mags mmArchive\n\n')
-        mif_file.write('Schedule Oxs_TimeDriver::Magnetization mags Stage 1\n\n')
+        mif_file.write(
+            'Schedule Oxs_TimeDriver::Magnetization mags Stage 1\n\n')
         mif_file.close()
 
     def run_until(self, t, alpha=0.1, gamma=2.21e5):
@@ -46,9 +51,10 @@ class Sim(object):
         self.execute_mif()
 
     def execute_mif(self):
-        command = 'tclsh $OOMMFTCL boxsi +fg ' + self.mif_filename + ' -exitondone 1'
+        command = 'tclsh $OOMMFTCL boxsi +fg ' + \
+            self.mif_filename + ' -exitondone 1'
         return_code = os.system(command)
         if return_code != 0:
-            print("DEBUG: An error calling OOMMF occurred.\n" + \
-                  "       You may need to set the environment variable OOMMFTCL\n")
-               
+            print("DEBUG: An error calling OOMMF occurred.\n" +
+                  "       You may need to set the environment" +
+                  " variable OOMMFTCL\n")

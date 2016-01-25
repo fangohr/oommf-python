@@ -4,11 +4,6 @@
 Vagrant.configure(2) do |config|
 config.vm.box = "ubuntu/trusty64"
 config.vm.network "forwarded_port", guest: 80, host: 8080
-config.vm.provision "shell", inline: <<-SHELL
-sudo apt-get update
-sudo apt-get install python, git
-git clone https://github.com/fangohr/oommf.git 
-
-SHELL
+config.vm.provision "shell", path: "provision_script.sh"
 
 end

@@ -1,6 +1,6 @@
 import numpy as np
 from matplotlib import pyplot as plt
-from PIL import Image
+from pillow import Image
 
 from . import materials
 from . import geometry

@@ -23,8 +23,9 @@ dependencies:
     - conda info -a
 
     # Install OOMMF, SWIG and relevant Python packages
-    - conda install -c http://conda.anaconda.org/maxalbert oommf=12a6_20150930 swig cython pillow numpy cycler matplotlib pytest coverage pytz, tornado, pyparsing
-    - conda install libagg, freetype, png, qhull, sample_data, toolkits, tests, nose, toolkits_tests
+    - conda install -c http://conda.anaconda.org/maxalbert oommf 
+    - conda install swig cython pillow numpy cycler matplotlib pytest
+  
 
 test:
   # This is not a real test suite; for the time being we simply print some info

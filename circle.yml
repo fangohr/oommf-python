@@ -6,7 +6,7 @@ machine:
     MINICONDA_ROOT: $HOME/miniconda
     PATH: $MINICONDA_ROOT/bin:$PATH
     OOMMF_PATH: oommf/oommf
-
+ 
 dependencies:
   cache_directories:
     - oommf
@@ -17,6 +17,7 @@ dependencies:
     - if [[ ! -e oommf ]] ; then git clone https://github.com/fangohr/oommf.git && cd oommf && make ; fi
     - export OOMMF_TK_CONFIG=/usr/lib/x86_64-linux-gnu/tk8.6/tkConfig.sh
     - export OOMMF_TCL_CONFIG=/usr/lib/x86_64-linux-gnu/tcl8.6/tclConfig.sh
+    - alias oommf=~/oommf/oommf/tclsh oommf.tcl
   override:
     # Install conda and add it to PATH
     - wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
@@ -35,9 +36,8 @@ test:
   # This is not a real test suite; for the time being we simply print some info
   # about the OOMMF installation to see if conda installed it correctly.
   override:
-    - cat $(which oommf)
     - echo $PATH
     - tclsh ${OOMMF_PATH}/oommf.tcl +version
     - oommf +version
     - echo "OOMMF installation succeeded."
-    #- make test
+    - make test

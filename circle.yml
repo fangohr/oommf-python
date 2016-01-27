@@ -8,9 +8,9 @@ machine:
     OOMMF_PATH: oommf/oommf
 
 dependencies:
+  cache_directories:
+    - oommf
   pre:
-    cache_directories:
-        - oommf
   # Note, we used to use the naive caching of docker images, but found that
   # it was quicker just to pull each time. #rollondockercaching
     - sudo apt-get update; sudo apt-get install tk tcl tcl8.6-dev tk8.6-dev

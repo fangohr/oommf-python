@@ -23,10 +23,12 @@ dependencies:
     - conda info -a
 
     # Install OOMMF, SWIG and relevant Python packages
-    - conda install -c http://conda.anaconda.org/maxalbert oommf=12a6_20150930 
+    #- conda install -c http://conda.anaconda.org/maxalbert oommf=12a6_20150930 
     - conda install swig cython pillow numpy cycler matplotlib pytest
-  
-
+    - apt-get install tk tcl tcl8.6-dev tk8.6-dev 
+    - git clone https://github.com/fangohr/oommf.git
+    - cd oommf
+    - tclsh 
 test:
   # This is not a real test suite; for the time being we simply print some info
   # about the OOMMF installation to see if conda installed it correctly.
@@ -36,4 +38,4 @@ test:
     - tclsh ${OOMMF_PATH}/oommf.tcl +version
     - oommf +version
     - echo "OOMMF installation succeeded."
-    - make test
+    #- make test

@@ -5,7 +5,7 @@ machine:
   environment:
     MINICONDA_ROOT: $HOME/miniconda
     PATH: $MINICONDA_ROOT/bin:$PATH
-    OOMMF_PATH: oommf/oommf
+    OOMMF_PATH: ~/oommf-python/oommf/oommf
     OOMMF_TCL: oommf/oommf/oommf.tcl
 
 dependencies:
@@ -44,6 +44,5 @@ test:
     - ls ${OOMMF_PATH}
     - echo $PATH
     - tclsh ${OOMMF_TCL} +version
-    - oommf +version
     - echo "OOMMF installation succeeded."
     - make test

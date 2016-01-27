@@ -14,7 +14,7 @@ dependencies:
   # Note, we used to use the naive caching of docker images, but found that
   # it was quicker just to pull each time. #rollondockercaching
     - sudo apt-get update; sudo apt-get install tk8.6 tcl8.6 tcl8.6-dev tk8.6-dev
-    - if [[ ! -e oommf]] ; then git clone https://github.com/fangohr/oommf.git && cd oommf && make ; fi
+    - if [[ ! -e oommf ]] ; then git clone https://github.com/fangohr/oommf.git && cd oommf && make ; fi
     - export OOMMF_TK_CONFIG=/usr/lib/x86_64-linux-gnu/tk8.6/tkConfig.sh
     - export OOMMF_TCL_CONFIG=/usr/lib/x86_64-linux-gnu/tcl8.6/tclConfig.sh
   override:

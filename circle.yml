@@ -6,7 +6,7 @@ machine:
     MINICONDA_ROOT: $HOME/miniconda
     PATH: $MINICONDA_ROOT/bin:$PATH
     OOMMF_PATH: oommf/oommf
-    
+    OOMMF_TCL: oommf/oommf/oommf.tcl
 dependencies:
   pre:
   # Note, we used to use the naive caching of docker images, but found that
@@ -35,8 +35,9 @@ test:
   # about the OOMMF installation to see if conda installed it correctly.
   override:
     - pwd
+    - ls
+    - ls ${OOMMF_PATH}
     - echo $PATH
-    - tclsh ${OOMMF_PATH}/oommf.tcl +version
-    - oommf +version
+    - tclsh ${OOMMF_TCL} +version
     - echo "OOMMF installation succeeded."
-    - make test
+    #- make test

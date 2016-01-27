@@ -5,7 +5,7 @@ machine:
   environment:
     MINICONDA_ROOT: $HOME/miniconda
     PATH: $MINICONDA_ROOT/bin:$PATH
-    OOMMF_PATH: ~/oommf-python/oommf/oommf
+    OOMMF_PATH: /home/ubuntu/oommf-python/oommf/oommf
     OOMMF_TCL: oommf/oommf/oommf.tcl
 
 dependencies:

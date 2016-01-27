@@ -7,6 +7,7 @@ machine:
     PATH: $MINICONDA_ROOT/bin:$PATH
     OOMMF_PATH: oommf/oommf
     OOMMF_TCL: oommf/oommf/oommf.tcl
+
 dependencies:
   pre:
   # Note, we used to use the naive caching of docker images, but found that
@@ -15,7 +16,11 @@ dependencies:
     - git clone https://github.com/fangohr/oommf.git && cd oommf && make 
     - export OOMMF_TK_CONFIG=/usr/lib/x86_64-linux-gnu/tk8.6/tkConfig.sh
     - export OOMMF_TCL_CONFIG=/usr/lib/x86_64-linux-gnu/tcl8.6/tclConfig.sh
-    - alias "oommf=~/oommf-python/oommf/oommf/tclsh oommf.tcl"
+    - alias oommf="tclsh ${OOMMF_TCL}/oommf.tcl"
+
+
+
+
   override:
     # Install conda and add it to PATH
     - wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
@@ -39,5 +44,6 @@ test:
     - ls ${OOMMF_PATH}
     - echo $PATH
     - tclsh ${OOMMF_TCL} +version
+    - oommf +version
     - echo "OOMMF installation succeeded."
-    #- make test
+    - make test

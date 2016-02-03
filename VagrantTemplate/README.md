@@ -9,5 +9,6 @@ To use, install vagrant and VirtualBox and then from this folder type:
     vagrant ssh -- -X
 
 and you will then be logged into the virtual machine. To use OOMMF or JOOMMF, type either 'oommf' or from inside Python
-    import pyoommf
+   `import pyoommf`
+    
     

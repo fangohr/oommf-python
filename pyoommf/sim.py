@@ -22,7 +22,12 @@ class Sim(object):
 
     def add(self, energy):
         self.energies.append(energy)
-
+    
+    def set_solver(self, solver='rk4'):
+        """
+        Available solvers in OOMMF:
+           rk2, rk2heun, rk4, rkf54, rkf54m, rkf54s 
+        """
     def set_m(self, m_init):
         self.m_init = m_init
 

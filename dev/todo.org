@@ -2,6 +2,7 @@
 * TODO [0/4]
 - [ ] Small stuff [0/1]
   - [ ] remove SWIG examples
+  - [ ] RP: Update doc/continuous-integration.md - is it still up to date?
 
 - [ ] Class diagrams [0/2]
   - [ ] Which classes are there in OOMMF

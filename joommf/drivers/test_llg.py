@@ -16,7 +16,7 @@ def test_llg_mif():
     lines = mif_string.split('\n')
 
     assert 'Specify Oxs_RungeKuttaEvolve' in lines[0]
-    assert 'alpha 0.10000' in lines[1]
+    assert 'alpha 0.01000' in lines[1]
     assert 'gamma_G 221000.00000' in lines[2]
     assert 'start_dm 0.01' in lines[3]
 

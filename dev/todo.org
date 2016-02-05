@@ -1,0 +1,16 @@
+
+* TODO [0/4]
+- [ ] Small stuff [0/1]
+  - [ ] remove SWIG examples
+
+- [ ] Class diagrams [0/2]
+  - [ ] Which classes are there in OOMMF
+  - [ ] what should joommf look like?
+
+- [ ] Examples [0/1]
+  - [ ] Write python file for each example (of course we have tests)
+
+- [-] Basic functionality [1/2]
+  - [ ] read magnetisation from a file
+  - [X] save magnetisation to a file
+  - [ ] read/write arbirtray fields from an oommf run

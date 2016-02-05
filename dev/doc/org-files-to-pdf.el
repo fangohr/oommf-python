@@ -32,9 +32,7 @@
 (setq org-export-babel-evaluate nil)
 
 ;; Make the code blocks look nicer
-(add-to-list 'org-latex-packages-alist '("" "minted"))
 (add-to-list 'org-latex-packages-alist '("" "fancyvrb"))
-(setq org-latex-listings 'minted)
 (setq org-latex-pdf-process
       '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
 	"pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"

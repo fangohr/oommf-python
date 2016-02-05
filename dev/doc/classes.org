@@ -15,9 +15,12 @@ Inheritance structure taken from http://math.nist.gov/oommf/doc/userguide12a6/us
 
 ** Atlasses
 
+Figure \ref{fig:atlas} on page \pageref{fig:atlas} shows the OOMMF Atlas classes.
+
 #+CAPTION: OOMMF Atlas classes
-#+NAME: fig:example
+#+NAME: fig:atlas
 #+ATTR_LATEX: :width 1\textwidth
+#+ATTR_LATEX: placement=[H]
 file:atlas.eps
 
 *** COMMENT Source
@@ -81,9 +84,12 @@ Oxs_Ext <|-- Oxs_Atlas
 
 ** Meshes
 
+Figure \ref{fig:mesh} on page \pageref{fig:mesh} shows the OOMMF Mesh classes.
+
 #+CAPTION: Mesh classes
-#+NAME: fig:example
+#+NAME: fig:mesh
 #+ATTR_LATEX: :width 1\textwidth
+#+ATTR_LATEX: placement=[H]
 file:mesh.eps
 
 *** COMMENT Source
@@ -116,14 +122,19 @@ Oxs_Mesh <|-- Oxs_PeriodicRectangularMesh
 ** Energies
 *** Anisotropy energy
 
-#+CAPTION: Anisotropy energy classes
-#+NAME: fig:example
-#+ATTR_LATEX: :width 1\textwidth
-file:anisotropy.eps
+Figure \ref{fig:anisotropy-energy} on page \pageref{fig:anisotropy-energy} shows the OOMMF anisotropy energy classes.
 
+#+CAPTION: Anisotropy energy classes
+#+NAME: fig:anisotropy-energy
+#+ATTR_LATEX: :width 1\textwidth
+#+ATTR_LATEX: placement=[H]
+file:anisotropy-energy.eps
+
+
+#+LATEX \clearpage\clearfloat\newpage
 *** COMMENT Source
 
-#+begin_src plantuml :file anisotropy.eps :exports none
+#+begin_src plantuml :file anisotropy-energy.eps :exports none
 !include plantuml.h
 
 
@@ -156,11 +167,7 @@ Oxs_EnergyPreconditionerSupport <|-- Oxs_CubicAnisotropy
 #+end_src
 
 #+RESULTS:
-[[file:anisotropy.eps]]
-
-
-
-\clearfloats
+[[file:anisotropy-energy.eps]]
 
 
 

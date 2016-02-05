@@ -8,7 +8,78 @@
 #+LATEX_HEADER: \renewcommand{\baselinestretch}{1.1}%1.1
 
 
-* Class diagrams
+* OOMMF Classes
+
+
+Inheritance structure taken from http://math.nist.gov/oommf/doc/userguide12a6/userguide/Standard_Oxs_Ext_Child_Clas.html#BA, with additional reading of source code in ~oommf/app/oxs/base~ and ~oommf/app/oxs/ext~
+
+** Atlasses
+
+#+CAPTION[Example UML]: This is an example UML class diagram
+#+NAME: fig:example
+#+ATTR_LATEX: :width 1\textwidth
+file:atlas.eps
+
+*** COMMENT Source
+
+#+begin_src plantuml :file atlas.eps :exports none
+!include plantuml.h
+left to right direction
+
+abstract class Oxs_Atlas {
+}
+
+
+class Oxs_BoxAtlas {
+  An axes parallel rectangular parallelepiped,
+containing a single region that is coterminous
+with the atlas itself.
+
+' See http://math.nist.gov/oommf/doc/userguide12a6/userguide/Standard_Oxs_Ext_Child_Clas.html#BA
+}
+
+
+class Oxs_ImageAtlas {
+  This class is designed to allow an image file
+  to be used to define regions in  terms of
+  colors in the image.
+
+ 'It is intended for use in conjunction with the Oxs_AtlasScalarField and Oxs_AtlasVectorField classes in circumstances where a small number of distinct species (materials) are being modeled. This provides a generalization of the mask file functionality of the 2D solver (Sec. 17.1.3).
+
+ 'For situations requiring continuous variation in material parameters, the script field classes should be used in conjunction with the ReadFile MIF extension command. See the ColorField sample proc in the ReadFile documentation for an example of this technique.
+}
+
+class Oxs_MultiAtlas {
+  This atlas is built up as an ordered list of other atlases.
+
+}
+
+class Oxs_ScriptAtlas {
+  An atlas where the regions are defined via a Tcl script.
+}
+
+class Oxs_EllipsoidAtlas  {
+  Defines an ellipsoidal region with axes parallel to the
+  coordinate axes.
+}
+
+Oxs_Atlas <|-- Oxs_ImageAtlas
+Oxs_Atlas <|-- Oxs_MultiAtlas
+Oxs_Atlas <|-- Oxs_ScriptAtlas
+Oxs_Atlas <|-- Oxs_EllipsoidAtlas
+Oxs_Atlas <|-- Oxs_BoxAtlas
+Oxs_Ext <|-- Oxs_Atlas
+
+
+#+end_src
+
+#+RESULTS:
+[[file:atlas.eps]]
+
+\clearfloat
+
+
+
 
 ** Example class
 

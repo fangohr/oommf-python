@@ -114,6 +114,50 @@ Oxs_Mesh <|-- Oxs_PeriodicRectangularMesh
 
 
 ** Energies
+*** Anisotropy energy
+
+#+CAPTION: Anisotropy energy classes
+#+NAME: fig:example
+#+ATTR_LATEX: :width 1\textwidth
+file:anisotropy.eps
+
+*** COMMENT Source
+
+#+begin_src plantuml :file anisotropy.eps :exports none
+!include plantuml.h
+
+
+class Oxs_ChunkEnergy {
+}
+
+class Oxs_EnergyPreconditionerSupport {
+}
+
+class Oxs_UniaxialAnisotropy {
+  K1 K
+  Ha H
+  axis u
+}
+
+class Oxs_CubicAnisotropy {
+K1 K
+Ha H
+axis1 u1
+axis2 u2
+}
+
+Oxs_ChunkEnergy <|-- Oxs_UniaxialAnisotropy
+Oxs_EnergyPreconditionerSupport <|-- Oxs_UniaxialAnisotropy
+
+Oxs_ChunkEnergy <|-- Oxs_CubicAnisotropy
+Oxs_EnergyPreconditionerSupport <|-- Oxs_CubicAnisotropy
+
+
+#+end_src
+
+#+RESULTS:
+[[file:anisotropy.eps]]
+
 
 
 

@@ -69,8 +69,6 @@ Oxs_Atlas <|-- Oxs_ScriptAtlas
 Oxs_Atlas <|-- Oxs_EllipsoidAtlas
 Oxs_Atlas <|-- Oxs_BoxAtlas
 Oxs_Ext <|-- Oxs_Atlas
-
-
 #+end_src
 
 #+RESULTS:
@@ -86,38 +84,36 @@ Oxs_Ext <|-- Oxs_Atlas
 #+CAPTION: Mesh classes
 #+NAME: fig:example
 #+ATTR_LATEX: :width 1\textwidth
-file:example.eps
+file:mesh.eps
 
 *** COMMENT Source
 
-#+begin_src plantuml :file example.eps :exports none
+#+begin_src plantuml :file mesh.eps :exports none
 !include plantuml.h
 
-abstract class AbstractClass {
-OMFField
-TemplateMethod()
-{abstract} PrimitiveOp1()
-{abstract} PrimitiveOp2()
-}
-note right: . . .\nPrimitiveOp1()\nPrimitiveOp2()\n. . .
-
-class ConcreteClass {
-PrimitiveOperation1()
-PrimitiveOperation2()
+abstract class Oxs_Mesh {
 }
 
-class ConcreteClass2 {
-PrimitiveOperation1()
-PrimitiveOperation2()
+class Oxs_RectangularMesh {
+  This mesh is comprised of a
+  lattice of rectangular prisms.
 }
 
-AbstractClass <|-- ConcreteClass
-AbstractClass <|-- ConcreteClass2
+class Oxs_PeriodicRectangularMesh {
+  Like the Oxs_RectangularMesh,
+  but periodic along one or more
+  axis directions.
+}
 
+Oxs_Mesh <|-- Oxs_RectangularMesh
+Oxs_Mesh <|-- Oxs_PeriodicRectangularMesh
 #+end_src
 
 #+RESULTS:
-[[file:example.eps]]
+[[file:mesh.eps]]
+
+
+** Energies
 
 
 

@@ -1,0 +1,82 @@
+#+LaTeX_CLASS_OPTIONS: [a4paper,12pt]
+#+TITLE: Class diagrams
+#+LATEX_HEADER: \setlength{\textheight}{24cm}
+#+LATEX_HEADER: \setlength{\textwidth}{16cm}
+#+LATEX_HEADER: \setlength{\evensidemargin}{-0cm}
+#+LATEX_HEADER: \setlength{\oddsidemargin}{-0cm}
+#+LATEX_HEADER: \setlength{\topmargin}{0cm}
+#+LATEX_HEADER: \renewcommand{\baselinestretch}{1.1}%1.1
+
+
+* Class diagrams
+
+** Example class
+
+#+CAPTION[Example UML]: This is an example UML class diagram
+#+NAME: fig:example
+#+ATTR_LATEX: :width 10cm
+file:example.eps
+
+*** COMMENT Source
+
+#+begin_src plantuml :file example.eps :exports none
+!include plantuml.h
+
+abstract class AbstractClass {
+TemplateMethod()
+{abstract} PrimitiveOp1()
+{abstract} PrimitiveOp2()
+}
+note right: . . .\nPrimitiveOp1()\nPrimitiveOp2()\n. . .
+
+class ConcreteClass {
+PrimitiveOperation1()
+PrimitiveOperation2()
+}
+
+AbstractClass <|-- ConcreteClass
+
+#+end_src
+
+#+RESULTS:
+[[file:example.eps]]
+
+
+
+* Setting up your system to compile this file
+
+** Mini tutorial generating UML diagrams
+
+- Install 'plantuml' on your system
+  - ~brew install plantuml~ on OS X
+- Tell Emacs where to find the plantuml jar file (in ~.emacs):
+  #+BEGIN_SRC elisp :results output :exports both
+  (setq org-plantuml-jar-path~
+      (expand-file-name "/usr/local/Cellar/plantuml/8031/plantuml.8031.jar"))
+  #+END_SRC
+
+- Tell Emacs to parse plantuml code (also python, sh, dot in this example):
+
+  #+BEGIN_SRC elisp :results output :exports both
+   ;; enable python for in-buffer evaluation
+   (org-babel-do-load-languages
+    'org-babel-load-languages
+    '(
+      (python . t)
+      (sh . t)
+      (plantuml . t)
+      (dot . t)
+      ))
+
+   ;; all plantuml and dot code to execute without confirmation
+   (defun my-org-confirm-babel-evaluate (lang body)
+   (not (or (string= lang "plantuml") (string= lang "dot"))))
+   (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
+  #+END_SRC
+
+- To re-execute the plantuml code, use ~C-c C-c~ when the cursor is in that block.
+
+- Let's add ~*.eps~ files to the repository, so that we only need tis setup for creating new class diagrams.
+
+** To compile the pdf from this file (watch how the screen changes):
+ ~C-c C-e l p~

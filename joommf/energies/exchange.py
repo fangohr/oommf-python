@@ -1,6 +1,10 @@
-class Exchange(object):
+from baseenergy import energy
+
+
+class Exchange(energy):
 
     def __init__(self, A):
+        energy.__init__(self, "Exchange")
         self.A = A
 
     def get_mif(self):

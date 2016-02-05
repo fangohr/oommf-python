@@ -15,19 +15,10 @@ def test_llg_mif():
 
     lines = mif_string.split('\n')
 
-    assert 'Specify Oxs_RungeKuttaEvolve {' in lines[0]
-    line2 = lines[1].split()
-    assert float(line2[1]) == alpha
-    line3 = lines[2].split()
-    assert float(line3[1]) == gamma
-    line8 = lines[8].split()
-    assert float(line8[1]) == t
-    line11 = lines[11].split()
-    assert float(line11[1]) == Ms
-    line13 = lines[13].split()
-    assert float(line13[1][1:]) == m_init[0]
-    assert float(line13[2]) == m_init[1]
-    assert float(line13[3][:-1]) == m_init[2]
+    assert 'Specify Oxs_RungeKuttaEvolve' in lines[0]
+    assert 'alpha 0.01000' in lines[1]
+    assert 'gamma_G 221000.00000' in lines[2]
+    assert 'start_dm 0.01' in lines[3]
 
 
 def test_llg_formatting():
@@ -36,7 +27,7 @@ def test_llg_formatting():
     Ms = 1e6
     alpha = 0.01
     gamma = 2.21e5
-    name = 'llgtest'
+    name = 'test_llg'
 
     llg = LLG(t, m_init, Ms, alpha, gamma, name)
 

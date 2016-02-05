@@ -40,6 +40,6 @@ class LLG(object):
 
 if __name__ == '__main__':
     llg = LLG(1e-9, (0, 0, 1), 1e6, 0.1, 2.21e5, 'test')
-    f = open('llg.mif', 'w')
+    f = open('test_llg.mif', 'w')
     f.write(llg.get_mif())
     f.close()

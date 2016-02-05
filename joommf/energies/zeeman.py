@@ -1,6 +1,10 @@
-class Zeeman(object):
+from baseenergy import energy
+
+
+class Zeeman(energy):
 
     def __init__(self, H):
+        energy.__init__(self, "Zeeman")
         self.H = H
 
     def get_mif(self):

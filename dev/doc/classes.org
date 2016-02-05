@@ -14,7 +14,7 @@
 
 #+CAPTION[Example UML]: This is an example UML class diagram
 #+NAME: fig:example
-#+ATTR_LATEX: :width 10cm
+#+ATTR_LATEX: :width 1\textwidth
 file:example.eps
 
 *** COMMENT Source
@@ -23,6 +23,7 @@ file:example.eps
 !include plantuml.h
 
 abstract class AbstractClass {
+OMFField
 TemplateMethod()
 {abstract} PrimitiveOp1()
 {abstract} PrimitiveOp2()
@@ -34,7 +35,13 @@ PrimitiveOperation1()
 PrimitiveOperation2()
 }
 
+class ConcreteClass2 {
+PrimitiveOperation1()
+PrimitiveOperation2()
+}
+
 AbstractClass <|-- ConcreteClass
+AbstractClass <|-- ConcreteClass2
 
 #+end_src
 

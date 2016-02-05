@@ -1,4 +1,5 @@
 from baseenergy import energy
+import textwrap
 
 
 class Exchange(energy):
@@ -8,9 +9,10 @@ class Exchange(energy):
         self.A = A
 
     def get_mif(self):
-        exchange_mif = 'Specify Oxs_UniformExchange {\n'
-        exchange_mif += '\tA %2e\n' % self.A
-        exchange_mif += '}\n\n'
+        exchange_mif = textwrap.dedent("""\
+                       Specify Oxs_UniformExchange {{
+                           A {:.2e}
+                       }}""").format(self.A)
         return exchange_mif
 
 if __name__ == '__main__':

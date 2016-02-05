@@ -15,7 +15,7 @@ Inheritance structure taken from http://math.nist.gov/oommf/doc/userguide12a6/us
 
 ** Atlasses
 
-#+CAPTION[Example UML]: This is an example UML class diagram
+#+CAPTION: OOMMF Atlas classes
 #+NAME: fig:example
 #+ATTR_LATEX: :width 1\textwidth
 file:atlas.eps
@@ -78,6 +78,46 @@ Oxs_Ext <|-- Oxs_Atlas
 
 \clearfloat
 
+
+
+
+** Meshes
+
+#+CAPTION: Mesh classes
+#+NAME: fig:example
+#+ATTR_LATEX: :width 1\textwidth
+file:example.eps
+
+*** COMMENT Source
+
+#+begin_src plantuml :file example.eps :exports none
+!include plantuml.h
+
+abstract class AbstractClass {
+OMFField
+TemplateMethod()
+{abstract} PrimitiveOp1()
+{abstract} PrimitiveOp2()
+}
+note right: . . .\nPrimitiveOp1()\nPrimitiveOp2()\n. . .
+
+class ConcreteClass {
+PrimitiveOperation1()
+PrimitiveOperation2()
+}
+
+class ConcreteClass2 {
+PrimitiveOperation1()
+PrimitiveOperation2()
+}
+
+AbstractClass <|-- ConcreteClass
+AbstractClass <|-- ConcreteClass2
+
+#+end_src
+
+#+RESULTS:
+[[file:example.eps]]
 
 
 

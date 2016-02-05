@@ -8,12 +8,12 @@
 ;; Author: Sam Sinayoko
 ;; Email: s.sinayoko@soton.ac.uk
 ;; Date: 05/10/2014
+;; Modifications Hans Fangohr, 05/02/2016
 
-(require 'ox-beamer)
 (require 'ox-latex)
 
 ;; Define an interactive function for easy testing
-(defun org-beamer-export-to-pdf-directory (dirname)
+(defun org-latex-export-to-pdf-directory (dirname)
   "Export all org files in directory `dirname' to pdf"
   (interactive "DExport org files to pdf in directory:")
   (save-excursion
@@ -21,7 +21,7 @@
       (dolist (org-file (directory-files dirname nil "\.org$"))
 	(message "*** Exporting file %s ***" org-file)
 	(find-file org-file)
-	(org-beamer-export-to-pdf)
+	(org-latex-export-to-pdf)
 	(kill-buffer)))))
 
 
@@ -56,12 +56,8 @@
 	     'org-latex-filter-fancyvrb)
 
 
-;; Add the environment "onlyenv" to display something only on certain slides
-(add-to-list 'org-beamer-environments-extra
-             '("onlyenv" "O" "\\begin{onlyenv}%a" "\\end{onlyenv}"))
-
 ;; Use utf8x for LaTeX export to access more unicode characters
 (setq org-latex-inputenc-alist '(("utf8" . "utf8x")))
 
 ;; Export all org files
-(org-beamer-export-to-pdf-directory ".")
+(org-latex-export-to-pdf-directory ".")

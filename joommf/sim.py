@@ -1,7 +1,8 @@
 import os
-from drivers.llg import LLG
-
+from drivers.evolver import LLG
+from drivers.evolver import Minimiser
 import oommfmif as o
+
 
 class Sim(object):
 
@@ -22,16 +23,16 @@ class Sim(object):
 
     def add(self, energy):
         self.energies.append(energy)
-    
+
     def set_solver(self, solver='rk4'):
         """
         Available solvers in OOMMF:
-           rk2, rk2heun, rk4, rkf54, rkf54m, rkf54s 
+           rk2, rk2heun, rk4, rkf54, rkf54m, rkf54s
         """
     def set_m(self, m_init):
         self.m_init = m_init
 
-    def create_mif(self, overwrite=True):
+    def create_mif(self, evolver, overwrite=True):
         if self.name is None:
             self.name = 'unnamed'
         self.mif_filename = self.name + '_iteration' + \
@@ -45,23 +46,24 @@ class Sim(object):
         mif_file.write(self.mesh.mesh_mif())
         for energy in self.energies:
             mif_file.write(energy.get_mif())
-        mif_file.write(self.llg.get_mif())
+        mif_file.write(self.evolver.get_mif())
         mif_file.write('Destination mags mmArchive\n\n')
         mif_file.write(
             'Schedule Oxs_TimeDriver::Magnetization mags Stage 1\n\n')
         mif_file.close()
 
     def run_until(self, t, alpha=0.1, gamma=2.21e5):
-        self.llg = LLG(t, self.m_init, self.Ms, alpha, gamma, name=self.name)
-        self.create_mif()
+        llg = LLG(t, self.m_init, self.Ms, alpha, gamma, name=self.name)
+        self.create_mif(llg)
+        self.execute_mif()
+
+    def minimise(self):
+        minim = Minimiser(self.m_init, self.Ms, name=self.name)
+        self.create_mif(minim)
         self.execute_mif()
 
     def execute_mif(self):
-        path = o.retrieve_oommf_path()
-        executable = o.retrieve_oommf_executable(path)
+        # path = o.retrieve_oommf_path()
+        # executable = o.retrieve_oommf_executable(path)
         process = o.call_oommf('boxsi ' + self.mif_filename)
         process.wait()
-
-
-
-

@@ -17,5 +17,3 @@ def test_exchange_formatting():
     exchange = Exchange(A)
     mif_string = exchange.get_mif()
     assert mif_string[0] == 'S'
-    assert mif_string[-1] == '\n'
-    assert mif_string[-2] == '\n'

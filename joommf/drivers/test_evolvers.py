@@ -1,5 +1,5 @@
-import evolver.LLG
-import evolver.Minimiser
+import drivers.evolver.LLG as LLG
+import drivers.evolver.Minimiser as Minimiser
 
 
 def test_llg_mif():
@@ -30,7 +30,7 @@ def test_llg_formatting():
     gamma = 2.21e5
     name = 'test_llg'
 
-    evolver_object = evolver.LLG(t, m_init, Ms, alpha, gamma, name)
+    evolver_object = LLG(t, m_init, Ms, alpha, gamma, name)
 
     mif_string = evolver_object.get_mif()
 
@@ -43,7 +43,7 @@ def test_minevolve():
     m_init = (0, 1, 0)
     Ms = 1e6
     name = 'llgtest'
-    evolver_object = evolver.Minimiser(m_init, Ms, name)
+    evolver_object = Minimiser(m_init, Ms, name)
     mif_string = evolver_object.get_mif()
     lines = mif_string.split('\n')
     print(lines)

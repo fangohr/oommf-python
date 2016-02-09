@@ -3,17 +3,13 @@ import textwrap
 
 class Minimiser(object):
 
-    def __init__(self, m_init, Ms, name, d_mxHxm=0.1)
+    def __init__(self, m_init, Ms, name, d_mxHxm=0.1):
         self.m_init = m_init
         self.Ms = Ms
-        self.alpha = alpha
-        self.gamma = gamma
         self.name = name
-        self.solver = solver
         self.d_mxHxm = d_mxHxm
 
     def get_mif(self):
-        if
         mif = textwrap.dedent("""\
         Specify Oxs_CGEvolve:evolver {}
 
@@ -39,7 +35,7 @@ class Minimiser(object):
             self.m_init[0],
             self.m_init[1],
             self.m_init[2],
-            self.stopping_mxHxm
+            self.stopping_mxHxm,
             self.name
         )
 

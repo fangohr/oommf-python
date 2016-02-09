@@ -1,9 +1,9 @@
 
-* TODO [0/4]
-- [ ] Small stuff [0/1]
-  - [ ] remove SWIG examples
-  - [ ] RP: Update doc/continuous-integration.md - is it still up to date?
-
+* TODO [1/4]
+- [X] Small stuff [2/2]
+  - [X] remove SWIG examples
+  - [X] RP: Update doc/continuous-integration.md - is it still up to date?
+    
 - [ ] Class diagrams [0/2]
   - [ ] Which classes are there in OOMMF
   - [ ] what should joommf look like?
@@ -11,7 +11,17 @@
 - [ ] Examples [0/1]
   - [ ] Write python file for each example (of course we have tests)
 
-- [-] Basic functionality [1/2]
+- [-] Basic functionality [1/3]
   - [ ] read magnetisation from a file
   - [X] save magnetisation to a file
   - [ ] read/write arbirtray fields from an oommf run
+
+- [ ] Arbitrary Vector Fields
+  - [ ] Can call Python from an arbitrary Tcl proc, so in theory can get more clever with
+        the integration and allow non-Tcl scripts to run.
+  - [ ] Otherwise, many examples of functions that already exist in examples - grep for 'Oxs_ScriptVectorField'
+
+- [ ] Alternative meshes
+  - [ ] grep for variations on '*Atlas:' to find various examples e.g elipsoid
+  - [ ] Along with this need to write code to support having different material 
+        parameters in different regions.

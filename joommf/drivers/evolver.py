@@ -11,7 +11,7 @@ class Minimiser(object):
 
     def get_mif(self):
         mif = textwrap.dedent("""\
-        Specify Oxs_CGEvolve:evolver {}
+        Specify Oxs_CGEvolve:evolver {{}}
 
         Specify Oxs_MinDriver {{
         evolver :evolve
@@ -26,16 +26,12 @@ class Minimiser(object):
         }}
         """)
 
-        return mif.format(  # self.solver,
-            # self.alpha,
-            # self.gamma,
-            self.dm,
-            self.t,
+        return mif.format(
             self.Ms,
             self.m_init[0],
             self.m_init[1],
             self.m_init[2],
-            self.stopping_mxHxm,
+            self.d_mxHxm,
             self.name
         )
 

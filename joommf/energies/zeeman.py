@@ -1,4 +1,4 @@
-from baseenergy import energy
+from joommf.energies.baseenergy import energy
 
 
 class Zeeman(energy):

@@ -1,3 +1,4 @@
+from subprocess import Popen, PIPE, STDOUT
 import os
 from drivers.evolver import LLG
 from drivers.evolver import Minimiser
@@ -46,10 +47,7 @@ class Sim(object):
         mif_file.write(self.mesh.mesh_mif())
         for energy in self.energies:
             mif_file.write(energy.get_mif())
-        mif_file.write(self.evolver.get_mif())
-        mif_file.write('Destination mags mmArchive\n\n')
-        mif_file.write(
-            'Schedule Oxs_TimeDriver::Magnetization mags Stage 1\n\n')
+        mif_file.write(evolver.get_mif())
         mif_file.close()
 
     def run_until(self, t, alpha=0.1, gamma=2.21e5):
@@ -66,4 +64,10 @@ class Sim(object):
         # path = o.retrieve_oommf_path()
         # executable = o.retrieve_oommf_executable(path)
         process = o.call_oommf('boxsi ' + self.mif_filename)
-        process.wait()
+        if process.wait() != 0:
+            print("JOOMMF: There has been an error. Please send your script\n" + 
+                  "to the mailing list for help")
+            print(process.stdout.read())
+            output, err = process.communicate()
+            print(output)
+            print(err)

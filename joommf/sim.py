@@ -14,6 +14,8 @@ class Sim(object):
         self.gamma = 2.21e5
         self.energies = []
         self.N_Sims_Run = 0
+        self._oommf_stdout = ''
+        self._oommf_stderr = ''
         # Want some kind of persistent 'knowledge' of number of runs
         # and the sequence these occur in for data analysis
         # when we call a simulation multiple times to either
@@ -64,10 +66,6 @@ class Sim(object):
         # path = o.retrieve_oommf_path()
         # executable = o.retrieve_oommf_executable(path)
         process = o.call_oommf('boxsi ' + self.mif_filename)
-        if process.wait() != 0:
-            print("JOOMMF: There has been an error. Please send your script\n" + 
-                  "to the mailing list for help")
-            print(process.stdout.read())
-            output, err = process.communicate()
-            print(output)
-            print(err)
+        output, err = process.communicate()
+        self._oommf_stdout = output
+        self._oommf_stderr = err

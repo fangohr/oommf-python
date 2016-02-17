@@ -2,6 +2,7 @@ from subprocess import Popen, PIPE, STDOUT
 import os
 from drivers.evolver import LLG
 from drivers.evolver import Minimiser
+
 import oommfmif as o
 
 
@@ -24,7 +25,7 @@ class Sim(object):
         # data from the output files?
         # Advantage of this is recreating sim object if needed.
 
-    def add(self, energy):
+    def add_energy(self, energy):
         self.energies.append(energy)
 
     def set_m(self, m_init):

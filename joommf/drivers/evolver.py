@@ -13,17 +13,19 @@ class Minimiser(object):
         mif = textwrap.dedent("""\
         Specify Oxs_CGEvolve:evolver {{}}
 
-        Specify Oxs_MinDriver {{
-        evolver :evolve
+        Specify Oxs_MinDriver [subst {{
+        evolver :evolver
         mesh :mesh
         Ms {}
         m0 {{ Oxs_UniformVectorField {{
-        vector {{{:.5f}, {:.5f}, {:.5f}}}
-        }} }}
+          norm 1
+          vector {{{} {} {}}}
+         }} }}
+
         stopping_mxHxm {}
         basename {}
         vector_field_output_format {{text \%#.8g}}
-        }}
+        }}]
         """)
 
         return mif.format(

@@ -1,4 +1,4 @@
-from baseenergy import energy
+from joommf.energies.baseenergy import energy
 import textwrap
 
 
@@ -12,7 +12,7 @@ class Exchange(energy):
         exchange_mif = textwrap.dedent("""\
                        Specify Oxs_UniformExchange {{
                            A {:.2e}
-                       }}""").format(self.A)
+                       }}\n\n""").format(self.A)
         return exchange_mif
 
 if __name__ == '__main__':

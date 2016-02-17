@@ -62,5 +62,5 @@ class Sim(object):
         # executable = o.retrieve_oommf_executable(path)
         process = o.call_oommf('boxsi ' + self.mif_filename)
         output, err = process.communicate()
-        self._oommf_stdout = output
-        self._oommf_stderr = err
+        self._oommf_stdout += output
+        self._oommf_stderr += err

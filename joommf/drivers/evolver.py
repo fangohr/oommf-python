@@ -14,11 +14,14 @@ class Minimiser(object):
         Specify Oxs_CGEvolve:evolver {{}}
 
         Specify Oxs_MinDriver [subst {{
-        evolver :evolve
+        evolver :evolver
         mesh :mesh
         Ms {}
-        m0 {{{:.5f}, {:.5f}, {:.5f}}}
-  
+        m0 {{ Oxs_UniformVectorField {{
+          norm 1
+          vector {{{} {} {}}}
+         }} }}
+
         stopping_mxHxm {}
         basename {}
         vector_field_output_format {{text \%#.8g}}

@@ -60,7 +60,7 @@ class LLG(object):
     def get_mif(self):
         llg_mif = textwrap.dedent("""\
                    Specify Oxs_RungeKuttaEvolve:evolve {{
-                       method ${}   alpha {:.5f}
+                       method {}   alpha {:.5f}
                        gamma_G {:.5f}
                        start_dm {:.5f}
                    }}
@@ -70,9 +70,10 @@ class LLG(object):
                        stopping_time {:.2e}
                        stage_count 1
                        mesh :mesh
-                       Ms {:.5e}
+                       Ms {}
                        m0 {{ Oxs_UniformVectorField {{
-                           vector {{{:.5f}, {:.5f}, {:.5f}}}
+                        norm 1
+                        vector {{{} {} {}}}
                        }} }}
                        basename {}
                    vector_field_output_format {{text \%#.8g}}

@@ -18,12 +18,12 @@ t_sim = 1e-9  # simulation time (s)
 mesh = Mesh((lx, ly, lz), (dx, dy, dz))
 
 # Create a simulation object.
-sim = Sim(mesh, Ms, name='small_example')
+sim = Sim(mesh, Ms, name='small_example_dyn')
 
 # Add energies.
-sim.add(Exchange(A))
-sim.add(Demag())
-sim.add(Zeeman(H))
+sim.add_energy(Exchange(A))
+sim.add_energy(Demag())
+sim.add_energy(Zeeman(H))
 
 
 # Set initial magnetisation.

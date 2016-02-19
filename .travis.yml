@@ -33,7 +33,10 @@ script:
 
 script: make test
 
+after_success: coveralls
 
 
 notifications:
   slack: finmag:7HxjIcZF9CPe0sIS5CQJGK08
+
+

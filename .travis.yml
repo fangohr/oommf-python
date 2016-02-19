@@ -16,7 +16,7 @@ addons:
     - tk8.5-dev
 
 install:
-        - pip install cython matplotlib pillow pytest-cov coverage
+        - pip install cython matplotlib pillow pytest-cov coverage coveralls
 
 before_script:
     - sudo apt-get install swig
@@ -31,8 +31,8 @@ script:
 - $OOMMF_PATH/oommf.tcl +platform
 
 
-script: make test
-
+script: 
+- coverage run --source joommf -m py.test
 after_success: coveralls
 
 

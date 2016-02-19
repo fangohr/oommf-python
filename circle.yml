@@ -45,4 +45,4 @@ test:
     - echo $PATH
     - tclsh ${OOMMF_TCL} +version
     - echo "OOMMF installation succeeded."
-    - make test
+    - py.test -v

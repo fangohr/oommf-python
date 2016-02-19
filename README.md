@@ -1,6 +1,6 @@
 # OOMMF-python
 
-[![Build Status](https://travis-ci.org/fangohr/oommf-python.svg?branch=master)](https://travis-ci.org/fangohr/oommf-python) [![Circle CI](https://circleci.com/gh/fangohr/oommf-python.svg?style=svg)](https://circleci.com/gh/fangohr/oommf-python)
+[![Build Status](https://travis-ci.org/fangohr/oommf-python.svg?branch=master)](https://travis-ci.org/fangohr/oommf-python) [![Circle CI](https://circleci.com/gh/fangohr/oommf-python.svg?style=svg)](https://circleci.com/gh/fangohr/oommf-python) [![Coverage Status](https://coveralls.io/repos/github/fangohr/oommf-python/badge.svg?branch=master)](https://coveralls.io/github/fangohr/oommf-python?branch=master)
 
 Working towards a Python interface to the OOMMF micromagnetic package.
 

@@ -1,32 +1,35 @@
-from sim import Sim
-from mesh import Mesh
-from energies.exchange import Exchange
-from energies.demag import Demag
-from energies.zeeman import Zeeman
+def main():
+    from sim import Sim
+    from mesh import Mesh
+    from energies.exchange import Exchange
+    from energies.demag import Demag
+    from energies.zeeman import Zeeman
 
-# Mesh specification.
-lx = ly = lz = 50e-9  # x, y, and z dimensions (m)
-dx = dy = dz = 5e-9  # x, y, and z cell dimensions (m)
+    # Mesh specification.
+    lx = ly = lz = 50e-9  # x, y, and z dimensions (m)
+    dx = dy = dz = 5e-9  # x, y, and z cell dimensions (m)
 
-Ms = 8e5  # saturation magnetisation (A/m)
-A = 1e-11  # exchange energy constant (J/m)
-H = (1e3, 0, 0)  # external magnetic field (A/m)
-m_init = (0, 0, 1)  # initial magnetisation
+    Ms = 8e5  # saturation magnetisation (A/m)
+    A = 1e-11  # exchange energy constant (J/m)
+    H = (1e3, 0, 0)  # external magnetic field (A/m)
+    m_init = (0, 0, 1)  # initial magnetisation
 
-# Create a mesh.
-mesh = Mesh((lx, ly, lz), (dx, dy, dz))
+    # Create a mesh.
+    mesh = Mesh((lx, ly, lz), (dx, dy, dz))
 
-# Create a simulation object.
-sim = Sim(mesh, Ms, name='small_example_min')
+    # Create a simulation object.
+    sim = Sim(mesh, Ms, name='small_example_min')
 
-# Add energies.
-sim.add_energy(Exchange(A))
-sim.add_energy(Demag())
-sim.add_energy(Zeeman(H))
+    # Add energies.
+    sim.add_energy(Exchange(A))
+    sim.add_energy(Demag())
+    sim.add_energy(Zeeman(H))
 
+    # Set initial magnetisation.
+    sim.set_m(m_init)
 
-# Set initial magnetisation.
-sim.set_m(m_init)
+    # Run simulation.
+    sim.minimise()
 
-# Run simulation.
-sim.minimise()
+if __name__ == "__main__":
+    main()

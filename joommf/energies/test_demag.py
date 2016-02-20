@@ -5,7 +5,7 @@ def test_demag_mif():
     demag = Demag()
     mif_string = demag.get_mif()
     assert 'Specify Oxs_Demag {}' in mif_string
-
+    assert demag.__repr__() == "This is the energy class of type Demag"
 
 def test_demag_formatting():
     demag = Demag()

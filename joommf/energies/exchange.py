@@ -15,9 +15,3 @@ class Exchange(energy):
                        }}\n\n""").format(self.A)
         return exchange_mif
 
-if __name__ == '__main__':
-    exchange = Exchange(1e-11)
-
-    f = open('exchange.mif', 'w')
-    f.write(exchange.get_mif())
-    f.close()

@@ -38,10 +38,3 @@ class Mesh(object):
         mesh_mif += '}\n\n'
         return mesh_mif
 
-if __name__ == '__main__':
-    mesh = Mesh(50e-9, 50e-9, 50e-9, 5-9, 5e-9, 5e-9)
-
-    f = open('mesh.mif', 'w')
-    f.write(mesh.atlas_mif())
-    f.write(mesh.mesh_mif())
-    f.close()

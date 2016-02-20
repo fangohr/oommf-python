@@ -18,9 +18,3 @@ class Zeeman(energy):
         zeeman_mif += '}\n\n'
         return zeeman_mif
 
-if __name__ == '__main__':
-    exchange = Zeeman((0, 0, 1))
-
-    f = open('zeeman.mif', 'w')
-    f.write(exchange.get_mif())
-    f.close()

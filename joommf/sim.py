@@ -15,8 +15,8 @@ class Sim(object):
         self.gamma = 2.21e5
         self.energies = []
         self.N_Sims_Run = 0
-        self._oommf_stdout = ''
-        self._oommf_stderr = ''
+        self._oommf_stdout = b''
+        self._oommf_stderr = b''
         # Want some kind of persistent 'knowledge' of number of runs
         # and the sequence these occur in for data analysis
         # when we call a simulation multiple times to either

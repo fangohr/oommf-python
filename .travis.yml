@@ -18,38 +18,44 @@ addons:
     - tk8.5-dev
 
 install:
-    - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
       wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
-      else:
+    else
       wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-      fi
-    - bash miniconda.sh -b -p $HOME/miniconda
-    - export PATH="$HOME/miniconda/bin:$PATH"
-    - hash -r
-    - conda config --set always_yes yes --set changeps1 no
-    - conda update -q conda
-    - conda info -a
-    - if [[ "TRAVIS_PYTHON_VERSION" == "3.5" ]]; then
-        conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION cython matplotlib pillow pytest-cov coverage coveralls
-      else
-        conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION cython matplotlib pillow
-    - source activate test-environment
+    fi
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - conda info -a
+  - if [[ "TRAVIS_PYTHON_VERSION" == "3.5" ]]; then
+      conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION cython matplotlib pillow pytest-cov coverage coveralls
+    else
+      conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION cython matplotlib pillow
+  - source activate test-environment
 
 before_script:
-    - export OOMMF_PREFIX=${OOMMF_PREFIX:-$HOME}
-    - bash -x .travis/install-oommf.sh
-    - export OOMMF_PATH=/home/travis/oommf
+  - export OOMMF_PREFIX=${OOMMF_PREFIX:-$HOME}
+  - bash -x .travis/install-oommf.sh
+  - export OOMMF_PATH=/home/travis/oommf
 
 # command to run tests
 script:
-- which tclsh
-- which oommf
-- $OOMMF_PATH/oommf.tcl +platform
+  - which tclsh
+  - which oommf
+  - $OOMMF_PATH/oommf.tcl +platform
 
 
 script:
-- coverage run --source joommf -m py.test
-after_success: coveralls
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "3.5" ]]; then
+      coverage run --source joommf -m py.test
+    else
+      py.test
+
+after_success: 
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "3.5" ]]; then
+      coveralls
 
 
 notifications:

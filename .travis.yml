@@ -30,9 +30,9 @@ install:
   - conda update -q conda
   - conda info -a
   - if [[ "TRAVIS_PYTHON_VERSION" == "3.5" ]]; then
-      conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION cython matplotlib pillow pytest-cov coverage coveralls
+      conda create -n test-environment python=$TRAVIS_PYTHON_VERSION cython matplotlib pillow pytest-cov coverage coveralls
     else
-      conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION cython matplotlib pillow
+      conda create -n test-environment python=$TRAVIS_PYTHON_VERSION cython matplotlib pillow
   - source activate test-environment
 
 before_script:

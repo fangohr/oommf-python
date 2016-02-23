@@ -3,6 +3,8 @@ language: python
 
 python:
   - "2.7"
+  - "3.4"
+  - "3.5"
 
 env:
 - TCL_VERSION=8.5.0
@@ -16,10 +18,24 @@ addons:
     - tk8.5-dev
 
 install:
-        - pip install cython matplotlib pillow pytest-cov coverage coveralls
+    - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+      wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+    else
+      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+    fi
+    - bash miniconda.sh -b -p $HOME/miniconda
+    - export PATH="$HOME/miniconda/bin:$PATH"
+    - hash -r
+    - conda config --set always_yes yes --set changeps1 no
+    - conda update -q conda
+    - conda info -a
+    - if [[ "TRAVIS_PYTHON_VERSION" == "3.5" ]]; then
+        conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION cython matplotlib pillow pytest-cov coverage coveralls
+      else
+        conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION cython matplotliv pillow
+    - source activate test-environment
 
 before_script:
-    - sudo apt-get install swig
     - export OOMMF_PREFIX=${OOMMF_PREFIX:-$HOME}
     - bash -x .travis/install-oommf.sh
     - export OOMMF_PATH=/home/travis/oommf
@@ -31,7 +47,7 @@ script:
 - $OOMMF_PATH/oommf.tcl +platform
 
 
-script: 
+script:
 - coverage run --source joommf -m py.test
 after_success: coveralls
 

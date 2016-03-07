@@ -111,6 +111,8 @@ class Sim(object):
         self.field_outputs = []
         self.evolver_outputs = []
         self.evolver = None
+        self._oommf_stdout = b''
+        self._oommf_stderr = b''
 
     def __repr__(self):
         string = "Joommf Sim Object - Mesh: {}\n Ms: {}\n gamma: {}\n".format(

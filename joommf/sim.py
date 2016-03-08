@@ -103,9 +103,7 @@ class Sim(object):
         self.mesh = mesh
         self.Ms = Ms
         self.name = name
-        self.gamma = 2.21e5
         self.energies = []
-        self.N_Sims_Run = 0
         self._oommf_stdout = ''
         self._oommf_stderr = ''
         self.field_outputs = []
@@ -114,6 +112,7 @@ class Sim(object):
         self._oommf_stdout = b''
         self._oommf_stderr = b''
         self.debug = debug
+        self._t = None
 
     def __repr__(self):
         string = "Joommf Sim Object - Mesh: {}\n Ms: {}\n gamma: {}\n".format(
@@ -157,11 +156,15 @@ class Sim(object):
     def create_mif(self, overwrite=True):
         if self.name is None:
             self.name = 'unnamed'
-        self.mif_filename = self.name + \
-            str(self.N_Sims_Run) + '.mif'
+        self.mif_filename = self.name + '.mif'
         if os.path.isfile(self.mif_filename):
             print("DEBUG: This simulation name already exists.")
-            print("DEBUG: Overwriting MIF.")
+            if overwrite:
+                print("DEBUG: Overwriting MIF.")
+            else:
+                raise JoommfError("Set overwrite to true or change"
+                                  " the name of the sim object")
+            os.path.isfile(self.mif_filename)
         mif_file = open(self.mif_filename, 'w')
         mif_file.write('# MIF 2.1\n\n')
         mif_file.write(self.mesh.atlas_mif())
@@ -171,9 +174,9 @@ class Sim(object):
         mif_file.write(self.evolver.get_mif())
         mif_file.close()
 
-    def run_until(self, t, alpha=0.1, gamma=2.21e5):
+    def run_until(self, t):
         if isinstance(self.evolver, LLG):
-            self.create_mif(self.evolver)
+            self.create_mif()
             self.execute_mif()
         else:
             raise JoommfError("Joommf: You must add a valid time"
@@ -181,7 +184,7 @@ class Sim(object):
 
     def minimise(self):
         if isinstance(self.evolver, Minimiser):
-            self.create_mif(self.evolver)
+            self.create_mif()
             self.execute_mif()
         else:
             raise JoommfError("Joommf: You must add a valid minimisation"

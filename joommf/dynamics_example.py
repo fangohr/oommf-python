@@ -4,7 +4,7 @@ def main():
     from energies.exchange import Exchange
     from energies.demag import Demag
     from energies.zeeman import Zeeman
-
+    from drivers import evolver
     # Mesh specification.
     lx = ly = lz = 50e-9  # x, y, and z dimensions (m)
     dx = dy = dz = 5e-9  # x, y, and z cell dimensions (m)
@@ -14,18 +14,20 @@ def main():
     H = (1e3, 0, 0)  # external magnetic field (A/m)
     m_init = (0, 0, 1)  # initial magnetisation
     t_sim = 1e-9  # simulation time (s)
-
+    gamma = 2.21e5
+    alpha = 0.1
     # Create a mesh.
     mesh = Mesh((lx, ly, lz), (dx, dy, dz))
 
     # Create a simulation object.
-    sim = Sim(mesh, Ms, name='small_example_dyn')
+    sim = Sim(mesh, Ms, name='small_example_dyn', debug=True)
 
     # Add energies.
     sim.add_energy(Exchange(A))
     sim.add_energy(Demag())
     sim.add_energy(Zeeman(H))
-
+    sim.add_evolver(
+        evolver.LLG(t_sim, m_init, Ms, alpha, gamma, name='evolver'))
     # Set initial magnetisation.
     sim.set_m(m_init)
 

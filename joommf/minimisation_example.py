@@ -26,8 +26,6 @@ def main():
     sim.add_energy(Zeeman(H))
     sim.add_evolver(evolver.Minimiser(m_init, Ms, 'test'))
     # Set initial magnetisation.
-    sim.set_m(m_init)
-
     # Run simulation.
     sim.minimise()
     print("Done")

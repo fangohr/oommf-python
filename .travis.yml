@@ -32,6 +32,8 @@ install:
   - conda create -n test-environment python=$TRAVIS_PYTHON_VERSION cython matplotlib pillow pytest
   - if [[ "TRAVIS_PYTHON_VERSION" == "3.5" ]]; then
       source activate test-environment; pip install pytest-cov coverage coveralls
+    else
+      echo "Skipping Coverage"
   - source activate test-environment
 
 before_script:

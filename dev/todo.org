@@ -14,7 +14,7 @@
 - [-] Basic functionality [1/3]
   - [ ] read magnetisation from a file
   - [X] save magnetisation to a file
-  - [ ] read/write arbirtray fields from an oommf run
+  - [ ] read/write arbitrary fields from an oommf run
 
 - [ ] Arbitrary Vector Fields
   - [ ] Can call Python from an arbitrary Tcl proc, so in theory can get more clever with
@@ -25,3 +25,11 @@
   - [ ] grep for variations on '*Atlas:' to find various examples e.g elipsoid
   - [ ] Along with this need to write code to support having different material 
         parameters in different regions.
+
+- [ ] Examples
+  - [ ] Bigbar.mif - Save DataTable on every step
+  - [ ] Load data in Pandas?
+  - [ ] Bigbar.mif - Save magnetisation on every 5 steps
+  - [ ] Load and visualise!
+  - [ ] Monitor files as created (look at last line, if incomplete del., pass to pandas).
+  - [ ] 

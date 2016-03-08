@@ -20,7 +20,7 @@ def main():
     mesh = Mesh((lx, ly, lz), (dx, dy, dz))
 
     # Create a simulation object.
-    sim = Sim(mesh, Ms, name='small_example_dyn', debug=True)
+    sim = Sim(mesh, Ms, name='dynamics_example', debug=True)
 
     # Add energies.
     sim.add_energy(Exchange(A))

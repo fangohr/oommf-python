@@ -99,7 +99,7 @@ class JoommfError(Exception):
 
 class Sim(object):
 
-    def __init__(self, mesh, Ms, name=None):
+    def __init__(self, mesh, Ms, name=None, debug=False):
         self.mesh = mesh
         self.Ms = Ms
         self.name = name
@@ -113,6 +113,7 @@ class Sim(object):
         self.evolver = None
         self._oommf_stdout = b''
         self._oommf_stderr = b''
+        self.debug = debug
 
     def __repr__(self):
         string = "Joommf Sim Object - Mesh: {}\n Ms: {}\n gamma: {}\n".format(
@@ -174,11 +175,17 @@ class Sim(object):
         if isinstance(self.evolver, LLG):
             self.create_mif(self.evolver)
             self.execute_mif()
+        else:
+            raise JoommfError("Joommf: You must add a valid time"
+                              " evolver to the simulation object")
 
     def minimise(self):
         if isinstance(self.evolver, Minimiser):
             self.create_mif(self.evolver)
             self.execute_mif()
+        else:
+            raise JoommfError("Joommf: You must add a valid minimisation"
+                              " evolver to the simulation object")
 
     def execute_mif(self):
         # path = o.retrieve_oommf_path()
@@ -187,3 +194,9 @@ class Sim(object):
         output, err = process.communicate()
         self._oommf_stdout += output
         self._oommf_stderr += err
+        if self.debug:
+            print("JOOMMF DEBUG MODE")
+            print("Oommf Stderr:")
+            print(self._oommf_stderr)
+            print("\n\n\nOommf Stdout:")
+            print(self._oommf_stdout)

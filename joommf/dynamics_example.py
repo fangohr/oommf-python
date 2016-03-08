@@ -26,13 +26,13 @@ def main():
     sim.add_energy(Exchange(A))
     sim.add_energy(Demag())
     sim.add_energy(Zeeman(H))
-    sim.add_evolver(
+    sim.set_evolver(
         evolver.LLG(t_sim, m_init, Ms, alpha, gamma, name='evolver'))
     # Set initial magnetisation.
     sim.set_m(m_init)
 
     # Run simulation.
-    sim.run_until(t_sim)
+    sim.run()
 
 if __name__ == '__main__':
     main()

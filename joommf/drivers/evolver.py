@@ -1,7 +1,13 @@
 import textwrap
 
 
-class Minimiser(object):
+class Evolver(object):
+
+    def __init__(self):
+        pass
+
+
+class Minimiser(Evolver):
 
     def __init__(self, m_init, Ms, name, d_mxHxm=0.1):
         self.m_init = m_init
@@ -38,7 +44,7 @@ class Minimiser(object):
         )
 
 
-class LLG(object):
+class LLG(Evolver):
 
     def __init__(self, t, m_init, Ms, alpha, gamma,
                  name, solver='rkf54', dm=0.01):

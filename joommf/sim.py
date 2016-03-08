@@ -1,7 +1,7 @@
 import os
 from drivers.evolver import LLG
 from drivers.evolver import Minimiser
-
+from drivers.evolver import Evolver
 import oommfmif as o
 
 "Soon to be supported outputs"
@@ -72,9 +72,7 @@ Oxs_RungeKuttaEvolve:evolver:Total field
 Oxs_RungeKuttaEvolve:evolver:dm/dt
 Oxs_RungeKuttaEvolve:evolver:mxH
 
-Oxs_TimeDriver::Iteration
-Oxs_TimeDriver::Stage iteration
-Oxs_TimeDriver::Stage
+
 Oxs_TimeDriver::Magnetization
 Oxs_TimeDriver::Spin
 Oxs_TimeDriver::Last time step
@@ -82,6 +80,9 @@ Oxs_TimeDriver::Simulation time
 Oxs_TimeDriver::mx
 Oxs_TimeDriver::my
 Oxs_TimeDriver::mz
+Oxs_TimeDriver::Iteration
+Oxs_TimeDriver::Stage iteration
+Oxs_TimeDriver::Stage
 
 Minimisation Evolvers:
 Oxs_CGEvolve::H
@@ -112,7 +113,6 @@ class Sim(object):
         self._oommf_stdout = b''
         self._oommf_stderr = b''
         self.debug = debug
-        self._t = None
 
     def __repr__(self):
         string = "Joommf Sim Object - Mesh: {}\n Ms: {}\n gamma: {}\n".format(
@@ -124,8 +124,19 @@ class Sim(object):
     def add_energy(self, energy):
         self.energies.append(energy)
 
-    def add_evolver(self, evolver):
-        self.evolver = evolver
+    def set_evolver(self, evolver):
+        if isinstance(evolver, Evolver):
+            if self.evolver:
+                print("Joommf: Evolver already set for this Sim object."
+                      "\n This will be replaced with the new object")
+            self.evolver = evolver
+
+        else:
+            raise JoommfError("Joommf: You must add a valid evolver from"
+                              "the drivers/evolver module. If you are "
+                              "trying to extend the functionality by adding"
+                              "support for a new evolver, the new evolver "
+                              "must be a subclass of Evolver")
 
     def add_output(self, output, freq):
         if not self.evolver:
@@ -174,7 +185,7 @@ class Sim(object):
         mif_file.write(self.evolver.get_mif())
         mif_file.close()
 
-    def run_until(self, t):
+    def run(self):
         if isinstance(self.evolver, LLG):
             self.create_mif()
             self.execute_mif()

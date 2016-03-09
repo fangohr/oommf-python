@@ -1,4 +1,4 @@
-from exchange import Exchange
+from joommf.energies.exchange import Exchange
 
 
 def test_exchange_mif():

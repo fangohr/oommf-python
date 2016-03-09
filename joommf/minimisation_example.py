@@ -4,7 +4,7 @@ def main():
     from energies.exchange import Exchange
     from energies.demag import Demag
     from energies.zeeman import Zeeman
-
+    from drivers import evolver
     # Mesh specification.
     lx = ly = lz = 50e-9  # x, y, and z dimensions (m)
     dx = dy = dz = 5e-9  # x, y, and z cell dimensions (m)
@@ -16,20 +16,22 @@ def main():
 
     # Create a mesh.
     mesh = Mesh((lx, ly, lz), (dx, dy, dz))
-
     # Create a simulation object.
-    sim = Sim(mesh, Ms, name='small_example_min')
+    sim = Sim(mesh, Ms, name='minimisation_example', debug=True)
 
     # Add energies.
     sim.add_energy(Exchange(A))
     sim.add_energy(Demag())
     sim.add_energy(Zeeman(H))
-
+    sim.set_evolver(evolver.Minimiser(m_init, Ms))
     # Set initial magnetisation.
-    sim.set_m(m_init)
-
     # Run simulation.
     sim.minimise()
+    print("Done")
+
+    def add(a, b):
+        return a + b
+
 
 if __name__ == "__main__":
     main()

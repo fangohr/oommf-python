@@ -1,4 +1,4 @@
-from demag import Demag
+from joommf.energies.demag import Demag
 
 
 def test_demag_mif():

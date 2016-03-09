@@ -85,7 +85,7 @@ def call_oommf(argstring, workdir=None):
 
     """
     if workdir:
-        command = "cd {:s} && ".format(workdir)
+        command = "cd {} && ".format(workdir)
     else:
         command = ""
 
@@ -104,7 +104,7 @@ def get_version():
     stderr = p.stderr.readlines()     # version is returned in stderr
     # output is something like  "<15330> oommf.tcl 1.2.0.6  info:\noommf.tcl
     # 1.2.0.6"
-    line = stderr[0]
+    line = stderr[0].decode()
     assert 'oommf.tcl' in line
     versionstring = line.split('oommf.tcl')[1].strip()
     return versionstring

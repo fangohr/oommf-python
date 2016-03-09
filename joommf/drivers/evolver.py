@@ -1,13 +1,22 @@
 import textwrap
 
 
-class Minimiser(object):
+class Evolver(object):
 
-    def __init__(self, m_init, Ms, name, d_mxHxm=0.1):
+    def __init__(self):
+        pass
+
+
+class Minimiser(Evolver):
+
+    def __init__(self, m_init, Ms, d_mxHxm=0.1):
         self.m_init = m_init
         self.Ms = Ms
-        self.name = name
         self.d_mxHxm = d_mxHxm
+        self.name = None
+
+    def _setname(self, name):
+        self.name = name
 
     def get_mif(self):
         mif = textwrap.dedent("""\
@@ -38,7 +47,7 @@ class Minimiser(object):
         )
 
 
-class LLG(object):
+class LLG(Evolver):
 
     def __init__(self, t, m_init, Ms, alpha, gamma,
                  name, solver='rkf54', dm=0.01):
@@ -53,9 +62,12 @@ class LLG(object):
         self.Ms = Ms
         self.alpha = alpha
         self.gamma = gamma
-        self.name = name
+        self.name = None
         self.solver = solver
         self.dm = dm
+
+    def _setname(self, name):
+        self.name = name
 
     def get_mif(self):
         llg_mif = textwrap.dedent("""\

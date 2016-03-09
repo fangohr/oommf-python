@@ -1,4 +1,4 @@
-from zeeman import Zeeman
+from joommf.energies.zeeman import Zeeman
 
 
 def test_zeeman_mif():

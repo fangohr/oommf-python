@@ -5,9 +5,6 @@ import pytest
 import oommfmif as o
 
 
-def test_get_oommf_version_return_type():
-    assert isinstance(o.get_version(), str)
-
 
 def test_retrieve_oommf_executable(tmpdir):
     oommf_path = o.get_oommf_path()

@@ -19,7 +19,7 @@ Specify Oxs_UniformExchange {A  13e-12}
 
 Specify Oxs_Demag {}
 
-#Specify Oxs_UZeeman "Hrange { { 0.5e6 0 0 0.5e6 0 0 0 } }"
+Specify Oxs_UZeeman "Hrange { { 0.5e6 0 0 0.5e6 0 0 0 } }"
 
 Specify Oxs_EulerEvolve {
   alpha 0.5
@@ -31,13 +31,13 @@ Specify Oxs_EulerEvolve {
 
 
 Specify Oxs_TimeDriver {
- basename bigbar
+ basename test
  evolver Oxs_EulerEvolve
  stopping_dm_dt 0.01
  mesh :mesh
  stage_count 1
  stage_iteration_limit 550000
- total_iteration_limit 2
+ total_iteration_limit 1000
  Ms { Oxs_UniformScalarField { value 0.86e6 } }
  m0 { Oxs_UniformVectorField {
   norm 1
@@ -47,7 +47,7 @@ Specify Oxs_TimeDriver {
 
 Destination archive mmArchive
 
-Schedule DataTable archive Step 10
+Schedule DataTable archive Step 1
 Schedule Oxs_TimeDriver::Magnetization archive Stage 500
 
 

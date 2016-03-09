@@ -16,7 +16,6 @@ def main():
 
     # Create a mesh.
     mesh = Mesh((lx, ly, lz), (dx, dy, dz))
-
     # Create a simulation object.
     sim = Sim(mesh, Ms, name='minimisation_example', debug=True)
 
@@ -24,10 +23,15 @@ def main():
     sim.add_energy(Exchange(A))
     sim.add_energy(Demag())
     sim.add_energy(Zeeman(H))
-    sim.set_evolver(evolver.Minimiser(m_init, Ms, 'test'))
+    sim.set_evolver(evolver.Minimiser(m_init, Ms))
     # Set initial magnetisation.
     # Run simulation.
     sim.minimise()
     print("Done")
+
+    def add(a, b):
+        return a + b
+
+
 if __name__ == "__main__":
     main()

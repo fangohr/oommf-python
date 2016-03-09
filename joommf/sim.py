@@ -1,9 +1,18 @@
+"""
+sim.py
+
+This module contains the Sim class which Joommf uses to run simulations
+
+
+"""
+
+
 import os
 from drivers.evolver import LLG
 from drivers.evolver import Minimiser
 from drivers.evolver import Evolver
 import oommfmif as o
-
+import textwrap
 "Soon to be supported outputs"
 
 time_evolver_outputs = ['time', 'Iteration', 'Stage iteration', 'Stage',
@@ -21,6 +30,9 @@ field_outputs = ['UniformExchange', 'Demag', 'FixedZeeman', 'UZeeman',
 
 """
 Outputs from OOMMF:
+
+DataTable contains ALL Scalar Outputs for the given Simulation
+
 Energies:
 Oxs_UniformExchange::Energy density
 Oxs_UniformExchange::Field
@@ -145,18 +157,18 @@ class Sim(object):
                               "not support certain outputs.")
         if isinstance(self.evolver, LLG):
             if output in time_evolver_outputs:
-                self.outputs.append(output)
+                self.outputs.append([output, freq])
             elif output in minimizer_outputs:
                 raise JoommfError("Joommf: This output is not supported by"
                                   " time integrator evolvers.")
         elif isinstance(self.evolver, Minimiser):
             if output in minimizer_outputs:
-                self.outputs.append(output)
+                self.outputs.append([output, freq])
             elif output in time_evolver_outputs:
                 raise JoommfError("Joommf: This output is not supported by"
                                   " minimization evolvers.")
         elif output in field_outputs:
-            self.evolver_outputs.append(output)
+            self.evolver_outputs.append([output, freq])
         else:
             raise JoommfError("Joommf: This output was not understood."
                               " Please check that it is supported.")
@@ -182,7 +194,9 @@ class Sim(object):
         mif_file.write(self.mesh.mesh_mif())
         for energy in self.energies:
             mif_file.write(energy.get_mif())
+        self.evolver._setname(self.name)
         mif_file.write(self.evolver.get_mif())
+        mif_file.write(self._schedule_outputs())
         mif_file.close()
 
     def run(self):
@@ -193,6 +207,13 @@ class Sim(object):
             raise JoommfError("Joommf: You must add a valid time"
                               " evolver to the simulation object")
 
+    def _schedule_outputs(self):
+        mif = textwrap.dedent("""\
+
+              Destination archive mmArchive
+              Schedule DataTable archive Step 1""")
+        return mif
+
     def minimise(self):
         if isinstance(self.evolver, Minimiser):
             self.create_mif()
@@ -200,6 +221,7 @@ class Sim(object):
         else:
             raise JoommfError("Joommf: You must add a valid minimisation"
                               " evolver to the simulation object")
+    minimize = minimise
 
     def execute_mif(self):
         # path = o.retrieve_oommf_path()

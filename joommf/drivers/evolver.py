@@ -9,11 +9,14 @@ class Evolver(object):
 
 class Minimiser(Evolver):
 
-    def __init__(self, m_init, Ms, name, d_mxHxm=0.1):
+    def __init__(self, m_init, Ms, d_mxHxm=0.1):
         self.m_init = m_init
         self.Ms = Ms
-        self.name = name
         self.d_mxHxm = d_mxHxm
+        self.name = None
+
+    def _setname(self, name):
+        self.name = name
 
     def get_mif(self):
         mif = textwrap.dedent("""\
@@ -59,9 +62,12 @@ class LLG(Evolver):
         self.Ms = Ms
         self.alpha = alpha
         self.gamma = gamma
-        self.name = name
+        self.name = None
         self.solver = solver
         self.dm = dm
+
+    def _setname(self, name):
+        self.name = name
 
     def get_mif(self):
         llg_mif = textwrap.dedent("""\

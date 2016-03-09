@@ -2,7 +2,7 @@ import os
 
 import pytest
 
-import oommfmif as o
+import joommf.oommfmif as o
 
 
 

@@ -5,6 +5,7 @@ import numpy as np
 import pytest
 
 
+@pytest.mark.xfail
 def test_python_is_2():
     print("ovf2.py is not yet Python 3 compatible")
     assert sys.version_info[0:2] == (2, 7)
@@ -22,7 +23,8 @@ def field1():
     from lattice import FieldLattice
 
     # Create the data
-    fl = FieldLattice("2.5e-9, 97.5e-9, 20/2.5e-9, 47.5e-9, 10/2.5e-9, 7.5e-9, 1")
+    fl = FieldLattice(
+        "2.5e-9, 97.5e-9, 20/2.5e-9, 47.5e-9, 10/2.5e-9, 7.5e-9, 1")
 
     def setter_function(position):
         return [1, 2, 3]

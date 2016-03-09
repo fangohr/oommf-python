@@ -1,5 +1,5 @@
-import joommf.mesh
-import joommf.sim
+import joommf.mesh as mesh
+import joommf.sim as sim
 from joommf.energies.demag import Demag
 
 def test_sim_basic_square():

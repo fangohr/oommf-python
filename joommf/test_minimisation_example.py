@@ -1,3 +1,3 @@
 def test_minimisation_example():
-    import minimisation_example
-    minimisation_example.main()
+    import joommf.minimisation_example
+    joommf.minimisation_example.main()

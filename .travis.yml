@@ -26,6 +26,9 @@ install:
   - conda create -n test-environment python=$TRAVIS_PYTHON_VERSION cython matplotlib pillow pytest
   - source activate test-environment; pip install pytest-cov coverage coveralls pandas
 
+cache:
+  directories:
+    - oommf
 before_script:
   - export OOMMF_PREFIX=${OOMMF_PREFIX:-$HOME}
   - bash -x .travis/install-oommf.sh

@@ -1,6 +1,6 @@
-import mesh
-import sim
-from energies.demag import Demag
+import joommf.mesh as mesh
+import joommf.sim as sim
+from joommf.energies.demag import Demag
 
 def test_sim_basic_square():
     testmesh = mesh.Mesh((10, 20, 30), (3, 3, 3), scale=1e-9)

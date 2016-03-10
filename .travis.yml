@@ -3,8 +3,6 @@ language: python
 
 python:
   - "2.7"
-  - "3.4"
-  - "3.5"
 
 env:
 - TCL_VERSION=8.5.0
@@ -18,24 +16,19 @@ addons:
     - tk8.5-dev
 
 install:
-  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
-      wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
-    else
-      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-    fi
+  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   - conda info -a
-  - conda create -n test-environment$TRAVIS_PYTHON_VERSION python=$TRAVIS_PYTHON_VERSION cython matplotlib pillow pytest
-  - if [[ "TRAVIS_PYTHON_VERSION" == "3.5" ]]; then
-      source activate test-environment$TRAVIS_PYTHON_VERSION; pip install pytest-cov coverage coveralls
-    else
-      echo "Skipping Coverage"
-  - source activate test-environment
+  - conda create -n test-environment python=$TRAVIS_PYTHON_VERSION cython matplotlib pillow pytest
+  - source activate test-environment; pip install pytest-cov coverage coveralls pandas
 
+cache:
+  directories:
+    - oommf
 before_script:
   - export OOMMF_PREFIX=${OOMMF_PREFIX:-$HOME}
   - bash -x .travis/install-oommf.sh
@@ -49,14 +42,10 @@ script:
 
 
 script:
-  - if [[ "$TRAVIS_PYTHON_VERSION" == "3.5" ]]; then
-      coverage run --source joommf -m py.test
-    else
-      py.test
+  - coverage run --source joommf -m py.test
 
 after_success: 
-  - if [[ "$TRAVIS_PYTHON_VERSION" == "3.5" ]]; then
-      coveralls
+  - coveralls
 
 
 notifications:

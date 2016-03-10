@@ -4,6 +4,10 @@
 # CONTACT: h.fangohr@soton.ac.uk
 #
 # AUTHOR(S) OF THIS FILE: Matteo Franchin
+import struct
+from numpy import array, ndarray
+
+from lattice import FieldLattice
 
 """
 Generic library to read/write files using the OOMMF OVF file format.
@@ -106,10 +110,6 @@ NOTE: The OVF file defines fields over a grid of cubes while the FieldLattice
 
 __all__ = ["OVF10", "OVF20", "OVFFile", "OVFValueUnits", "OVFValueLabels"]
 
-import struct
-from numpy import array, ndarray
-
-from lattice import FieldLattice
 
 # Abbreviations for OVF versions
 OVF10 = (1, 0)
@@ -167,7 +167,7 @@ class OVFNode(object):
     value = property(_get_value, _set_value)
 
     def _add_as_attr(self, obj=None, prefix="a_"):
-        if obj != None:
+        if obj:
             assert obj != self
             setattr(obj, prefix + self.identity, self)
 
@@ -226,7 +226,7 @@ class OVFSectionNode(OVFNode):
         missing_value = []
         if self.required is not None:
             for required_value in self.required:
-                if not required_value in self.received:
+                if required_value not in self.received:
                     missing_value.append(required_value)
 
         if missing_value:
@@ -367,7 +367,8 @@ known_values_list = [
     ("valueunits", OVFValueUnits,
         "Units for each dimension of the field.", OVF20),
     ("valuemultiplier", float,
-        "Multiply data values by this to get true value in valueunit-s", OVF10),
+     "Multiply data values by this to get true value in valueunit-s",
+     OVF10),
     ("ValueRangeMaxMag", float, "Maximum value of data (used as hint)", OVF10),
     ("ValueRangeMinMag", float, "Minimum value of data (used as hint)", OVF10),
     ("Desc", str, "Extra lines used by postprocessing programs"),
@@ -902,7 +903,7 @@ if __name__ == "__main__no":
     print("Reading")
     ovf = OVFFile(sys.argv[1])
     print("Writing")
-    #ovf.content.a_segment.a_databinary8.name = "Data Binary 4"
+    # ovf.content.a_segment.a_databinary8.name = "Data Binary 4"
     ovf.write(sys.argv[2])
     print("Done")
 

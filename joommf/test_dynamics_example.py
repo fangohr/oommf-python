@@ -1,3 +1,3 @@
 def test_dynamics_example():
-    import dynamics_example
-    dynamics_example.main()
+    import joommf.dynamics_example
+    joommf.dynamics_example.main()

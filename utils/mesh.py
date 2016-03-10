@@ -1,4 +1,4 @@
-# oommf-python
+#oommf-python
 # Copyright (C) 2015 University of Southampton
 #
 # CONTACT: h.fangohr@soton.ac.uk
@@ -103,7 +103,7 @@ class Mesh(object):
     # Returns an array of the form [(x_min, x_max, x_num), (y_min, y_max,
     # y_num), (z_min, z_max, z_num)]
     def get_lattice_spec(self):
-        return [(self.origin[i] + self.cell_size[i] * 0.5, self.origin[i] + self.cell_size[i] * 0.5 + self.cell_size[i] * self.mesh_size[i], self.mesh_size[i]) for i in xrange(3)]
+        return [(self.origin[i] + self.cell_size[i] * 0.5, self.origin[i] + self.cell_size[i] * 0.5 + self.cell_size[i] * self.mesh_size[i], self.mesh_size[i]) for i in range(3)]
 
     def field_from_xyz_array(self, arr):
         assert arr.ndim == 4
@@ -130,9 +130,9 @@ class Mesh(object):
 
     def iter_coords_int(self):
         l, m, n = self.array_order
-        for i in xrange(self.mesh_size[l]):
-            for j in xrange(self.mesh_size[m]):
-                for k in xrange(self.mesh_size[n]):
+        for i in range(self.mesh_size[l]):
+            for j in range(self.mesh_size[m]):
+                for k in range(self.mesh_size[n]):
                     r = [-1] * 3
                     r[l] = i
                     r[m] = j
@@ -141,7 +141,7 @@ class Mesh(object):
 
     def iter_coords(self):
         for i in self.iter_coords_int():
-            yield([self.origin[d] + (0.5 + i[d]) * self.cell_size[d] for d in xrange(3)])
+            yield([self.origin[d] + (0.5 + i[d]) * self.cell_size[d] for d in range(3)])
 
     endpoint = property(
         lambda self: self.origin + self.cell_size * self.mesh_size)

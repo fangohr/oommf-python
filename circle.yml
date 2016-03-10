@@ -33,7 +33,7 @@ dependencies:
     - conda info -a
 
     # Install OOMMF, SWIG and relevant Python packages
-    - conda install cython pillow numpy cycler matplotlib pytest 
+    - conda install cython pillow numpy cycler matplotlib pytest pandas
 test:
   # This is not a real test suite; for the time being we simply print some info
   # about the OOMMF installation to see if conda installed it correctly.

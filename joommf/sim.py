@@ -8,11 +8,13 @@ This module contains the Sim class which Joommf uses to run simulations
 
 
 import os
-from drivers.evolver import LLG
-from drivers.evolver import Minimiser
-from drivers.evolver import Evolver
+from joommf.drivers.evolver import LLG
+from joommf.drivers.evolver import Minimiser
+from joommf.drivers.evolver import Evolver
+from joommf.odtreader import ODTFile
 import oommfmif as o
 import textwrap
+
 "Soon to be supported outputs"
 
 time_evolver_outputs = ['time', 'Iteration', 'Stage iteration', 'Stage',
@@ -176,18 +178,20 @@ class Sim(object):
     def set_m(self, m_init):
         self.m_init = m_init
 
-    def create_mif(self, overwrite=True):
+    def create_mif(self, overwrite=False):
         if self.name is None:
             self.name = 'unnamed'
-        self.mif_filename = self.name + '.mif'
-        if os.path.isfile(self.mif_filename):
+        if os.path.isfile(self.name + '.mif'):
             print("DEBUG: This simulation name already exists.")
             if overwrite:
                 print("DEBUG: Overwriting MIF.")
             else:
-                raise JoommfError("Set overwrite to true or change"
-                                  " the name of the sim object")
-            os.path.isfile(self.mif_filename)
+                var = 1
+                while os.path.isfile(self.name + str(var) + '.mif'):
+                    var += 1
+                self.name += str(var)
+        self.mif_filename = self.name + '.mif'
+        os.path.isfile(self.mif_filename)
         mif_file = open(self.mif_filename, 'w')
         mif_file.write('# MIF 2.1\n\n')
         mif_file.write(self.mesh.atlas_mif())
@@ -227,6 +231,9 @@ class Sim(object):
         # path = o.retrieve_oommf_path()
         # executable = o.retrieve_oommf_executable(path)
         process = o.call_oommf('boxsi ' + self.mif_filename)
+        print("Running simulation... This may take a while")
+        process.wait()
+        print("Simulation complete")
         output, err = process.communicate()
         self._oommf_stdout += output
         self._oommf_stderr += err
@@ -236,3 +243,6 @@ class Sim(object):
             print(self._oommf_stderr)
             print("\n\n\nOommf Stdout:")
             print(self._oommf_stdout)
+        print("Loading simulation scalar output from {}".format(
+            self.mif_filename[:-3] + 'odt'))
+        self.scalar_output = ODTFile(self.mif_filename[:-3] + 'odt')

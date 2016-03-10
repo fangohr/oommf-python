@@ -24,7 +24,7 @@ install:
   - conda update -q conda
   - conda info -a
   - conda create -n test-environment python=$TRAVIS_PYTHON_VERSION cython matplotlib pillow pytest
-  - source activate test-environment; pip install pytest-cov coverage coveralls
+  - source activate test-environment; pip install pytest-cov coverage coveralls pandas
 
 before_script:
   - export OOMMF_PREFIX=${OOMMF_PREFIX:-$HOME}

@@ -8,10 +8,10 @@ This module contains the Sim class which Joommf uses to run simulations
 
 
 import os
-from drivers.evolver import LLG
-from drivers.evolver import Minimiser
-from drivers.evolver import Evolver
-from odtreader import ODTFile
+from joommf.drivers.evolver import LLG
+from joommf.drivers.evolver import Minimiser
+from joommf.drivers.evolver import Evolver
+from joommf.odtreader import ODTFile
 import oommfmif as o
 import textwrap
 

@@ -3,7 +3,7 @@ def main():
     from mesh import Mesh
     from energies.exchange import Exchange
     from energies.demag import Demag
-    from energies.zeeman import Zeeman
+    from energies.zeeman import FixedZeeman
     from drivers import evolver
     # Mesh specification.
     lx = ly = lz = 50e-9  # x, y, and z dimensions (m)
@@ -22,7 +22,7 @@ def main():
     # Add energies.
     sim.add_energy(Exchange(A))
     sim.add_energy(Demag())
-    sim.add_energy(Zeeman(H))
+    sim.add_energy(FixedZeeman(H))
     sim.set_evolver(evolver.Minimiser(m_init, Ms))
     # Set initial magnetisation.
     # Run simulation.

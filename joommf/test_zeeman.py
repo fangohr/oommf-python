@@ -1,9 +1,9 @@
-from joommf.energies.zeeman import Zeeman
+from joommf.energies.zeeman import FixedZeeman
 
 
 def test_zeeman_mif():
     H = (0.1, -0.5, -8.9e6)
-    zeeman = Zeeman(H)
+    zeeman = FixedZeeman(H)
     mif_string = zeeman.get_mif()
     lines = mif_string.split('\n')
     assert 'Specify Oxs_FixedZeeman {' in lines[0]
@@ -17,7 +17,7 @@ def test_zeeman_mif():
 
 def test_zeeman_formatting():
     H = (0.1, -0.5, -8.9e6)
-    zeeman = Zeeman(H)
+    zeeman = FixedZeeman(H)
     mif_string = zeeman.get_mif()
     assert mif_string[0] == 'S'
     assert mif_string[-1] == '\n'

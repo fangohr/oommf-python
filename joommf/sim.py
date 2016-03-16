@@ -11,11 +11,10 @@ import os
 from joommf.drivers.evolver import LLG
 from joommf.drivers.evolver import Minimiser
 from joommf.drivers.evolver import Evolver
-from joommf.odtreader import ODTFile
+import joommf.odtreader as odtreader
 import oommfmif as o
 import textwrap
 from joommf.exceptions import JoommfError
-import odtreader
 
 
 """Soon to be supported outputs"""
@@ -244,6 +243,6 @@ class Sim(object):
             print(self._oommf_stdout)
         print("Loading simulation scalar output from {}".format(
             self.mif_filename[:-3] + 'odt'))
-        ODTFile = odtreader.ODTFile(self.mif_filename[:-3] + 'odt')
-        self.df = ODTFile.df
+        self.ODTFile = odtreader.ODTFile(self.mif_filename[:-3] + 'odt')
+        self.df = self.ODTFile.df
 

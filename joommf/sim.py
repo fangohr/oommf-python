@@ -11,11 +11,13 @@ import os
 from joommf.drivers.evolver import LLG
 from joommf.drivers.evolver import Minimiser
 from joommf.drivers.evolver import Evolver
-from joommf.odtreader import ODTFile
+import joommf.odtreader as odtreader
 import oommfmif as o
 import textwrap
+from joommf.exceptions import JoommfError
 
-"Soon to be supported outputs"
+
+"""Soon to be supported outputs"""
 
 time_evolver_outputs = ['time', 'Iteration', 'Stage iteration', 'Stage',
                         'Last time step', 'Simulation time',
@@ -106,10 +108,6 @@ Oxs_MinDriver::Magnetization
 Oxs_MinDriver::Spin
 
 """
-
-
-class JoommfError(Exception):
-    pass
 
 
 class Sim(object):
@@ -245,4 +243,6 @@ class Sim(object):
             print(self._oommf_stdout)
         print("Loading simulation scalar output from {}".format(
             self.mif_filename[:-3] + 'odt'))
-        self.scalar_output = ODTFile(self.mif_filename[:-3] + 'odt')
+        self.ODTFile = odtreader.ODTFile(self.mif_filename[:-3] + 'odt')
+        self.df = self.ODTFile.df
+

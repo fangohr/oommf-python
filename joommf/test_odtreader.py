@@ -1,4 +1,4 @@
-def main():
+def test_odtreader_dynamics_example():
     from joommf.sim import Sim
     from joommf.mesh import Mesh
     from joommf.energies.exchange import Exchange
@@ -13,7 +13,7 @@ def main():
     A = 1e-11  # exchange energy constant (J/m)
     H = (1e3, 0, 0)  # external magnetic field (A/m)
     m_init = (0, 0, 1)  # initial magnetisation
-    t_sim = 3e-9  # simulation time (s)
+    t_sim = 0.5e-9  # simulation time (s)
     gamma = 2.21e5
     alpha = 0.1
     # Create a mesh.
@@ -30,9 +30,7 @@ def main():
         evolver.LLG(t_sim, m_init, Ms, alpha, gamma, name='evolver'))
     # Set initial magnetisation.
     sim.set_m(m_init)
-
     # Run simulation.
     sim.run()
 
-if __name__ == '__main__':
-    main()
+    assert sim.df.time.values[-1] == 0.5e-09

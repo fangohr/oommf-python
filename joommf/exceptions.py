@@ -1,0 +1,2 @@
+class JoommfError(Exception):
+    pass

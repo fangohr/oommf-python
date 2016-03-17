@@ -1,5 +1,5 @@
 
-* TODO [1/4]
+* TODO [1/7]
 - [X] Small stuff [2/2]
   - [X] remove SWIG examples
   - [X] RP: Update doc/continuous-integration.md - is it still up to date?
@@ -26,10 +26,9 @@
   - [ ] Along with this need to write code to support having different material 
         parameters in different regions.
 
-- [ ] Examples
-  - [ ] Bigbar.mif - Save DataTable on every step
-  - [ ] Load data in Pandas?
+- [ ] Examples [2/6] 
+  - [X] Bigbar.mif - Save DataTable on every step
+  - [X] Load data in Pandas
   - [ ] Bigbar.mif - Save magnetisation on every 5 steps
   - [ ] Load and visualise!
   - [ ] Monitor files as created (look at last line, if incomplete del., pass to pandas).
-  - [ ] 

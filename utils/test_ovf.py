@@ -1,14 +1,11 @@
+from __future__ import unicode_literals
+from builtins import bytes, str
+from io import open
 import os
 import sys
 
 import numpy as np
 import pytest
-
-
-@pytest.mark.xfail
-def test_python_is_2():
-    print("ovf2.py is not yet Python 3 compatible")
-    assert sys.version_info[0:2] == (2, 7)
 
 
 def test_can_import():
@@ -41,7 +38,7 @@ def test_example_docstring_write_ovff20(tmpdir, field1):
     path = os.path.join(str(tmpdir), "newfile.ovf")
     ovf.write(path)
     assert os.path.exists(path)
-    filecontent = open(path).read()
+    filecontent = open(path, encoding='ISO-8859-1').read()
     assert filecontent.startswith("""# OOMMF OVF 2.0
 # Segment count: 1
 # Begin: Segment
@@ -60,7 +57,7 @@ def test_example_docstring_write_ovff10(tmpdir, field1):
     ovf.write(path)
     ovf.write("tmp_test_ovf1.ovf")
     assert os.path.exists(path)
-    filecontent = open(path).read()
+    filecontent = open(path, encoding='ISO-8859-1').read()
     assert filecontent.startswith("""# OOMMF: rectangular mesh v1.0
 # Segment count: 1
 # Begin: Segment

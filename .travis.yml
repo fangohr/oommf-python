@@ -24,7 +24,7 @@ install:
   - conda update -q conda
   - conda info -a
   - conda create -n test-environment python=$TRAVIS_PYTHON_VERSION cython matplotlib pillow pytest
-  - source activate test-environment; pip install pytest-cov coverage coveralls pandas
+  - source activate test-environment; pip install pytest-cov coverage coveralls pandas future
 
 cache:
   directories:

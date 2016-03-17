@@ -1,5 +1,5 @@
 # oommf-python
-# Copyright (C) 2015 University of Southampton
+# Copyright (C) 2015-2016 University of Southampton
 #
 # CONTACT: h.fangohr@soton.ac.uk
 #
@@ -10,14 +10,16 @@ This module provides the Lattice class to describe multi dimensional
 rectangular grids.
 '''
 
-__all__ = ["first_difference", "parse_lattice_spec",
-           "Lattice", "FieldLattice"]
 
 import numpy
 
 import collections
 
 from functools import reduce
+import sys
+py_ver = sys.version_info[0]
+__all__ = ["first_difference", "parse_lattice_spec",
+           "Lattice", "FieldLattice"]
 
 
 def first_difference(la, lb, reverse=False):
@@ -90,7 +92,10 @@ class Lattice(object):
         """
         if type(min_max_num_list) == str:
             min_max_num_list = parse_lattice_spec(min_max_num_list)
+        elif py_ver == 2 and type(min_max_num_list) == unicode:
+            min_max_num_list = parse_lattice_spec(min_max_num_list)
         self.min_max_num_list = list(min_max_num_list)
+        print(self.min_max_num_list)
         self.dim = len(min_max_num_list)
         self.order = order
         self.reduction = reduction

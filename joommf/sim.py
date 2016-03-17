@@ -157,18 +157,18 @@ class Sim(object):
                               "not support certain outputs.")
         if isinstance(self.evolver, LLG):
             if output in time_evolver_outputs:
-                self.outputs.append([output, freq])
+                self.evolver_outputs.append([output, freq])
             elif output in minimizer_outputs:
                 raise JoommfError("Joommf: This output is not supported by"
                                   " time integrator evolvers.")
         elif isinstance(self.evolver, Minimiser):
             if output in minimizer_outputs:
-                self.outputs.append([output, freq])
+                self.evolver_outputs.append([output, freq])
             elif output in time_evolver_outputs:
                 raise JoommfError("Joommf: This output is not supported by"
                                   " minimization evolvers.")
         elif output in field_outputs:
-            self.evolver_outputs.append([output, freq])
+            self.field_outputs.append([output, freq])
         else:
             raise JoommfError("Joommf: This output was not understood."
                               " Please check that it is supported.")
@@ -213,7 +213,17 @@ class Sim(object):
         mif = textwrap.dedent("""\
 
               Destination archive mmArchive
-              Schedule DataTable archive Step 1""")
+              Schedule DataTable archive Step 1
+              """)
+        for i, output in enumerate(self.evolver_outputs):
+            if isinstance(self.evolver, LLG):
+                evolverstr = "Oxs_TimeDriver"
+            mif += textwrap.dedent("""\
+                Destination archive{} mmArchive
+                Schedule {}::{} archive{} Step {}
+                """.format(i, evolverstr,
+                           output[0], i,
+                           output[1]))
         return mif
 
     def minimise(self):
@@ -245,4 +255,3 @@ class Sim(object):
             self.mif_filename[:-3] + 'odt'))
         self.ODTFile = odtreader.ODTFile(self.mif_filename[:-3] + 'odt')
         self.df = self.ODTFile.df
-

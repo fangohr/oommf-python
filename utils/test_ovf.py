@@ -8,12 +8,6 @@ import numpy as np
 import pytest
 
 
-@pytest.mark.xfail
-def test_python_is_2():
-    print("ovf2.py is not yet Python 3 compatible")
-    assert sys.version_info[0:2] == (2, 7)
-
-
 def test_can_import():
     import ovf
     ovf

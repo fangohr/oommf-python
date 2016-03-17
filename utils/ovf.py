@@ -4,10 +4,14 @@
 # CONTACT: h.fangohr@soton.ac.uk
 #
 # AUTHOR(S) OF THIS FILE: Matteo Franchin
+from __future__ import unicode_literals
+from builtins import bytes, str
+from io import *
 import struct
 from numpy import array, ndarray
-
 from lattice import FieldLattice
+import sys
+py_ver = sys.version_info[0]
 
 """
 Generic library to read/write files using the OOMMF OVF file format.
@@ -481,11 +485,9 @@ class OVFDataSectionNode(OVFSectionNode):
     def _read_binary(self, stream, root=None, data_size=8):
         endianness, float_type, expected_tag = \
             _info_binary(root.a_oommf.value.version, data_size)
-        print(endianness, float_type, expected_tag)
         fmt = endianness + float_type
-        print(fmt, type(fmt))
-        #print(type(stream.read_bytes(data_size)))
-        verification_tag, = struct.unpack(fmt, bytes(stream.read_bytes(data_size), 'ISO-8859-1'))
+        verification_tag, = struct.unpack(
+            fmt, bytes(stream.read_bytes(data_size), 'ISO-8859-1'))
         if verification_tag != expected_tag:
             raise OVFReadError("Data carries wrong signature: got '%s' but "
                                "'%s' was expected. This usually means that "
@@ -544,7 +546,7 @@ class OVFDataSectionNode(OVFSectionNode):
         fmt = endianness + float_type * num_floats
         flat_array = self.field.ravel('F')
         out_data += struct.pack(fmt, *flat_array)
-        out_data += b"\n"
+        out_data += bytes("\n", encoding='ISO-8859-1')
         stream.write(out_data)
 
     def _write_ascii(self, stream, root=None):
@@ -720,9 +722,15 @@ class OVFRootNode(OVFSectionNode):
 class OVFStream(object):
 
     def __init__(self, filename, mode="r"):
-        if type(filename) == str:
-            self.filename = filename
-            self.f = open(filename, mode, encoding='ISO-8859-1')
+        print(type(filename))
+        if py_ver == 2:
+            if type(filename) == unicode or type(filename) == str:
+                self.filename = filename
+                self.f = open(filename, mode, encoding='ISO-8859-1')
+        elif py_ver == 3:
+            if type(filename) == str:
+                self.filename = filename
+                self.f = open(filename, mode, encoding='ISO-8859-1')
         else:
             self.filename = None
             self.f = filename
@@ -758,7 +766,7 @@ class OVFStream(object):
         self.lines += self.f.readlines()
 
     def write(self, data):
-        self.f.write(data)
+        self.f.write(str(data, encoding='ISO-8859-1'))
 
     def write_line(self, line):
         self.f.write(line + "\n")

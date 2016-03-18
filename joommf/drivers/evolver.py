@@ -1,4 +1,6 @@
 import textwrap
+from joommf.exceptions import JoommfError
+import os
 
 
 class Evolver(object):
@@ -10,7 +12,14 @@ class Evolver(object):
 class Minimiser(Evolver):
 
     def __init__(self, m_init, Ms, d_mxHxm=0.1):
-        self.m_init = m_init
+        if isinstance(m_init, str):
+            if os.isfile(m_init):
+                self.m_init = m_init
+            else:
+                raise JoommfError("Magnetisation file not found")
+        else:
+            self.m_init = m_init
+        # Want to throw a warning here if neither
         self.Ms = Ms
         self.d_mxHxm = d_mxHxm
         self.name = None
@@ -19,6 +28,24 @@ class Minimiser(Evolver):
         self.name = name
 
     def get_mif(self):
+        if isinstance(self.m_init, str):
+            self.m0 = textwrap.dedent("""\
+                m0 {{ Oxs_FileVectorField {{
+                file {}
+                atlas :atlas
+                }} }}
+                """)
+
+        else:
+            self.m0 = textwrap.dedent("""\
+                m0 {{ Oxs_UniformVectorField {{
+                norm 1
+                vector {{{} {} {}}}
+                }} }}
+                """.format(self.m_init[0],
+                           self.m_init[1],
+                           self.m_init[2]))
+
         mif = textwrap.dedent("""\
         Specify Oxs_CGEvolve:evolver {{}}
 
@@ -26,10 +53,7 @@ class Minimiser(Evolver):
         evolver :evolver
         mesh :mesh
         Ms {}
-        m0 {{ Oxs_UniformVectorField {{
-          norm 1
-          vector {{{} {} {}}}
-         }} }}
+        {}
 
         stopping_mxHxm {}
         basename {}
@@ -39,9 +63,7 @@ class Minimiser(Evolver):
 
         return mif.format(
             self.Ms,
-            self.m_init[0],
-            self.m_init[1],
-            self.m_init[2],
+            self.m0,
             self.d_mxHxm,
             self.name
         )
@@ -70,6 +92,23 @@ class LLG(Evolver):
         self.name = name
 
     def get_mif(self):
+        if isinstance(self.m_init, str):
+            self.m0 = textwrap.dedent("""\
+                m0 {{ Oxs_FileVectorField {{
+                file {}
+                atlas :atlas
+                }} }}
+                """.format(self.m_init))
+        else:
+            self.m0 = textwrap.dedent("""\
+                m0 {{ Oxs_UniformVectorField {{
+                norm 1
+                vector {{{} {} {}}}
+                }} }}
+                """.format(self.m_init[0],
+                           self.m_init[1],
+                           self.m_init[2]))
+
         llg_mif = textwrap.dedent("""\
                    Specify Oxs_RungeKuttaEvolve:evolve {{
                        method {}   alpha {:.5f}
@@ -83,10 +122,7 @@ class LLG(Evolver):
                        stage_count 1
                        mesh :mesh
                        Ms {}
-                       m0 {{ Oxs_UniformVectorField {{
-                        norm 1
-                        vector {{{} {} {}}}
-                       }} }}
+                       {}
                        basename {}
                    vector_field_output_format {{text \%#.8g}}
                    }}]
@@ -100,9 +136,7 @@ class LLG(Evolver):
                               self.dm,
                               self.t,
                               self.Ms,
-                              self.m_init[0],
-                              self.m_init[1],
-                              self.m_init[2],
+                              self.m0,
                               self.name
                               )
 

@@ -1,9 +1,8 @@
-
 * TODO [1/7]
 - [X] Small stuff [2/2]
   - [X] remove SWIG examples
   - [X] RP: Update doc/continuous-integration.md - is it still up to date?
-    
+
 - [ ] Class diagrams [0/2]
   - [ ] Which classes are there in OOMMF
   - [ ] what should joommf look like?
@@ -23,12 +22,16 @@
 
 - [ ] Alternative meshes
   - [ ] grep for variations on '*Atlas:' to find various examples e.g elipsoid
-  - [ ] Along with this need to write code to support having different material 
+  - [ ] Along with this need to write code to support having different material
         parameters in different regions.
 
-- [ ] Examples [2/6] 
+- [ ] Examples [2/6]
   - [X] Bigbar.mif - Save DataTable on every step
   - [X] Load data in Pandas
   - [ ] Bigbar.mif - Save magnetisation on every 5 steps
   - [ ] Load and visualise!
   - [ ] Monitor files as created (look at last line, if incomplete del., pass to pandas).
+
+- [ ] Installation
+  - [ ] have requirements.txt file
+  - [ ] include 'future' 0.15

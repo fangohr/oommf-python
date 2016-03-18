@@ -12,7 +12,7 @@ from joommf.drivers.evolver import LLG
 from joommf.drivers.evolver import Minimiser
 from joommf.drivers.evolver import Evolver
 import joommf.odtreader as odtreader
-import oommfmif as o
+import joommf.oommfmif as o
 import textwrap
 from joommf.exceptions import JoommfError
 

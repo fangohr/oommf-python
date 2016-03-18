@@ -236,8 +236,6 @@ class Sim(object):
     minimize = minimise
 
     def execute_mif(self):
-        # path = o.retrieve_oommf_path()
-        # executable = o.retrieve_oommf_executable(path)
         process = o.call_oommf('boxsi ' + self.mif_filename)
         print("Running simulation... This may take a while")
         process.wait()

@@ -727,7 +727,7 @@ class OVFStream(object):
             if type(filename) == unicode or type(filename) == str:
                 self.filename = filename
                 self.f = open(filename, mode, encoding='ISO-8859-1')
-        elif py_ver == 3:
+        elif py_ver >= 3:
             if type(filename) == str:
                 self.filename = filename
                 self.f = open(filename, mode, encoding='ISO-8859-1')

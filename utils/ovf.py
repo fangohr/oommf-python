@@ -6,7 +6,7 @@
 # AUTHOR(S) OF THIS FILE: Matteo Franchin
 from __future__ import unicode_literals
 from builtins import bytes, str
-from io import *
+from io import open
 import struct
 from numpy import array, ndarray
 from lattice import FieldLattice

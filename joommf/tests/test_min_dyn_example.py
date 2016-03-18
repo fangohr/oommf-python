@@ -1,7 +1,5 @@
 def test_min_dyn():
     import glob
-    import matplotlib.pyplot as plt
-    %matplotlib inline
     from joommf.sim import Sim
     from joommf.mesh import Mesh
     from joommf.energies.exchange import Exchange

@@ -1,10 +1,10 @@
 def main():
-    from sim import Sim
-    from mesh import Mesh
-    from energies.exchange import Exchange
-    from energies.demag import Demag
-    from energies.zeeman import FixedZeeman
-    from drivers import evolver
+    from joommf.sim import Sim
+    from joommf.mesh import Mesh
+    from joommf.energies.exchange import Exchange
+    from joommf.energies.demag import Demag
+    from joommf.energies.zeeman import FixedZeeman
+    from joommf.drivers import evolver
     # Mesh specification.
     lx = ly = lz = 50e-9  # x, y, and z dimensions (m)
     dx = dy = dz = 5e-9  # x, y, and z cell dimensions (m)
@@ -28,10 +28,6 @@ def main():
     # Run simulation.
     sim.minimise()
     print("Done")
-
-    def add(a, b):
-        return a + b
-
 
 if __name__ == "__main__":
     main()

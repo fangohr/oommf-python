@@ -3,6 +3,7 @@ language: python
 
 python:
   - "2.7"
+  - "3.5"
 
 env:
 - TCL_VERSION=8.5.0
@@ -44,11 +45,9 @@ script:
 script:
   - coverage run --source joommf -m py.test
 
-after_success: 
+after_success:
   - coveralls
 
 
 notifications:
   slack: finmag:7HxjIcZF9CPe0sIS5CQJGK08
-
-

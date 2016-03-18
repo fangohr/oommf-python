@@ -76,7 +76,7 @@ class Simulation():
 
     def advance_time(self, target):
         self.mif = mifgen._assemble_mif(self)
-	mifpath = mifgen._save_mif(self, target)
+        mifpath = mifgen._save_mif(self, target)
         _run(mifpath)
         print("Integrating ODE from {}s to {}s".format(self.t, target))
         self.time_series.append([self.t, target])

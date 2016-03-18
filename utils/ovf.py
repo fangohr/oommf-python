@@ -6,7 +6,7 @@
 # AUTHOR(S) OF THIS FILE: Matteo Franchin
 from __future__ import unicode_literals
 from builtins import bytes, str
-from io import *
+from io import open
 import struct
 from numpy import array, ndarray
 from lattice import FieldLattice
@@ -727,7 +727,7 @@ class OVFStream(object):
             if type(filename) == unicode or type(filename) == str:
                 self.filename = filename
                 self.f = open(filename, mode, encoding='ISO-8859-1')
-        elif py_ver == 3:
+        elif py_ver >= 3:
             if type(filename) == str:
                 self.filename = filename
                 self.f = open(filename, mode, encoding='ISO-8859-1')

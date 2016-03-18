@@ -77,7 +77,7 @@ Oxs_Ext <|-- Oxs_Atlas
 #+RESULTS:
 [[file:atlas.eps]]
 
-\clearfloat
+
 
 
 
@@ -131,7 +131,7 @@ Figure \ref{fig:anisotropy-energy} on page \pageref{fig:anisotropy-energy} shows
 file:anisotropy-energy.eps
 
 
-#+LATEX \clearpage\clearfloat\newpage
+#+LATEX \clearpage\newpage
 *** COMMENT Source
 
 #+begin_src plantuml :file anisotropy-energy.eps :exports none
@@ -204,7 +204,8 @@ Oxs_EnergyPreconditionerSupport <|-- Oxs_CubicAnisotropy
 
 - To re-execute the plantuml code, use ~C-c C-c~ when the cursor is in that block.
 
-- Let's add ~*.eps~ files to the repository, so that we only need tis setup for creating new class diagrams.
+- Let's add ~*.eps~ files to the repository, so that we only need this
+  setup for creating new class diagrams.
 
 ** To compile the pdf from this file (watch how the screen changes):
  ~C-c C-e l p~

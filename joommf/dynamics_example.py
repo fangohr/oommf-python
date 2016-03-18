@@ -29,7 +29,6 @@ def main():
     sim.set_evolver(
         evolver.LLG(t_sim, m_init, Ms, alpha, gamma, name='evolver'))
     # Set initial magnetisation.
-    sim.set_m(m_init)
     sim.add_output('Magnetization', 100)
     # Run simulation.
     sim.run()

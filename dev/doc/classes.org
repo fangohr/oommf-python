@@ -204,7 +204,8 @@ Oxs_EnergyPreconditionerSupport <|-- Oxs_CubicAnisotropy
 
 - To re-execute the plantuml code, use ~C-c C-c~ when the cursor is in that block.
 
-- Let's add ~*.eps~ files to the repository, so that we only need tis setup for creating new class diagrams.
+- Let's add ~*.eps~ files to the repository, so that we only need this
+  setup for creating new class diagrams.
 
 ** To compile the pdf from this file (watch how the screen changes):
  ~C-c C-e l p~

@@ -1,9 +1,4 @@
-import os
-import sys
-
-# putting 'joommf' into search path
-sys.path.insert(0, os.path.abspath('..'))
-print(sys.path)
+from .context import joommf
 
 
 def test_run_min_example():

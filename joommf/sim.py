@@ -12,7 +12,7 @@ from joommf.drivers.evolver import LLG
 from joommf.drivers.evolver import Minimiser
 from joommf.drivers.evolver import Evolver
 import joommf.odtreader as odtreader
-import oommfmif as o
+import joommf.oommfmif as o
 import textwrap
 from joommf.exceptions import JoommfError
 
@@ -173,9 +173,6 @@ class Sim(object):
             raise JoommfError("Joommf: This output was not understood."
                               " Please check that it is supported.")
 
-    def set_m(self, m_init):
-        self.m_init = m_init
-
     def create_mif(self, overwrite=False):
         if self.name is None:
             self.name = 'unnamed'
@@ -210,20 +207,26 @@ class Sim(object):
                               " evolver to the simulation object")
 
     def _schedule_outputs(self):
-        mif = textwrap.dedent("""\
-
-              Destination archive mmArchive
-              Schedule DataTable archive Step 1
-              """)
+        mif = ""
+        if isinstance(self.evolver, LLG):
+            evolverstr = "Oxs_TimeDriver"
+        elif isinstance(self.evolver, Minimiser):
+            evolverstr = "Oxs_MinDriver"
         for i, output in enumerate(self.evolver_outputs):
-            if isinstance(self.evolver, LLG):
-                evolverstr = "Oxs_TimeDriver"
             mif += textwrap.dedent("""\
                 Destination archive{} mmArchive
                 Schedule {}::{} archive{} Step {}
                 """.format(i, evolverstr,
                            output[0], i,
                            output[1]))
+
+        mif += textwrap.dedent("""\
+
+              Destination archive mmArchive
+              Schedule DataTable archive Step 1
+              Destination archiveMag mmArchive
+              Schedule {}::Magnetization archiveMag Stage 1
+              """).format(evolverstr)
         return mif
 
     def minimise(self):

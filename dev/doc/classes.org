@@ -77,7 +77,7 @@ Oxs_Ext <|-- Oxs_Atlas
 #+RESULTS:
 [[file:atlas.eps]]
 
-\clearfloat
+
 
 
 
@@ -131,7 +131,7 @@ Figure \ref{fig:anisotropy-energy} on page \pageref{fig:anisotropy-energy} shows
 file:anisotropy-energy.eps
 
 
-#+LATEX \clearpage\clearfloat\newpage
+#+LATEX \clearpage\newpage
 *** COMMENT Source
 
 #+begin_src plantuml :file anisotropy-energy.eps :exports none

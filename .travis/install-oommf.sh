@@ -6,7 +6,7 @@
 
 set -o errexit
 
-OOMMF_VERSION=oommf12a6_20150930.tar.gz
+OOMMF_VERSION=oommf12a6_20150930
 OOMMF_TARBALL=${OOMMF_VERSION}.tar.gz
 OOMMF_URL=http://math.nist.gov/oommf/dist/${OOMMF_TARBALL}
 

@@ -7,7 +7,7 @@ python:
 
 env:
 - TCL_VERSION=8.5.0
-- PYTHONPATH=/home/travis/build/oommf-python/joommf:$PYTHONPATH
+- PYTHONPATH=/home/travis/oommf-python/joommf:$PYTHONPATH
 addons:
   apt:
     packages:
@@ -35,7 +35,7 @@ cache:
     - oommf
 before_script:
   - export OOMMF_PREFIX=${OOMMF_PREFIX:-$HOME}
-  - export OOMMF_PATH=/home/travis/build/oommf-python/oommf
+  - export OOMMF_PATH=/home/travis/oommf-python/oommf
 
 # command to run tests
 script:
@@ -48,6 +48,9 @@ script:
 
 
 script:
+  - echo $PWD
+  - echo $PYTHONPATH
+  - echo $OOMMF_PATH
   - coverage run --source joommf -m py.test
 
 after_success:

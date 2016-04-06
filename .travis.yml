@@ -26,8 +26,8 @@ install:
   - conda create -n test-environment python=$TRAVIS_PYTHON_VERSION cython matplotlib pillow pytest
   - source activate test-environment; pip install pytest-cov coverage coveralls pandas future
   - git clone https://github.com/fangohr/oommf.git && cd oommf && make && cd ..
-  - export OOMMF_TK_CONFIG=/usr/lib/x86_64-linux-gnu/tk8.6/tkConfig.sh
-  - export OOMMF_TCL_CONFIG=/usr/lib/x86_64-linux-gnu/tcl8.6/tclConfig.sh
+  - export OOMMF_TK_CONFIG=/usr/lib/x86_64-linux-gnu/tk8.5/tkConfig.sh
+  - export OOMMF_TCL_CONFIG=/usr/lib/x86_64-linux-gnu/tcl8.5/tclConfig.sh
   - alias oommf="tclsh ${OOMMF_TCL}/oommf.tcl"
 cache:
   directories:

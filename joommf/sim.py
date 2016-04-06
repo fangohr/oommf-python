@@ -15,7 +15,7 @@ import joommf.odtreader as odtreader
 import joommf.oommfmif as o
 import textwrap
 from joommf.exceptions import JoommfError
-
+import glob
 
 """Soon to be supported outputs"""
 
@@ -194,18 +194,19 @@ class Sim(object):
         for energy in self.energies:
             mif_file.write(energy.get_mif())
         self.evolver._setname(self.name)
-	if isinstance(self.evolver, LLG):
-	    mif_file.write(self.evolver.get_mif(stage_count = self.stages))
+        if isinstance(self.evolver, LLG):
+            mif_file.write(self.evolver.get_mif(stage_count = self.stages))
         else:
-	    mif_file.write(self.evolver.get_mif())
+            mif_file.write(self.evolver.get_mif())
         mif_file.write(self._schedule_outputs())
         mif_file.close()
 
     def run(self, stages=1):
         if isinstance(self.evolver, LLG):
-	    self.stages = stages
+            self.stages = stages
             self.create_mif()
             self.execute_mif()
+            self.final_mag = glob.glob(self.name + '*.omf')[-1]
         else:
             raise JoommfError("Joommf: You must add a valid time"
                               " evolver to the simulation object")

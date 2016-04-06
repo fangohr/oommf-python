@@ -91,7 +91,7 @@ class LLG(Evolver):
     def _setname(self, name):
         self.name = name
 
-    def get_mif(self):
+    def get_mif(self, stage_count=1):
         if isinstance(self.m_init, str):
             self.m0 = textwrap.dedent("""\
                 m0 {{ Oxs_FileVectorField {{
@@ -119,7 +119,7 @@ class LLG(Evolver):
                        Specify Oxs_TimeDriver [subst {{
                        evolver :evolve
                        stopping_time {:.2e}
-                       stage_count 1
+                       stage_count {}
                        mesh :mesh
                        Ms {}
                        {}
@@ -135,6 +135,7 @@ class LLG(Evolver):
                               self.gamma,
                               self.dm,
                               self.t,
+			      stage_count,
                               self.Ms,
                               self.m0,
                               self.name

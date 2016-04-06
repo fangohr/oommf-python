@@ -194,12 +194,16 @@ class Sim(object):
         for energy in self.energies:
             mif_file.write(energy.get_mif())
         self.evolver._setname(self.name)
-        mif_file.write(self.evolver.get_mif())
+	if isinstance(self.evolver, LLG):
+	    mif_file.write(self.evolver.get_mif(stage_count = self.stages))
+        else:
+	    mif_file.write(self.evolver.get_mif())
         mif_file.write(self._schedule_outputs())
         mif_file.close()
 
-    def run(self):
+    def run(self, stages=1):
         if isinstance(self.evolver, LLG):
+	    self.stages = stages
             self.create_mif()
             self.execute_mif()
         else:

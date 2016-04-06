@@ -7,7 +7,7 @@ machine:
     PATH: $MINICONDA_ROOT/bin:$PATH
     OOMMF_PATH: /home/ubuntu/oommf-python/oommf/oommf
     OOMMF_TCL: oommf/oommf/oommf.tcl
-
+    PYTHONPATH: /home/ubuntu/oommf-python/joommf:$PYTHONPATH
 dependencies:
   pre:
   # Note, we used to use the naive caching of docker images, but found that

@@ -37,4 +37,3 @@ class Mesh(object):
         mesh_mif += '\tatlas :atlas\n'
         mesh_mif += '}\n\n'
         return mesh_mif
-

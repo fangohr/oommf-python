@@ -34,7 +34,7 @@ cache:
     - oommf
 before_script:
   - export OOMMF_PREFIX=${OOMMF_PREFIX:-$HOME}
-  - export OOMMF_PATH=/home/travis/build/oommf-python/oommf
+  - export OOMMF_PATH=/home/travis/build/fangohr/oommf-python/oommf/oommf
 
 # command to run tests
 script:

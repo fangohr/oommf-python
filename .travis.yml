@@ -7,7 +7,7 @@ python:
 
 env:
 - TCL_VERSION=8.5.0
-
+- PYTHONPATH=/home/travis/build/oommf-python/joommf:$PYTHONPATH
 addons:
   apt:
     packages:
@@ -26,7 +26,7 @@ install:
   - conda info -a
   - conda create -n test-environment python=$TRAVIS_PYTHON_VERSION cython matplotlib pillow pytest
   - source activate test-environment; pip install pytest-cov coverage coveralls pandas future
-  - git clone https://github.com/fangohr/oommf.git && cd oommf && make
+  - git clone https://github.com/fangohr/oommf.git && cd oommf && make && cd ..
   - export OOMMF_TK_CONFIG=/usr/lib/x86_64-linux-gnu/tk8.6/tkConfig.sh
   - export OOMMF_TCL_CONFIG=/usr/lib/x86_64-linux-gnu/tcl8.6/tclConfig.sh
   - alias oommf="tclsh ${OOMMF_TCL}/oommf.tcl"
@@ -35,10 +35,13 @@ cache:
     - oommf
 before_script:
   - export OOMMF_PREFIX=${OOMMF_PREFIX:-$HOME}
-  - export OOMMF_PATH=/home/travis/oommf
+  - export OOMMF_PATH=/home/travis/build/oommf-python/oommf
 
 # command to run tests
 script:
+  - echo $PWD 
+  - echo $PYTHONPATH
+  - echo $OOMMF_PATH
   - which tclsh
   - which oommf
   - $OOMMF_PATH/oommf.tcl +platform

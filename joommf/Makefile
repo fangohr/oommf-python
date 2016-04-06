@@ -9,3 +9,4 @@ clean:
 	rm -f mult*.omf
 	rm -f mult*.mif
 	rm -f *.pyc
+	echo "Done"

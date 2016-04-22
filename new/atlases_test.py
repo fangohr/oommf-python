@@ -1,5 +1,5 @@
 import pytest
-from atlas import BoxAtlas
+from atlases import BoxAtlas
 
 
 class TestBoxAtlas(object):

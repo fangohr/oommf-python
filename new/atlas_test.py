@@ -93,8 +93,8 @@ class TestBoxAtlas(object):
                 l = mif_lines[8+i].split()
                 assert l[0] == '{}range'.format('xyz'[i])
                 assert l[1] == '{'
-                assert l[2] == '{}min'.format('xyz'[i])
-                assert l[3] == '{}max'.format('xyz'[i])
+                assert l[2] == '${}min'.format('xyz'[i])
+                assert l[3] == '${}max'.format('xyz'[i])
                 assert l[4] == '}'
 
             # Assert region name.
@@ -107,4 +107,4 @@ class TestBoxAtlas(object):
             assert mif_lines[12] == '}'
 
             # Assert new lines at the end of the string.
-            assert mif[-1] == '\n'
+            assert mif[-2:] == '\n\n'

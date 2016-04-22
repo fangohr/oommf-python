@@ -54,9 +54,9 @@ class TestRectangularMesh(object):
             mif_lines = mesh.get_mif().split('\n')
 
             # Assert comment.
-            l1 = mif_lines[0].split()
-            assert l1[0] == '#'
-            assert l1[1] == 'RectangularMesh'
+            l = mif_lines[0].split()
+            assert l[0] == '#'
+            assert l[1] == 'RectangularMesh'
 
             # Assert set statements.
             expected_data = [('xstep', d[0]),

@@ -225,6 +225,54 @@ class Field(object):
             for j in range(self.dim):
                 self.f[:, :, :, j] = norm * self.f[:, :, :, j]/f_norm
 
+    def write_oommf_file(self, filename):
+        oommf_file = open(filename, 'w')
+        
+        header_lines = ['OOMMF OVF 2.0',
+                        '',
+                        'Segment count: 1',
+                        '',
+                        'Begin: Segment',
+                        'Begin: Header',
+                        '',
+                        'meshunit: m',
+                        'meshtype: rectangular',
+                        'xbase: ' + str(self.d[0]),
+                        'ybase: ' + str(self.d[1]),
+                        'zbase: ' + str(self.d[2]),
+                        'xnodes: ' + str(self.n[0]),
+                        'ynodes: ' + str(self.n[1]),
+                        'znodes: ' + str(self.n[2]),
+                        'xstepsize: ' + str(self.d[0]),
+                        'ystepsize: ' + str(self.d[1]),
+                        'zstepsize: ' + str(self.d[2]),
+                        'xmin: ' + str(self.cmin[0]),
+                        'ymin: ' + str(self.cmin[1]),
+                        'zmin: ' + str(self.cmin[2]),
+                        'xmax: ' + str(self.cmax[0]),
+                        'ymax: ' + str(self.cmax[1]),
+                        'zmax: ' + str(self.cmax[2]),
+                        'valuedim: ' + str(self.dim),
+                        '',
+                        'End: Header',
+                        '',
+                        'Begin: Data Text']
+
+        for line in header_lines:
+            oommf_file.write('# ' + line + '\n')
+
+        for iz in xrange(self.n[0]):
+            for iy in xrange(self.n[1]):
+                for ix in xrange(self.n[2]):
+                    v = [str(vi) for vi in self.f[ix, iy, iz, :]]
+                    for vi in v:
+                        oommf_file.write(' ' + vi)
+                    oommf_file.write('\n')
+
+        oommf_file.write('# End: Data Text\n')
+        oommf_file.write('# End: Segment')
+        oommf_file.close()
+
 
 def load_oommf_file(filename, name=None):
     f = open(filename, 'r')
@@ -260,12 +308,13 @@ def load_oommf_file(filename, name=None):
             data_first_line = j+1
 
     counter = 0
-    for ix in xrange(n[0]):
+    for iz in xrange(n[0]):
             for iy in xrange(n[1]):
-                    for iz in xrange(n[2]):
+                    for ix in xrange(n[2]):
                         i = (ix, iy, iz)
                         line_data = lines[data_first_line+counter]
                         value = [float(vi) for vi in line_data.split()]
                         field.set_at_index(i, value)
 
                         counter += 1
+    field.write_oommf_file('test_file.omf')

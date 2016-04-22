@@ -19,9 +19,9 @@ class TestField(object):
         self.vector_pyfuncs = self.create_vector_pyfuncs()
 
     def create_scalar_fs(self):
-        cmin_list = [(0, 0, 0), (-5, -8, -10), (10, -5, -80)]
-        cmax_list = [(5, 8, 10), (11, 4, 4), (15, 10, 85)]
-        d_list = [(1, 1, 1), (1, 2, 1), (5, 5, 2.5)]
+        cmin_list = [(0, 0, 0), (-5e-9, -8e-9, -10e-9), (10, -5, -80)]
+        cmax_list = [(5e-9, 8e-9, 10e-9), (11e-9, 4e-9, 4e-9), (15, 10, 85)]
+        d_list = [(1e-9, 1e-9, 1e-9), (1e-9, 2e-9, 1e-9), (5, 5, 2.5)]
 
         scalar_fs = []
         for i in range(len(cmin_list)):
@@ -201,10 +201,11 @@ class TestField(object):
                     elif s == 'z':
                         assert cs == (0, 1, 2)
 
-                    assert a1[0] == f.cmin[cs[0]] + f.d[cs[0]]/2.
-                    assert a1[-1] == f.cmax[cs[0]] - f.d[cs[0]]/2.
-                    assert a2[0] == f.cmin[cs[1]] + f.d[cs[1]]/2.
-                    assert a2[-1] == f.cmax[cs[1]] - f.d[cs[1]]/2.
+                    tol = 1e-16
+                    assert abs(a1[0] - (f.cmin[cs[0]] + f.d[cs[0]]/2.)) < tol
+                    assert abs(a1[-1] - (f.cmax[cs[0]] - f.d[cs[0]]/2.)) < tol
+                    assert abs(a2[0] - (f.cmin[cs[1]] + f.d[cs[1]]/2.)) < tol
+                    assert abs(a2[-1] - (f.cmax[cs[1]] - f.d[cs[1]]/2.)) < tol
                     assert len(a1) == f.n[cs[0]]
                     assert len(a2) == f.n[cs[1]]
                     assert f_slice.shape == (f.n[cs[0]],

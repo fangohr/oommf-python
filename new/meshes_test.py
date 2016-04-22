@@ -1,6 +1,7 @@
 import pytest
 from meshes import RectangularMesh
 
+
 class TestRectangularMesh(object):
     def setup(self):
         # Set of valid arguments.
@@ -8,12 +9,12 @@ class TestRectangularMesh(object):
                       [(1e-9, 1e-9, 1e-9), 'atlas2', 'mesh2'],
                       [(5, 1, 1e-9), 'atlas3', 'mesh3'],
                       [(1.0, 13-6, 1.1e4), 'atlas4', 'mesh4']]
-                      
+
         # Set of invalid arguments.
         self.args2 = [[(0, 1, 1), 'atlas1', 'mesh1'],
                       [(1, -0.1e-9, 1e-9), 'atlas2', 'mesh2'],
                       [(5, 1, 1e-9), 7, 'mesh3'],
-                      [(1.0, 13-6, 1.1e4), 'atlas4', [1 , 2]]]
+                      [(1.0, 13-6, 1.1e4), 'atlas4', [1, 2]]]
 
     def test_init(self):
         # Valid arguments.

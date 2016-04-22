@@ -30,9 +30,9 @@ class BoxAtlas(object):
         for datum in data:
             mif += 'set {} {}\n'.format(datum[0], datum[1])
         mif += 'Specify Oxs_BoxAtlas:{}'.format(self.atlasname) + ' {\n'
-        mif += '\txrange { xmin xmax }\n'
-        mif += '\tyrange { ymin ymax }\n'
-        mif += '\tzrange { zmin zmax }\n'
+        mif += '\txrange { $xmin $xmax }\n'
+        mif += '\tyrange { $ymin $ymax }\n'
+        mif += '\tzrange { $zmin $zmax }\n'
         mif += '\tname {}\n'.format(self.regionname)
         mif += '}\n\n'
 

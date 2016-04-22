@@ -18,9 +18,9 @@ class Field(object):
 
         # Compute the number of cells in x, y, and z directions.
         tol = 1e-12
-        if ((self.d[0] - tol > self.l[0] % self.d[0] > tol) or \
-            (self.d[1] - tol > self.l[1] % self.d[1] > tol) or \
-            (self.d[2] - tol > self.l[2] % self.d[2] > tol)):
+        if (self.d[0] - tol > self.l[0] % self.d[0] > tol) or
+        (self.d[1] - tol > self.l[1] % self.d[1] > tol) or
+        (self.d[2] - tol > self.l[2] % self.d[2] > tol):
             raise ValueError('Domain is not a multiple of {}.'.format(self.d))
 
         else:
@@ -65,22 +65,22 @@ class Field(object):
         return c
 
     def coord2index(self, c):
-        if (c[0] < self.cmin[0] or c[0] > self.cmax[0] or \
-            c[1] < self.cmin[1] or c[1] > self.cmax[1] or \
-            c[2] < self.cmin[2] or c[2] > self.cmax[2]):
+        if c[0] < self.cmin[0] or c[0] > self.cmax[0] or
+        c[1] < self.cmin[1] or c[1] > self.cmax[1] or
+        c[2] < self.cmin[2] or c[2] > self.cmax[2]:
             raise ValueError('Coordinate {} out of domain.'. format(c))
 
         else:
-           i = [int(round(float(c[0]-self.cmin[0])/self.d[0] - 0.5)),
-                int(round(float(c[1]-self.cmin[1])/self.d[1] - 0.5)),
-                int(round(float(c[2]-self.cmin[2])/self.d[2] - 0.5))]
+            i = [int(round(float(c[0]-self.cmin[0])/self.d[0] - 0.5)),
+                 int(round(float(c[1]-self.cmin[1])/self.d[1] - 0.5)),
+                 int(round(float(c[2]-self.cmin[2])/self.d[2] - 0.5))]
 
-           # If rounded to the out-of-range index.
-           for j in range(3):
-               if i[j] < 0:
-                   i[j] = 0
-               elif i[j] > self.n[j] - 1:
-                   i[j] = self.n[j] - 1
+            # If rounded to the out-of-range index.
+            for j in range(3):
+                if i[j] < 0:
+                    i[j] = 0
+                elif i[j] > self.n[j] - 1:
+                    i[j] = self.n[j] - 1
 
         return tuple(i)
 
@@ -128,7 +128,6 @@ class Field(object):
             axes = (0, 1)
         else:
             raise ValueError('Axis not properly defined.')
-        
 
         if self.cmin[slice_num] <= point <= self.cmax[slice_num]:
             axis1_indices = np.arange(0, self.n[axes[0]])
@@ -136,14 +135,16 @@ class Field(object):
 
             axis1_coords = np.zeros(len(axis1_indices))
             axis2_coords = np.zeros(len(axis2_indices))
-            
+
             sample_centre = list(self.domain_centre())
             sample_centre[slice_num] = point
             sample_centre = tuple(sample_centre)
 
             slice_index = self.coord2index(sample_centre)[slice_num]
 
-            field_slice = np.zeros([self.n[axes[0]], self.n[axes[1]], self.dim])
+            field_slice = np.zeros([self.n[axes[0]],
+                                    self.n[axes[1]],
+                                    self.dim])
             for j in axis1_indices:
                 for k in axis2_indices:
                     i = [0, 0, 0]
@@ -164,11 +165,10 @@ class Field(object):
             raise ValueError('Point {} outside the domain.'.format(point))
 
         return axis1_coords, axis2_coords, field_slice, coord_system
-            
 
     def plot_slice(self, axis, point):
         a1, a2, field_slice, coord_system = self.slice_field(axis, point)
-        
+
         if self.dim == 1:
             plt.imshow(field_slice[:, :, 0],
                        extent=[a1[0], a1[-1], a2[0], a2[-1]],
@@ -183,8 +183,10 @@ class Field(object):
                 raise ValueError('Vector plane components are zero.')
             else:
                 plt.quiver(pm[:, 0], pm[:, 1], pm[:, 2], pm[:, 3], pm[:, 4])
-                plt.xlim([self.cmin[coord_system[0]], self.cmax[coord_system[0]]])
-                plt.ylim([self.cmin[coord_system[1]], self.cmax[coord_system[1]]])
+                plt.xlim([self.cmin[coord_system[0]],
+                          self.cmax[coord_system[0]]])
+                plt.ylim([self.cmin[coord_system[1]],
+                          self.cmax[coord_system[1]]])
                 plt.xlabel('xyz'[coord_system[0]])
                 plt.ylabel('xyz'[coord_system[1]])
                 plt.title('xyz'[coord_system[2]] + ' slice')
@@ -222,7 +224,8 @@ class Field(object):
             # Normalise every component.
             for j in range(self.dim):
                 self.f[:, :, :, j] = norm * self.f[:, :, :, j]/f_norm
-                 
+
+
 def load_oommf_file(filename, name=None):
     f = open(filename, 'r')
     lines = f.readlines()
@@ -255,7 +258,7 @@ def load_oommf_file(filename, name=None):
     for j in xrange(len(lines)):
         if lines[j].find('Begin: Data') != -1:
             data_first_line = j+1
-    
+
     counter = 0
     for ix in xrange(n[0]):
             for iy in xrange(n[1]):

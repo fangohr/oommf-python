@@ -2,6 +2,7 @@ import random
 import numpy as np
 from field import Field
 
+
 class TestField(object):
     def setup(self):
         self.scalar_fs = self.create_scalar_fs()
@@ -42,24 +43,24 @@ class TestField(object):
         return vector_fs
 
     def create_scalar_pyfuncs(self):
-        f1 = lambda c: 1
-        f2 = lambda c: -2.4
-        f3 = lambda c: -6.4e-15
-        f4 = lambda c: c[0] + c[1] + c[2] + 1
-        f5 = lambda c: (c[0]-1)**2 - c[1]+7 + c[2]*0.1
-        f6 = lambda c: np.sin(c[0]) + np.cos(c[1]) - np.sin(2*c[2])
+        f = [lambda c: 1,
+             lambda c: -2.4,
+             lambda c: -6.4e-15,
+             lambda c: c[0] + c[1] + c[2] + 1,
+             lambda c: (c[0]-1)**2 - c[1]+7 + c[2]*0.1,
+             lambda c: np.sin(c[0]) + np.cos(c[1]) - np.sin(2*c[2])]
 
-        return [f1, f2, f3, f4, f5, f6]
+        return f
 
     def create_vector_pyfuncs(self):
-        f1 = lambda c: (1, 2, 0)
-        f2 = lambda c: (-2.4, 1e-3, 9)
-        f3 = lambda c: (c[0], c[1], c[2] + 100)
-        f4 = lambda c: (c[0]+c[2]+10, c[1], c[2]+1)
-        f5 = lambda c: (c[0]-1, c[1]+70, c[2]*0.1)
-        f6 = lambda c: (np.sin(c[0]), np.cos(c[1]), -np.sin(2*c[2]))
+        f = [lambda c: (1, 2, 0),
+             lambda c: (-2.4, 1e-3, 9),
+             lambda c: (c[0], c[1], c[2] + 100),
+             lambda c: (c[0]+c[2]+10, c[1], c[2]+1),
+             lambda c: (c[0]-1, c[1]+70, c[2]*0.1),
+             lambda c: (np.sin(c[0]), np.cos(c[1]), -np.sin(2*c[2]))]
 
-        return [f1, f2, f3, f4, f5, f6]
+        return f
 
     def test_init(self):
         cmin = (0, -4, 11)
@@ -68,7 +69,7 @@ class TestField(object):
         name = 'test_field'
 
         f = Field(cmin, cmax, d, dim=2, name=name)
-    
+
         assert f.l[0] == 15 - 0
         assert f.l[1] == 10.1 - (-4)
         assert f.l[2] == 16.5 - 11
@@ -161,7 +162,7 @@ class TestField(object):
         for f in self.scalar_fs:
             for pyfun in self.scalar_pyfuncs:
                 f.set(pyfun)
-                
+
                 for j in range(10):
                     c = f.random_coord()
                     expected_value = pyfun(f.nearestcellcoord(c))
@@ -178,7 +179,7 @@ class TestField(object):
                     expected_value = pyfun(f.nearestcellcoord(c))
                     assert np.all(f(c) == expected_value)
                     assert np.all(f.sample(c) == expected_value)
-                    
+
     def test_slice_f(self):
         for s in 'xyz':
             for f in self.vector_fs + self.scalar_fs:
@@ -192,7 +193,7 @@ class TestField(object):
                     point = f.domain_centre()['xyz'.find(s)]
                     data = f.slice_field(s, point)
                     a1, a2, f_slice, cs = data
-                    
+
                     if s == 'x':
                         assert cs == (1, 2, 0)
                     elif s == 'y':
@@ -207,8 +208,8 @@ class TestField(object):
                     assert len(a1) == f.n[cs[0]]
                     assert len(a2) == f.n[cs[1]]
                     assert f_slice.shape == (f.n[cs[0]],
-                                                 f.n[cs[1]],
-                                                 f.dim)
+                                             f.n[cs[1]],
+                                             f.dim)
 
                     for j in xrange(f.n[cs[0]]):
                         for k in xrange(f.n[cs[1]]):
@@ -235,5 +236,5 @@ class TestField(object):
 
                     assert norm.shape == (f.n[0], f.n[1], f.n[2])
                     diff = norm - norm_value
-            
+
                     assert np.all(abs(norm - norm_value) < 1e-12)

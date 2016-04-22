@@ -18,9 +18,9 @@ class Field(object):
 
         # Compute the number of cells in x, y, and z directions.
         tol = 1e-12
-        if (self.d[0] - tol > self.l[0] % self.d[0] > tol) or
-        (self.d[1] - tol > self.l[1] % self.d[1] > tol) or
-        (self.d[2] - tol > self.l[2] % self.d[2] > tol):
+        if self.d[0] - tol > self.l[0] % self.d[0] > tol or \
+           self.d[1] - tol > self.l[1] % self.d[1] > tol or \
+           self.d[2] - tol > self.l[2] % self.d[2] > tol:
             raise ValueError('Domain is not a multiple of {}.'.format(self.d))
 
         else:
@@ -65,9 +65,9 @@ class Field(object):
         return c
 
     def coord2index(self, c):
-        if c[0] < self.cmin[0] or c[0] > self.cmax[0] or
-        c[1] < self.cmin[1] or c[1] > self.cmax[1] or
-        c[2] < self.cmin[2] or c[2] > self.cmax[2]:
+        if c[0] < self.cmin[0] or c[0] > self.cmax[0] or \
+           c[1] < self.cmin[1] or c[1] > self.cmax[1] or \
+           c[2] < self.cmin[2] or c[2] > self.cmax[2]:
             raise ValueError('Coordinate {} out of domain.'. format(c))
 
         else:

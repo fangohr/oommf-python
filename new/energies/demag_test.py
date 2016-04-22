@@ -1,6 +1,7 @@
 import pytest
 from demag import Demag
 
+
 class TestDemag(object):
     def test_get_mif(self):
         demag = Demag()

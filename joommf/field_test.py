@@ -222,7 +222,7 @@ class TestField(object):
     def test_normalise(self):
         for f in self.vector_fs:
             for value in self.vector_pyfuncs + self.tuple_values:
-                for norm_value in [1, 2.1, 50, 1e-3]:
+                for norm_value in [1, 2.1, 50, 1e-3, np.pi]:
                     f.set(value)
 
                     f.normalise(norm=norm_value)

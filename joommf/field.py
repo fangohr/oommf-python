@@ -113,6 +113,9 @@ class Field(object):
         if normalise:
             self.normalise()
 
+    def set_at_index(self, i, value):
+        self.f[i[0], i[1], i[2], :] = value
+
     def slice_field(self, axis, point):
         if axis == 'x':
             slice_num = 0
@@ -175,14 +178,18 @@ class Field(object):
             pm = self._prepare_for_quiver(a1, a2,
                                           field_slice,
                                           coord_system)
-            plt.quiver(pm[:, 0], pm[:, 1], pm[:, 2], pm[:, 3], pm[:, 4])
-        plt.xlim([self.cmin[coord_system[0]], self.cmax[coord_system[0]]])
-        plt.ylim([self.cmin[coord_system[1]], self.cmax[coord_system[1]]])
-        plt.xlabel('xyz'[coord_system[0]])
-        plt.ylabel('xyz'[coord_system[1]])
-        plt.title('xyz'[coord_system[2]] + ' slice')
-        plt.grid()
-        plt.show()
+
+            if np.allclose(pm[:, 2], 0) and np.allclose(pm[:, 3], 0):
+                raise ValueError('Vector plane components are zero.')
+            else:
+                plt.quiver(pm[:, 0], pm[:, 1], pm[:, 2], pm[:, 3], pm[:, 4])
+                plt.xlim([self.cmin[coord_system[0]], self.cmax[coord_system[0]]])
+                plt.ylim([self.cmin[coord_system[1]], self.cmax[coord_system[1]]])
+                plt.xlabel('xyz'[coord_system[0]])
+                plt.ylabel('xyz'[coord_system[1]])
+                plt.title('xyz'[coord_system[2]] + ' slice')
+                plt.grid()
+                plt.show()
 
     def _prepare_for_quiver(self, a1, a2, field_slice, coord_system):
         nel = self.n[coord_system[0]]*self.n[coord_system[1]]
@@ -192,9 +199,9 @@ class Field(object):
         for j in xrange(self.n[coord_system[0]]):
             for k in xrange(self.n[coord_system[1]]):
                 entry = [a1[j], a2[k],
-                         field_slice[j, k, 0],
-                         field_slice[j, k, 1],
-                         field_slice[j, k, 2]]
+                         field_slice[j, k, coord_system[0]],
+                         field_slice[j, k, coord_system[1]],
+                         field_slice[j, k, coord_system[2]]]
                 plot_matrix[counter, :] = np.array(entry)
                 counter += 1
 
@@ -212,6 +219,50 @@ class Field(object):
                 f_norm += self.f[:, :, :, j]**2
             f_norm = np.sqrt(f_norm)
 
+            # Normalise every component.
             for j in range(self.dim):
                 self.f[:, :, :, j] = norm * self.f[:, :, :, j]/f_norm
                  
+def load_oommf_file(filename, name=None):
+    f = open(filename, 'r')
+    lines = f.readlines()
+    f.close()
+
+    # Load metadata.
+    dic = {'xmin': None, 'ymin': None, 'zmin': None,
+           'xmax': None, 'ymax': None, 'zmax': None,
+           'xstepsize': None, 'ystepsize': None, 'zstepsize': None,
+           'xbase': None, 'ybase': None, 'zbase': None,
+           'xnodes': None, 'ynodes': None, 'znodes': None,
+           'valuedim': None}
+
+    for line in lines[0:50]:
+        for key in dic.keys():
+            if line.find(key) != -1:
+                dic[key] = float(line.split()[2])
+
+    cmin = (dic['xmin'], dic['ymin'], dic['zmin'])
+    cmax = (dic['xmax'], dic['ymax'], dic['zmax'])
+    d = (dic['xstepsize'], dic['ystepsize'], dic['zstepsize'])
+    cbase = (dic['xbase'], dic['ybase'], dic['zbase'])
+    n = (int(round(dic['xnodes'])),
+         int(round(dic['ynodes'])),
+         int(round(dic['znodes'])))
+    dim = int(dic['valuedim'])
+
+    field = Field(cmin, cmax, d, dim, name=name)
+
+    for j in xrange(len(lines)):
+        if lines[j].find('Begin: Data') != -1:
+            data_first_line = j+1
+    
+    counter = 0
+    for ix in xrange(n[0]):
+            for iy in xrange(n[1]):
+                    for iz in xrange(n[2]):
+                        i = (ix, iy, iz)
+                        line_data = lines[data_first_line+counter]
+                        value = [float(vi) for vi in line_data.split()]
+                        field.set_at_index(i, value)
+
+                        counter += 1

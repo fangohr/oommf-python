@@ -24,7 +24,7 @@ class TestFixedZeeman(object):
             H = args[0]
             multiplier = args[1]
             name = args[2]
-                      
+
             fz = FixedZeeman(H, multiplier, name)
 
             assert fz.H == H
@@ -41,7 +41,7 @@ class TestFixedZeeman(object):
                 H = args[0]
                 multiplier = args[1]
                 name = args[2]
-                      
+
                 fz = FixedZeeman(H, multiplier, name)
 
     def test_get_mif(self):
@@ -49,7 +49,7 @@ class TestFixedZeeman(object):
             H = args[0]
             multiplier = args[1]
             name = args[2]
-                      
+
             fz = FixedZeeman(H, multiplier, name)
 
             mif = fz.get_mif()

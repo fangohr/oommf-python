@@ -1,5 +1,5 @@
 class RungeKuttaEvolve(object):
-    def __init__(self, alpha, gamma_G=2.210173e5, start_dm=0.01):
+    def __init__(self, alpha, gamma_G=2.210173e5, start_dm=0.01, method='rkf54'):
         if not isinstance(alpha, (int, float)) or alpha < 0:
             raise ValueError('alpha must be a positive float or int.')
         else:
@@ -15,6 +15,11 @@ class RungeKuttaEvolve(object):
         else:
             self.start_dm = start_dm
 
+        if not isinstance(method, str):
+            raise ValueError('solver must be a string')
+        else:
+            self.method = method
+
     def get_mif(self):
         data = [('alpha', self.alpha),
                 ('gamma_G', self.gamma_G),
@@ -28,6 +33,7 @@ class RungeKuttaEvolve(object):
         mif += '\talpha $alpha\n'
         mif += '\tgamma_G $gamma_G\n'
         mif += '\tstart_dm $start_dm\n'
+        mif += '\tmethod {}\n'.format(self.method)
         mif += '}\n\n'
 
         return mif

@@ -1,5 +1,6 @@
 class RungeKuttaEvolve(object):
-    def __init__(self, alpha, gamma_G=2.210173e5, start_dm=0.01, method='rkf54'):
+    def __init__(self, alpha, gamma_G=2.210173e5,
+                 start_dm=0.01, method='rkf54'):
         if not isinstance(alpha, (int, float)) or alpha < 0:
             raise ValueError('alpha must be a positive float or int.')
         else:

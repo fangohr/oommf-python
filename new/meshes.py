@@ -1,5 +1,5 @@
 class RectangularMesh(object):
-    def __init__(self, d, atlas, meshname='mesh'):
+    def __init__(self, d, atlas='atlas', meshname='mesh'):
         if not isinstance(d, (tuple, list)) or len(d) != 3:
             raise ValueError('Cellsize d must be a tuple of length 3.')
         elif d[0] <= 0 or d[1] <= 0 or d[2] <= 0:

@@ -29,7 +29,7 @@ class TimeDriver(object):
             raise ValueError('basename must be a string')
         else:
             self.basename = basename
-        
+
     def get_mif(self):
         # Create mif string.
         mif = '# TimeDriver\n'

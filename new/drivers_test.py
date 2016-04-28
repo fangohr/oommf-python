@@ -5,17 +5,16 @@ from drivers import TimeDriver
 class TestTimeDriver(object):
     def setup(self):
         # Set of valid arguments.
-        self.args1 = [['evolver1', 1, 1, 'mesh1', 1e6, (0, 0, 1), 'name1'],
-                      ['evolver2', 1e-9, 5, 'mesh2', 5e6, (1, 0, 0), 'name2'],
-                      ['evolver3', 1e-12, 10, 'mesh3', 1e-6, 'file.ovf', 'name3'],
-                      ['evolver4', 0.1, 20, 'mesh4', 1, 'string.ext', 'name4']]
+        self.args1 = [['e1', 1, 1, 'm1', 1e6, (0, 0, 1), 'n1'],
+                      ['e2', 1e-9, 5, 'm2', 5e6, (1, 0, 0), 'n2'],
+                      ['e3', 1e-12, 10, 'm3', 1e-6, 'file.ovf', 'n3'],
+                      ['e4', 0.1, 20, 'm4', 1, 'string.ext', 'n4']]
 
         # Set of valid arguments.
-        self.args2 = [[1, 1, 1, 'mesh1', 1e6, (0, 0, 1), 'name1'],
-                      ['evolver2', 'a', 5, 'mesh2', 5e6, (1, 0, 0), 'name2'],
-                      ['evolver3', 1e-12, [1, 2], 'mesh3', 1e-6, 'file.ovf', 'name3'],
-                      ['evolver4', 0.1, 20, 'mesh4', 1, 'string.ext', 31]]
-
+        self.args2 = [[1, 1, 1, 'm1', 1e6, (0, 0, 1), 'n1'],
+                      ['e2', 'a', 5, 'm2', 5e6, (1, 0, 0), 'n2'],
+                      ['e3', 1e-12, [1, 2], 'm3', 1e-6, 'file.ovf', 'ne3'],
+                      ['e4', 0.1, 20, 'm4', 1, 'string.ext', 31]]
 
     def test_init(self):
         # Valid arguments.
@@ -38,7 +37,7 @@ class TestTimeDriver(object):
             assert driver.Ms == Ms
             assert driver.m0 == m0
             assert driver.basename == basename
-            
+
     def test_init_exceptions(self):
         # Invalid arguments (ValueError expected).
         for arg in self.args2:
@@ -137,7 +136,7 @@ class TestTimeDriver(object):
                 assert l[0] == '}'
 
                 n = 10
-            
+
             elif isinstance(m0, str):
                 assert mif_lines[8][0:2] == '\t\t'
                 l = mif_lines[8].split()
@@ -164,7 +163,7 @@ class TestTimeDriver(object):
                 assert l[0] == '}'
 
                 n = 12
-   
+
             assert mif_lines[n+1] == '\t}'
 
             assert mif_lines[n+2][0] == '\t'
@@ -172,8 +171,8 @@ class TestTimeDriver(object):
             assert l[0] == 'basename'
             assert l[1] == basename
 
-            assert mif_lines[n+3] == '\tvector_field_output_format {text %\#.8g}'
-
+            l = mif_lines[n+3]
+            assert l == '\tvector_field_output_format {text %\#.8g}'
 
             # Assert mif end.
             assert mif_lines[n+4] == '}'

@@ -37,8 +37,8 @@ class TimeDriver(object):
         mif += '\tevolver {}\n'.format(self.evolver)
         mif += '\tstopping_time {}\n'.format(self.stopping_time)
         mif += '\tstage_count {}\n'.format(self.stage_count)
-        mif += '\tmesh :{}'.format(self.mesh)
-        mif += '\tMs {}'.format(self.Ms)
+        mif += '\tmesh :{}\n'.format(self.mesh)
+        mif += '\tMs {}\n'.format(self.Ms)
         mif += '\tm0 {\n'
         if isinstance(self.m0, (tuple, list)):
             mif += '\t\tOxs_UniformVectorField {\n'
@@ -57,5 +57,4 @@ class TimeDriver(object):
         mif += '\tvector_field_output_format {text %\#.8g}\n'
         mif += '}\n\n'
 
-        print mif
         return mif

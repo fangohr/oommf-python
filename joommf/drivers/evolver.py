@@ -11,7 +11,7 @@ class Evolver(object):
 
 class Minimiser(Evolver):
 
-    def __init__(self, m_init, Ms, d_mxHxm=0.1):
+    def __init__(self, m_init, Ms, d_mxHxm=0.1, name=None):
         if isinstance(m_init, str):
             if os.isfile(m_init):
                 self.m_init = m_init
@@ -22,7 +22,7 @@ class Minimiser(Evolver):
         # Want to throw a warning here if neither
         self.Ms = Ms
         self.d_mxHxm = d_mxHxm
-        self.name = None
+        self.name = name
 
     def _setname(self, name):
         self.name = name

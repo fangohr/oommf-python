@@ -127,8 +127,8 @@ class Sim(object):
         self.debug = debug
 
     def __repr__(self):
-        string = "Joommf Sim Object - Mesh: {}\n Ms: {}\n gamma: {}\n".format(
-                 self.mesh.__repr__(), self.Ms, self.gamma)
+        string = "Joommf Sim Object - Mesh: {}\n Ms: {}\n ".format(
+                 self.mesh.__repr__(), self.Ms)
         if self.evolver:
             string += "Evolver: {}".format(self.evolver.__repr__())
         return string

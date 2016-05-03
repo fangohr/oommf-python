@@ -25,9 +25,15 @@ class Sim(object):
     def add(self, energy):
         self.energies.append(energy)
 
-    def run_until(self, stopping_time, stages=1):
+    def run_until(self, stopping_time):
         self.evolver = RungeKuttaEvolve(self.alpha)
-        self.driver = TimeDriver('evolver', stopping_time, stages, 'mesh',
+        self.driver = TimeDriver('evolver', stopping_time, 1, 'mesh',
+                                 self.Ms, self.m0, basename=self.name)
+        self.execute_mif()
+
+    def run_multiple_stages(self, time_step, stages):
+        self.evolver = RungeKuttaEvolve(self.alpha)
+        self.driver = TimeDriver('evolver', time_step, stages, 'mesh',
                                  self.Ms, self.m0, basename=self.name)
         self.execute_mif()
 
@@ -39,6 +45,11 @@ class Sim(object):
             m0field.normalise(norm=self.Ms)
             m0field.write_oommf_file('m0file.omf')
             self.m0 = 'm0file.omf'
+        elif isinstance(m0, Field):
+            m0.write_oommf_file('m0file_from_field.omf')
+            self.m0 = 'm0file_from_field.omf'
+        else:
+            raise ValueError('m0 must be tuple, list, function, string, or field.')
 
     def get_mif(self):
         mif = '# MIF 2.1\n\n'

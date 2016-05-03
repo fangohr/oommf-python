@@ -18,21 +18,18 @@ class BoxAtlas(object):
             self.regionname = regionname
 
     def get_mif(self):
-        data = [('xmin', self.cmin[0]),
-                ('ymin', self.cmin[1]),
-                ('zmin', self.cmin[2]),
-                ('xmax', self.cmax[0]),
-                ('ymax', self.cmax[1]),
-                ('zmax', self.cmax[2])]
-
         # Create mif string.
         mif = '# BoxAtlas\n'
-        for datum in data:
-            mif += 'set {} {}\n'.format(datum[0], datum[1])
         mif += 'Specify Oxs_BoxAtlas:{}'.format(self.atlasname) + ' {\n'
-        mif += '\txrange { $xmin $xmax }\n'
-        mif += '\tyrange { $ymin $ymax }\n'
-        mif += '\tzrange { $zmin $zmax }\n'
+        mif += '\txrange {'
+        mif += ' {} {} '.format(self.cmin[0], self.cmax[0])
+        mif += '}\n'
+        mif += '\tyrange {'
+        mif += ' {} {} '.format(self.cmin[1], self.cmax[1])
+        mif += '}\n'
+        mif += '\tzrange {'
+        mif += ' {} {} '.format(self.cmin[2], self.cmax[2])
+        mif += '}\n'
         mif += '\tname {}\n'.format(self.regionname)
         mif += '}\n\n'
 

@@ -255,7 +255,7 @@ class Field(object):
                         'ymax: {}'.format(self.cmax[1]),
                         'zmax: {}'.format(self.cmax[2]),
                         'valuedim: {}'.format(self.dim),
-                        'valuelabels: Magnetization_x Magnetization_y Magnetization_z',
+                        "valuelabels: Mx My Mz",
                         'valueunits: A/m A/m A/m',
                         '',
                         'End: Header',

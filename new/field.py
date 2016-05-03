@@ -321,4 +321,5 @@ def load_oommf_file(filename, name=None):
                         field.set_at_index(i, value)
 
                         counter += 1
-    field.write_oommf_file('test_file.omf')
+
+    return field

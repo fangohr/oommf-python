@@ -48,7 +48,6 @@ class Sim(object):
             mif += i.get_mif()
         mif += self.evolver.get_mif()
         mif += self.driver.get_mif()
-        
         mif += 'Destination mags mmArchive\n'
         mif += 'Schedule Oxs_TimeDriver::Spin mags Stage 1'
 

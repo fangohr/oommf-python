@@ -116,6 +116,16 @@ class Field(object):
     def set_at_index(self, i, value):
         self.f[i[0], i[1], i[2], :] = value
 
+    def average(self):
+        if self.dim == 1:
+            return np.mean(self.f)
+        else:
+            average = []
+            for i in range(self.dim):
+                average.append(np.mean(self.f[:, :, :, i]))
+
+        return average
+
     def slice_field(self, axis, point):
         if axis == 'x':
             slice_num = 0
@@ -182,7 +192,7 @@ class Field(object):
             if np.allclose(pm[:, 2], 0) and np.allclose(pm[:, 3], 0):
                 raise ValueError('Vector plane components are zero.')
             else:
-                plt.figure(figsize=(10, 8))
+                plt.figure(figsize=(8, 6))
                 plt.quiver(pm[:, 0], pm[:, 1], pm[:, 2], pm[:, 3], pm[:, 4])
                 plt.xlim([self.cmin[coord_system[0]],
                           self.cmax[coord_system[0]]])

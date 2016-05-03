@@ -182,13 +182,14 @@ class Field(object):
             if np.allclose(pm[:, 2], 0) and np.allclose(pm[:, 3], 0):
                 raise ValueError('Vector plane components are zero.')
             else:
+                plt.figure(figsize=(10, 8))
                 plt.quiver(pm[:, 0], pm[:, 1], pm[:, 2], pm[:, 3], pm[:, 4])
                 plt.xlim([self.cmin[coord_system[0]],
                           self.cmax[coord_system[0]]])
                 plt.ylim([self.cmin[coord_system[1]],
                           self.cmax[coord_system[1]]])
-                plt.xlabel('xyz'[coord_system[0]])
-                plt.ylabel('xyz'[coord_system[1]])
+                plt.xlabel('xyz'[coord_system[0]] + ' (m)')
+                plt.ylabel('xyz'[coord_system[1]] + ' (m)')
                 plt.title('xyz'[coord_system[2]] + ' slice')
                 plt.grid()
                 plt.show()

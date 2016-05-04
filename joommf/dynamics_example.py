@@ -27,7 +27,7 @@ def main():
     sim.add_energy(Demag())
     sim.add_energy(FixedZeeman(H))
     sim.set_evolver(
-        evolver.LLG(t_sim, m_init, Ms, alpha, gamma, name='evolver'))
+        evolver.LLG(t_sim, m_init, Ms, alpha, gamma, name='./Testing'))
     # Set initial magnetisation.
     sim.add_output('Magnetization', 100)
     # Run simulation.

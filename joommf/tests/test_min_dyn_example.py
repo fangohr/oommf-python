@@ -29,6 +29,7 @@ def test_min_dyn():
         evolver.Minimiser(m_init, Ms, gamma))
     # Set initial magnetisation.
     # Run simulation.
+    sim1.add_output('Magnetization')
     sim1.minimise()
 
     m_init2 = glob.glob(sim1.mif_filename[:-4] + "*.omf")[-1]

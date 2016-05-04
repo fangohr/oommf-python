@@ -1,3 +1,4 @@
+from __future__ import division
 import textwrap
 from joommf.exceptions import JoommfError
 import os
@@ -72,7 +73,7 @@ class Minimiser(Evolver):
 class LLG(Evolver):
 
     def __init__(self, t, m_init, Ms, alpha, gamma,
-                 name, solver='rkf54', dm=0.01):
+                 name, solver='rkf54', dm=0.01, save_freq=1e-10):
         """
         Note:
         solver options passed as a string - options
@@ -87,11 +88,12 @@ class LLG(Evolver):
         self.name = None
         self.solver = solver
         self.dm = dm
-
+	self.stages = int(t/save_freq)
+	self.stopping_time = self.t / self.stages
     def _setname(self, name):
         self.name = name
 
-    def get_mif(self, stage_count=1):
+    def get_mif(self):
         if isinstance(self.m_init, str):
             self.m0 = textwrap.dedent("""\
                 m0 {{ Oxs_FileVectorField {{
@@ -134,8 +136,8 @@ class LLG(Evolver):
                               self.alpha,
                               self.gamma,
                               self.dm,
-                              self.t,
-			      stage_count,
+                              self.stopping_time,
+			      self.stages,
                               self.Ms,
                               self.m0,
                               self.name

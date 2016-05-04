@@ -74,7 +74,7 @@ oommf_path = retrieve_oommf_path()
 oommf_executable = retrieve_oommf_executable(oommf_path)
 
 
-def call_oommf(argstring, workdir=None):
+def call_oommf(argstring, workdir=None, print_output=True):
     """Convenience function to call OOMMF: Typical usage
 
     p = call_oommf("+version")
@@ -93,7 +93,8 @@ def call_oommf(argstring, workdir=None):
     print("About to execute: '{}'".format(command))
     p = subprocess.Popen(command,
                          shell=True, stderr=subprocess.PIPE,
-                         stdout=subprocess.PIPE)
+                         stdout=subprocess.PIPE, universal_newlines=True)
+
     return p
 
 

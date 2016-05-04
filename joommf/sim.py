@@ -150,25 +150,25 @@ class Sim(object):
                               "support for a new evolver, the new evolver "
                               "must be a subclass of Evolver")
 
-    def add_output(self, output, freq):
+    def add_output(self, output, stage=1):
         if not self.evolver:
             raise JoommfError("Joommf: You must add an evolver before "
                               "scheduling outputs, as some evolvers do "
                               "not support certain outputs.")
         if isinstance(self.evolver, LLG):
             if output in time_evolver_outputs:
-                self.evolver_outputs.append([output, freq])
+                self.evolver_outputs.append([output, stage])
             elif output in minimizer_outputs:
                 raise JoommfError("Joommf: This output is not supported by"
                                   " time integrator evolvers.")
         elif isinstance(self.evolver, Minimiser):
             if output in minimizer_outputs:
-                self.evolver_outputs.append([output, freq])
+                self.evolver_outputs.append([output, stage])
             elif output in time_evolver_outputs:
                 raise JoommfError("Joommf: This output is not supported by"
                                   " minimization evolvers.")
         elif output in field_outputs:
-            self.field_outputs.append([output, freq])
+            self.field_outputs.append([output, stage])
         else:
             raise JoommfError("Joommf: This output was not understood."
                               " Please check that it is supported.")
@@ -195,7 +195,7 @@ class Sim(object):
             mif_file.write(energy.get_mif())
         self.evolver._setname(self.name)
         if isinstance(self.evolver, LLG):
-            mif_file.write(self.evolver.get_mif(stage_count = self.stages))
+            mif_file.write(self.evolver.get_mif())
         else:
             mif_file.write(self.evolver.get_mif())
         mif_file.write(self._schedule_outputs())
@@ -206,7 +206,6 @@ class Sim(object):
             self.stages = stages
             self.create_mif()
             self.execute_mif()
-            self.final_mag = glob.glob(self.name + '*.omf')[-1]
         else:
             raise JoommfError("Joommf: You must add a valid time"
                               " evolver to the simulation object")
@@ -220,17 +219,14 @@ class Sim(object):
         for i, output in enumerate(self.evolver_outputs):
             mif += textwrap.dedent("""\
                 Destination archive{} mmArchive
-                Schedule {}::{} archive{} Step {}
+                Schedule {}::{} archive{} Stage {}
                 """.format(i, evolverstr,
                            output[0], i,
                            output[1]))
 
         mif += textwrap.dedent("""\
-
               Destination archive mmArchive
               Schedule DataTable archive Step 1
-              Destination archiveMag mmArchive
-              Schedule {}::Magnetization archiveMag Stage 1
               """).format(evolverstr)
         return mif
 
@@ -238,6 +234,7 @@ class Sim(object):
         if isinstance(self.evolver, Minimiser):
             self.create_mif()
             self.execute_mif()
+	
         else:
             raise JoommfError("Joommf: You must add a valid minimisation"
                               " evolver to the simulation object")
@@ -246,17 +243,16 @@ class Sim(object):
     def execute_mif(self):
         process = o.call_oommf('boxsi ' + self.mif_filename)
         print("Running simulation... This may take a while")
-        process.wait()
+        while True:
+            output = process.stdout.readline()
+            if output == '' and process.poll() is not None:
+                break
+            else:
+                print(output)
+        return_code = process.poll()
+	if return_code != 0:
+	    raise subprocess.CalledProcessError(return_code, "OOMMF Failed")
         print("Simulation complete")
-        output, err = process.communicate()
-        self._oommf_stdout += output
-        self._oommf_stderr += err
-        if self.debug:
-            print("JOOMMF DEBUG MODE")
-            print("Oommf Stderr:")
-            print(self._oommf_stderr)
-            print("\n\n\nOommf Stdout:")
-            print(self._oommf_stdout)
         print("Loading simulation scalar output from {}".format(
             self.mif_filename[:-3] + 'odt'))
         self.ODTFile = odtreader.ODTFile(self.mif_filename[:-3] + 'odt')

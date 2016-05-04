@@ -18,16 +18,12 @@ class RectangularMesh(object):
             self.meshname = meshname
 
     def get_mif(self):
-        data = [('xstep', self.d[0]),
-                ('ystep', self.d[1]),
-                ('zstep', self.d[2])]
-
         # Create mif string.
         mif = '# RectangularMesh\n'
-        for datum in data:
-            mif += 'set {} {}\n'.format(datum[0], datum[1])
         mif += 'Specify Oxs_RectangularMesh:{}'.format(self.meshname) + ' {\n'
-        mif += '\tcellsize { $xstep $ystep $zstep }\n'
+        mif += '\tcellsize {'
+        mif += ' {} {} {} '.format(self.d[0], self.d[1], self.d[2])
+        mif += '}\n'
         mif += '\tatlas {}\n'.format(self.atlas)
         mif += '}\n\n'
 

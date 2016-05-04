@@ -36,26 +36,20 @@ class TestUniformExchange(object):
             assert l[0] == '#'
             assert l[1] == 'UniformExchange'
 
-            # Assert set statement.
-            l = mif_lines[1].split()
-            assert l[0] == 'set'
-            assert l[1] == 'A'
-            assert float(l[2]) == A
-
             # Assert Specify line.
-            l = mif_lines[2].split()
+            l = mif_lines[1].split()
             assert l[0] == 'Specify'
             assert l[1] == 'Oxs_UniformExchange'
             assert l[2] == '{'
 
             # Assert step line.
-            assert mif_lines[3][0] == '\t'
-            l = mif_lines[3].split()
+            assert mif_lines[2][0] == '\t'
+            l = mif_lines[2].split()
             assert l[0] == 'A'
-            assert l[1] == '$A'
+            assert float(l[1]) == A
 
             # Assert mif end.
-            assert mif_lines[4] == '}'
+            assert mif_lines[3] == '}'
 
             # Assert new lines at the end of the string.
             assert mif[-2:] == '\n\n'

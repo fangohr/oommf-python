@@ -8,9 +8,8 @@ class UniformExchange(object):
     def get_mif(self):
         # Create mif string.
         mif = '# UniformExchange\n'
-        mif += 'set A {}\n'.format(self.A)
         mif += 'Specify Oxs_UniformExchange {\n'
-        mif += '\tA $A\n'
+        mif += '\tA {}\n'.format(self.A)
         mif += '}\n\n'
 
         return mif

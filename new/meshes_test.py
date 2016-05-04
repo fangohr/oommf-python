@@ -59,43 +59,31 @@ class TestRectangularMesh(object):
             assert l[0] == '#'
             assert l[1] == 'RectangularMesh'
 
-            # Assert set statements.
-            expected_data = [('xstep', d[0]),
-                             ('ystep', d[1]),
-                             ('zstep', d[2])]
-            c = 0
-            for line in mif_lines[1:4]:
-                l = line.split()
-                assert l[0] == 'set'
-                assert l[1] == expected_data[c][0]
-                assert float(l[2]) == expected_data[c][1]
-                c += 1
-
             # Assert Specify line.
-            l = mif_lines[4].split()
+            l = mif_lines[1].split()
             assert l[0] == 'Specify'
             assert l[1].split(':')[0] == 'Oxs_RectangularMesh'
             assert l[1].split(':')[1] == meshname
             assert l[2] == '{'
 
             # Assert step line.
-            assert mif_lines[5][0] == '\t'
-            l = mif_lines[5].split()
+            assert mif_lines[2][0] == '\t'
+            l = mif_lines[2].split()
             assert l[0] == 'cellsize'
             assert l[1] == '{'
-            assert l[2] == '$xstep'
-            assert l[3] == '$ystep'
-            assert l[4] == '$zstep'
+            assert float(l[2]) == d[0]
+            assert float(l[3]) == d[1]
+            assert float(l[4]) == d[2]
             assert l[5] == '}'
 
             # Assert atlas name.
-            assert mif_lines[6][0] == '\t'
-            l = mif_lines[6].split()
+            assert mif_lines[3][0] == '\t'
+            l = mif_lines[3].split()
             assert l[0] == 'atlas'
             assert l[1] == atlas
 
             # Assert mif end.
-            assert mif_lines[7] == '}'
+            assert mif_lines[4] == '}'
 
             # Assert new lines at the end of the string.
             assert mif[-2:] == '\n\n'

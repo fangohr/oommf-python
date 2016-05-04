@@ -22,18 +22,12 @@ class RungeKuttaEvolve(object):
             self.method = method
 
     def get_mif(self):
-        data = [('alpha', self.alpha),
-                ('gamma_G', self.gamma_G),
-                ('start_dm', self.start_dm)]
-
         # Create mif string.
         mif = '# RungeKutta evolver\n'
-        for datum in data:
-            mif += 'set {} {}\n'.format(datum[0], datum[1])
-        mif += 'Specify Oxs_RungeKuttaEvolve {\n'
-        mif += '\talpha $alpha\n'
-        mif += '\tgamma_G $gamma_G\n'
-        mif += '\tstart_dm $start_dm\n'
+        mif += 'Specify Oxs_RungeKuttaEvolve:evolver {\n'
+        mif += '\talpha {}\n'.format(self.alpha)
+        mif += '\tgamma_G {}\n'.format(self.gamma_G)
+        mif += '\tstart_dm {}\n'.format(self.start_dm)
         mif += '\tmethod {}\n'.format(self.method)
         mif += '}\n\n'
 

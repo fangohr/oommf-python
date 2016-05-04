@@ -65,46 +65,48 @@ class TestBoxAtlas(object):
             assert l1[0] == '#'
             assert l1[1] == 'BoxAtlas'
 
-            # Assert set statements.
-            expected_data = [('xmin', cmin[0]),
-                             ('ymin', cmin[1]),
-                             ('zmin', cmin[2]),
-                             ('xmax', cmax[0]),
-                             ('ymax', cmax[1]),
-                             ('zmax', cmax[2])]
-            c = 0
-            for line in mif_lines[1:7]:
-                l = line.split()
-                assert l[0] == 'set'
-                assert l[1] == expected_data[c][0]
-                assert float(l[2]) == expected_data[c][1]
-                c += 1
-
             # Assert Specify line.
-            l = mif_lines[7].split()
+            l = mif_lines[1].split()
             assert l[0] == 'Specify'
             assert l[1].split(':')[0] == 'Oxs_BoxAtlas'
             assert l[1].split(':')[1] == atlasname
             assert l[2] == '{'
 
             # Assert range lines.
-            for i in range(len(mif_lines[8:11])):
-                assert mif_lines[8+i][0] == '\t'
-                l = mif_lines[8+i].split()
-                assert l[0] == '{}range'.format('xyz'[i])
-                assert l[1] == '{'
-                assert l[2] == '${}min'.format('xyz'[i])
-                assert l[3] == '${}max'.format('xyz'[i])
-                assert l[4] == '}'
+            assert mif_lines[2][0] == '\t'
+            l = mif_lines[2].split()
+            assert l[0] == 'xrange'
+            assert l[1] == '{'
+            assert float(l[2]) == cmin[0]
+            assert float(l[3]) == cmax[0]
+            assert l[4] == '}'
+
+            # Assert range lines.
+            assert mif_lines[3][0] == '\t'
+            l = mif_lines[3].split()
+            assert l[0] == 'yrange'
+            assert l[1] == '{'
+            assert float(l[2]) == cmin[1]
+            assert float(l[3]) == cmax[1]
+            assert l[4] == '}'
+
+            # Assert range lines.
+            assert mif_lines[4][0] == '\t'
+            l = mif_lines[4].split()
+            assert l[0] == 'zrange'
+            assert l[1] == '{'
+            assert float(l[2]) == cmin[2]
+            assert float(l[3]) == cmax[2]
+            assert l[4] == '}'
 
             # Assert region name.
-            assert mif_lines[11][0] == '\t'
-            l = mif_lines[11].split()
+            assert mif_lines[5][0] == '\t'
+            l = mif_lines[5].split()
             assert l[0] == 'name'
             assert l[1] == regionname
 
             # Assert mif end.
-            assert mif_lines[12] == '}'
+            assert mif_lines[6] == '}'
 
             # Assert new lines at the end of the string.
             assert mif[-2:] == '\n\n'

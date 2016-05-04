@@ -8,6 +8,7 @@ This module contains the Sim class which Joommf uses to run simulations
 
 
 import os
+import subprocess
 from joommf.drivers.evolver import LLG
 from joommf.drivers.evolver import Minimiser
 from joommf.drivers.evolver import Evolver

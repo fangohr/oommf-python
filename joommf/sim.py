@@ -190,8 +190,7 @@ class Sim(object):
         os.path.isfile(self.mif_filename)
         mif_file = open(self.mif_filename, 'w')
         mif_file.write('# MIF 2.1\n\n')
-        mif_file.write(self.mesh.atlas_mif())
-        mif_file.write(self.mesh.mesh_mif())
+        mif_file.write(self.mesh.get_mif())
         for energy in self.energies:
             mif_file.write(energy.get_mif())
         self.evolver._setname(self.name)

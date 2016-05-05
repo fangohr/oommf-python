@@ -1,3 +1,4 @@
+import textwrap
 class Mesh(object):
 
     def __init__(self, lengths, mesh_spacing, scale=1e-9):
@@ -20,11 +21,13 @@ class Mesh(object):
         return (self.lx, self.ly, self.lz, self.dx, self.dy, self.dz)
 
     def _atlas_mif(self):
-        atlas_mif = 'Specify Oxs_BoxAtlas:atlas {\n'
-        atlas_mif += '\t xrange {0 %2e}\n' % self.lx
-        atlas_mif += '\t yrange {0 %2e}\n' % self.ly
-        atlas_mif += '\t zrange {0 %2e}\n' % self.lz
-        atlas_mif += '}\n\n'
+        atlas_mif = textwrap.dedent("""\
+            Specify Oxs_BoxAtlas:atlas {{
+                 xrange {{0 {}}}
+                 yrange {{0 {}}}
+                 zrange {{0 {}}}
+             }}
+             """).format(self.lx, self.ly, self.lz)
         return atlas_mif
 
     def _mesh_mif(self):

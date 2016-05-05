@@ -1,5 +1,18 @@
 import textwrap
+
+
 class Mesh(object):
+    """class Mesh(lengths, mesh_spacing, scale=1e-9)
+       lengths: list
+            List of 3 lengths which make up the global atlas
+       mesh_spacing:
+            List of 3 discretisations.
+
+       Example usage:
+       For a rectangular block of 30x30x50nm, with mesh nodes
+       every 5nm, create a Mesh object with
+       mesh = Mesh([30, 30, 50], [5, 5, 5])
+       """
 
     def __init__(self, lengths, mesh_spacing, scale=1e-9):
         assert len(lengths) == 3, "Lengths must contain three values"

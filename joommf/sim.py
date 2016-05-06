@@ -12,6 +12,7 @@ import subprocess
 from joommf.drivers.evolver import LLG
 from joommf.drivers.evolver import Minimiser
 from joommf.drivers.evolver import Evolver
+import joommf.fields
 import joommf.odtreader as odtreader
 import joommf.oommfmif as o
 import textwrap
@@ -234,7 +235,6 @@ class Sim(object):
         if isinstance(self.evolver, Minimiser):
             self.create_mif()
             self.execute_mif()
-	
         else:
             raise JoommfError("Joommf: You must add a valid minimisation"
                               " evolver to the simulation object")
@@ -250,8 +250,8 @@ class Sim(object):
             else:
                 print(output)
         return_code = process.poll()
-	if return_code != 0:
-	    raise subprocess.CalledProcessError(return_code, "OOMMF Failed")
+        if return_code != 0:
+            raise JoommfError("Joommf: OOMMF failed to execute.")
         print("Simulation complete")
         print("Loading simulation scalar output from {}".format(
             self.mif_filename[:-3] + 'odt'))

@@ -2,6 +2,7 @@ from __future__ import division
 import textwrap
 from joommf.exceptions import JoommfError
 import os
+import joommf.fields
 
 
 class Evolver(object):
@@ -29,20 +30,25 @@ class Minimiser(Evolver):
         self.name = name
 
     def get_mif(self):
-        if isinstance(self.m_init, str):
+        prefixmif = ""
+        if isinstance(self.m_init, joommf.fields.ScriptField):
+            scriptname, script, self.m0 = self.m_init.get_mif()
+            prefixmif += script
+
+        elif isinstance(self.m_init, str):
             self.m0 = textwrap.dedent("""\
-                m0 {{ Oxs_FileVectorField {{
+                Oxs_FileVectorField {{
                 file {}
                 atlas :atlas
-                }} }}
+                }}
                 """)
 
         else:
             self.m0 = textwrap.dedent("""\
-                m0 {{ Oxs_UniformVectorField {{
+                Oxs_UniformVectorField {{
                 norm 1
                 vector {{{} {} {}}}
-                }} }}
+                }}
                 """.format(self.m_init[0],
                            self.m_init[1],
                            self.m_init[2]))
@@ -54,7 +60,7 @@ class Minimiser(Evolver):
         evolver :evolver
         mesh :mesh
         Ms {}
-        {}
+        m0 {{{}}}
 
         stopping_mxHxm {}
         basename {}
@@ -62,7 +68,7 @@ class Minimiser(Evolver):
         }}]
         """)
 
-        return mif.format(
+        return prefixmif + mif.format(
             self.Ms,
             self.m0,
             self.d_mxHxm,
@@ -88,25 +94,31 @@ class LLG(Evolver):
         self.name = None
         self.solver = solver
         self.dm = dm
-	self.stages = int(t/save_freq)
-	self.stopping_time = self.t / self.stages
+        self.stages = int(t/save_freq)
+        self.stopping_time = self.t / self.stages
+
     def _setname(self, name):
         self.name = name
 
     def get_mif(self):
-        if isinstance(self.m_init, str):
+        prefixmif = ""
+        if isinstance(self.m_init, joommf.fields.ScriptField):
+            script, self.m0 = self.m_init.get_mif()
+            prefixmif += script
+
+        elif isinstance(self.m_init, str):
             self.m0 = textwrap.dedent("""\
-                m0 {{ Oxs_FileVectorField {{
+                Oxs_FileVectorField {{
                 file {}
                 atlas :atlas
-                }} }}
+                }}
                 """.format(self.m_init))
         else:
             self.m0 = textwrap.dedent("""\
-                m0 {{ Oxs_UniformVectorField {{
+                Oxs_UniformVectorField {{
                 norm 1
                 vector {{{} {} {}}}
-                }} }}
+                }}
                 """.format(self.m_init[0],
                            self.m_init[1],
                            self.m_init[2]))
@@ -124,7 +136,7 @@ class LLG(Evolver):
                        stage_count {}
                        mesh :mesh
                        Ms {}
-                       {}
+                       m0 {{{}}}
                        basename {}
                    vector_field_output_format {{text \%#.8g}}
                    }}]
@@ -132,16 +144,16 @@ class LLG(Evolver):
 
                    """)
 
-        return llg_mif.format(self.solver,
-                              self.alpha,
-                              self.gamma,
-                              self.dm,
-                              self.stopping_time,
-			      self.stages,
-                              self.Ms,
-                              self.m0,
-                              self.name
-                              )
+        return prefixmif + llg_mif.format(self.solver,
+                                          self.alpha,
+                                          self.gamma,
+                                          self.dm,
+                                          self.stopping_time,
+                                          self.stages,
+                                          self.Ms,
+                                          self.m0,
+                                          self.name
+                                          )
 
 if __name__ == '__main__':
     llg = LLG(1e-9, (0, 0, 1), 1e6, 0.1, 2.21e5, 'test')

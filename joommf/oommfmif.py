@@ -90,7 +90,6 @@ def call_oommf(argstring, workdir=None, print_output=True):
         command = ""
 
     command += os.path.join(oommf_path, oommf_executable) + ' ' + argstring
-    print("About to execute: '{}'".format(command))
     p = subprocess.Popen(command,
                          shell=True, stderr=subprocess.PIPE,
                          stdout=subprocess.PIPE, universal_newlines=True)

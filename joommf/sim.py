@@ -179,14 +179,10 @@ class Sim(object):
         if self.name is None:
             self.name = 'unnamed'
         if os.path.isfile(self.name + '.mif'):
-            print("DEBUG: This simulation name already exists.")
-            if overwrite:
-                print("DEBUG: Overwriting MIF.")
-            else:
-                var = 1
-                while os.path.isfile(self.name + str(var) + '.mif'):
-                    var += 1
-                self.name += str(var)
+            var = 1
+            while os.path.isfile(self.name + str(var) + '.mif'):
+                var += 1
+            self.name += str(var)
         self.mif_filename = self.name + '.mif'
         os.path.isfile(self.mif_filename)
         mif_file = open(self.mif_filename, 'w')
@@ -242,18 +238,16 @@ class Sim(object):
 
     def execute_mif(self):
         process = o.call_oommf('boxsi ' + self.mif_filename)
-        print("Running simulation... This may take a while")
         while True:
             output = process.stdout.readline()
+            stderr = process.stderr.readline()
             if output == '' and process.poll() is not None:
                 break
-            else:
+            elif self.debug:
                 print(output)
+                print(stderr)
         return_code = process.poll()
         if return_code != 0:
             raise JoommfError("Joommf: OOMMF failed to execute.")
-        print("Simulation complete")
-        print("Loading simulation scalar output from {}".format(
-            self.mif_filename[:-3] + 'odt'))
         self.ODTFile = odtreader.ODTFile(self.mif_filename[:-3] + 'odt')
         self.df = self.ODTFile.df

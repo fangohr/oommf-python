@@ -192,7 +192,9 @@ class Field(object):
             if np.allclose(pm[:, 2], 0) and np.allclose(pm[:, 3], 0):
                 raise ValueError('Vector plane components are zero.')
             else:
-                plt.figure(figsize=(8, 6))
+                xsize = 12
+                ysize = xsize*(self.l[coord_system[1]]/self.l[coord_system[0]])
+                plt.figure(figsize=(xsize, ysize))
                 plt.quiver(pm[:, 0], pm[:, 1], pm[:, 2], pm[:, 3], pm[:, 4])
                 plt.xlim([self.cmin[coord_system[0]],
                           self.cmax[coord_system[0]]])

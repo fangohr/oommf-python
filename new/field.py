@@ -100,9 +100,9 @@ class Field(object):
                 self.f[:, :, :, i].fill(value[i])
 
         elif hasattr(value, '__call__'):
-            for ix in xrange(self.n[0]):
-                for iy in xrange(self.n[1]):
-                    for iz in xrange(self.n[2]):
+            for ix in range(self.n[0]):
+                for iy in range(self.n[1]):
+                    for iz in range(self.n[2]):
                         i = (ix, iy, iz)
                         coord = self.index2coord((ix, iy, iz))
                         self.f[ix, iy, iz, :] = value(coord)
@@ -209,8 +209,8 @@ class Field(object):
         plot_matrix = np.zeros([nel, 5])
 
         counter = 0
-        for j in xrange(self.n[coord_system[0]]):
-            for k in xrange(self.n[coord_system[1]]):
+        for j in range(self.n[coord_system[0]]):
+            for k in range(self.n[coord_system[1]]):
                 entry = [a1[j], a2[k],
                          field_slice[j, k, coord_system[0]],
                          field_slice[j, k, coord_system[1]],
@@ -276,9 +276,9 @@ class Field(object):
         for line in header_lines:
             oommf_file.write('# ' + line + '\n')
 
-        for iz in xrange(self.n[2]):
-            for iy in xrange(self.n[1]):
-                for ix in xrange(self.n[0]):
+        for iz in range(self.n[2]):
+            for iy in range(self.n[1]):
+                for ix in range(self.n[0]):
                     v = [str(vi) for vi in self.f[ix, iy, iz, :]]
                     for vi in v:
                         oommf_file.write(' ' + vi)
@@ -318,14 +318,14 @@ def load_oommf_file(filename, name=None):
 
     field = Field(cmin, cmax, d, dim, name=name)
 
-    for j in xrange(len(lines)):
+    for j in range(len(lines)):
         if lines[j].find('Begin: Data') != -1:
             data_first_line = j+1
 
     counter = 0
-    for iz in xrange(n[2]):
-            for iy in xrange(n[1]):
-                    for ix in xrange(n[0]):
+    for iz in range(n[2]):
+            for iy in range(n[1]):
+                    for ix in range(n[0]):
                         i = (ix, iy, iz)
                         line_data = lines[data_first_line+counter]
                         value = [float(vi) for vi in line_data.split()]

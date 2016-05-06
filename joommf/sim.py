@@ -8,9 +8,11 @@ This module contains the Sim class which Joommf uses to run simulations
 
 
 import os
+import subprocess
 from joommf.drivers.evolver import LLG
 from joommf.drivers.evolver import Minimiser
 from joommf.drivers.evolver import Evolver
+import joommf.fields
 import joommf.odtreader as odtreader
 import joommf.oommfmif as o
 import textwrap
@@ -177,20 +179,15 @@ class Sim(object):
         if self.name is None:
             self.name = 'unnamed'
         if os.path.isfile(self.name + '.mif'):
-            print("DEBUG: This simulation name already exists.")
-            if overwrite:
-                print("DEBUG: Overwriting MIF.")
-            else:
-                var = 1
-                while os.path.isfile(self.name + str(var) + '.mif'):
-                    var += 1
-                self.name += str(var)
+            var = 1
+            while os.path.isfile(self.name + str(var) + '.mif'):
+                var += 1
+            self.name += str(var)
         self.mif_filename = self.name + '.mif'
         os.path.isfile(self.mif_filename)
         mif_file = open(self.mif_filename, 'w')
         mif_file.write('# MIF 2.1\n\n')
-        mif_file.write(self.mesh.atlas_mif())
-        mif_file.write(self.mesh.mesh_mif())
+        mif_file.write(self.mesh.get_mif())
         for energy in self.energies:
             mif_file.write(energy.get_mif())
         self.evolver._setname(self.name)
@@ -234,7 +231,6 @@ class Sim(object):
         if isinstance(self.evolver, Minimiser):
             self.create_mif()
             self.execute_mif()
-	
         else:
             raise JoommfError("Joommf: You must add a valid minimisation"
                               " evolver to the simulation object")
@@ -242,18 +238,16 @@ class Sim(object):
 
     def execute_mif(self):
         process = o.call_oommf('boxsi ' + self.mif_filename)
-        print("Running simulation... This may take a while")
         while True:
             output = process.stdout.readline()
+            stderr = process.stderr.readline()
             if output == '' and process.poll() is not None:
                 break
-            else:
+            elif self.debug:
                 print(output)
+                print(stderr)
         return_code = process.poll()
-	if return_code != 0:
-	    raise subprocess.CalledProcessError(return_code, "OOMMF Failed")
-        print("Simulation complete")
-        print("Loading simulation scalar output from {}".format(
-            self.mif_filename[:-3] + 'odt'))
+        if return_code != 0:
+            raise JoommfError("Joommf: OOMMF failed to execute.")
         self.ODTFile = odtreader.ODTFile(self.mif_filename[:-3] + 'odt')
         self.df = self.ODTFile.df

@@ -23,7 +23,7 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   - conda info -a
-  - conda create -n test-environment python=$TRAVIS_PYTHON_VERSION cython matplotlib pillow pytest
+  - conda create -n test-environment python=$TRAVIS_PYTHON_VERSION scipy cython matplotlib pillow pytest
   - source activate test-environment; pip install pytest-cov coverage coveralls pandas future
   - git clone https://github.com/fangohr/oommf.git && cd oommf && make && cd ..
   - export OOMMF_TK_CONFIG=/usr/lib/x86_64-linux-gnu/tk8.5/tkConfig.sh

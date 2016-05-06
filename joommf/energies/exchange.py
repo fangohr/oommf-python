@@ -11,7 +11,7 @@ class Exchange(energy):
     def get_mif(self):
         exchange_mif = textwrap.dedent("""\
                        Specify Oxs_UniformExchange {{
-                           A {:.2e}
+                           A {}
                        }}\n\n""").format(self.A)
         return exchange_mif
 

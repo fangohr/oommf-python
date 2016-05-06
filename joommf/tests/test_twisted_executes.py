@@ -1,7 +1,6 @@
 import pytest
 
 
-@pytest.mark.xfail
 def test_twisted():
     import joommf
     from joommf.energies import Exchange

@@ -1,55 +1,61 @@
 import pytest
 from meshes import RectangularMesh
+from atlases import BoxAtlas
 
 
 class TestRectangularMesh(object):
     def setup(self):
         # Set of valid arguments.
-        self.args1 = [[(1, 1, 1), 'atlas1', 'mesh1'],
-                      [(1e-9, 1e-9, 1e-9), 'atlas2', 'mesh2'],
-                      [(5, 1, 1e-9), 'atlas3', 'mesh3'],
-                      [(1.0, 13-6, 1.1e4), 'atlas4', 'mesh4']]
+        atlas1 = BoxAtlas((0, 0, 0), (5, 5, 5), 'atlas1', 'rn1')
+        atlas2 = BoxAtlas((0, 0, 0), (5e-9, 5e-9, 5e-9), 'atlas2', 'rn2')
+        atlas3 = BoxAtlas((-1.5e-9, -5e-9, 0), (1.5e-9, 15e-9, 16e-9),
+                          'atlas3', 'rn3')
+        atlas4 = BoxAtlas((-1.5e-9, -5e-9, -5e-9), (0, 0, 0), 'atlas3', 'rn3')
+        self.args1 = [[atlas1, (1, 1, 1), 'mesh1'],
+                      [atlas2, (1e-9, 1e-9, 1e-9), 'mesh2'],
+                      [atlas3, (5, 1, 1e-9), 'mesh3'],
+                      [atlas4, (1.0, 13-6, 1.1e4), 'mesh4']]
 
-        # Set of invalid arguments.
-        self.args2 = [[(0, 1, 1), 'atlas1', 'mesh1'],
-                      [(1, -0.1e-9, 1e-9), 'atlas2', 'mesh2'],
-                      [(5, 1, 1e-9), 7, 'mesh3'],
-                      [(1.0, 13-6, 1.1e4), 'atlas4', [1, 2]]]
+        # Invalid arguments.
+        self.args2 = [[atlas1, (-1, 1, 1), 'mesh1'],
+                      ['1', (0, 0, 1e-9), 'mesh2'],
+                      [atlas3, (5, 1, -1e-9), 'mesh3'],
+                      [atlas4, (1.0, 13-6, 1.1e4), 52]]
 
     def test_init(self):
         # Valid arguments.
         for arg in self.args1:
-            d = arg[0]
-            atlas = arg[1]
+            atlas = arg[0]
+            d = arg[1]
             meshname = arg[2]
 
-            mesh = RectangularMesh(d, atlas, meshname)
+            mesh = RectangularMesh(atlas, d, meshname)
 
-            assert mesh.d == d
             assert mesh.atlas == atlas
+            assert mesh.d == d
             assert mesh.meshname == meshname
 
+            assert isinstance(mesh.atlas, BoxAtlas)
             assert isinstance(mesh.d, tuple)
-            assert isinstance(mesh.atlas, str)
             assert isinstance(mesh.meshname, str)
 
     def test_init_exceptions(self):
         # Invalid arguments (ValueError expected).
         for arg in self.args2:
             with pytest.raises(ValueError):
-                d = arg[0]
-                atlas = arg[1]
+                atlas = arg[0]
+                d = arg[1]
                 meshname = arg[2]
 
-                mesh = RectangularMesh(d, atlas, meshname)
+                mesh = RectangularMesh(atlas, d, meshname)
 
     def test_get_mif(self):
         for arg in self.args1:
-            d = arg[0]
-            atlas = arg[1]
+            atlas = arg[0]
+            d = arg[1]
             meshname = arg[2]
 
-            mesh = RectangularMesh(d, atlas, meshname)
+            mesh = RectangularMesh(atlas, d, meshname)
 
             mif = mesh.get_mif()
             mif_lines = mesh.get_mif().split('\n')
@@ -80,7 +86,7 @@ class TestRectangularMesh(object):
             assert mif_lines[3][0] == '\t'
             l = mif_lines[3].split()
             assert l[0] == 'atlas'
-            assert l[1] == atlas
+            assert l[1] == atlas.name
 
             # Assert mif end.
             assert mif_lines[4] == '}'

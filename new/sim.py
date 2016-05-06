@@ -7,15 +7,11 @@ from field import Field
 
 
 class Sim(object):
-    def __init__(self, cmin, cmax, d, Ms, name=None):
-        self.cmin = cmin
-        self.cmax = cmax
-        self.d = d
+    def __init__(self, mesh, Ms, name=None):
+        self.mesh = mesh
+        self.atlas = mesh.atlas
         self.Ms = Ms
         self.name = name
-
-        self.atlas = BoxAtlas(cmin, cmax)
-        self.mesh = RectangularMesh(d)
 
         self.energies = []
 

@@ -32,7 +32,7 @@ class Minimiser(Evolver):
     def get_mif(self):
         prefixmif = ""
         if isinstance(self.m_init, joommf.fields.ScriptField):
-            scriptname, script, self.m0 = self.m_init.get_mif()
+            script, self.m0 = self.m_init.get_mif()
             prefixmif += script
 
         elif isinstance(self.m_init, str):

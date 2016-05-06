@@ -66,3 +66,30 @@ return [list 0.0 $zrad [expr {-1*$yrad}]]
             self.scriptname,
             x, y, z))
         return [float(i) for i in TclResult.split()]
+
+
+class Twisted(ScriptField):
+
+    def get_mif(self):
+        self.scriptname = "Twisted"
+        self.m0 = self.get_m0(self.scriptname)
+        self.script = ("""\
+set pi [expr {4*atan(1.0)}]
+
+proc Twisted { x y z } {
+   global pi
+   set vx 0
+   set vy [expr {sin(($pi/2.)*($x-0.5))}]
+   set vz [expr {cos(($pi/2.)*($x-0.5))}]
+   return [list $vx $vy $vz]
+}
+""")
+        return self.script, self.m0
+
+    def values(self, x, y, z):
+        _, _ = self.get_mif()
+        self.evaluator.tk.eval(self.script)
+        TclResult = self.evaluator.tk.eval("{} {} {} {}".format(
+            self.scriptname,
+            x, y, z))
+        return [float(i) for i in TclResult.split()]

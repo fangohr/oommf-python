@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class FixedZeeman(object):
     def __init__(self, H, multiplier=1, name='fixedzeeman'):
         if not isinstance(H, (list, tuple, np.ndarray)) or len(H) != 3:

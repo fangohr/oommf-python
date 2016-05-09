@@ -40,6 +40,6 @@ class CGEvolve(object):
 
     def get_mif(self):
         mif = '# CG evolver\n'
-        mif += 'Specify Oxs_CGEvolve {}\n\n'
+        mif += 'Specify Oxs_CGEvolve:evolver {}\n\n'
 
         return mif

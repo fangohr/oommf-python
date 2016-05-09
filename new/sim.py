@@ -55,7 +55,7 @@ class Sim(object):
             m0.write_oommf_file('m0file_from_field.omf')
             self.m0 = 'm0file_from_field.omf'
         else:
-            raise ValueError('m0 must be tuple, list, function, string, or field.')
+            raise ValueError('m0 type invalid.')
 
     def get_mif(self):
         mif = '# MIF 2.1\n\n'

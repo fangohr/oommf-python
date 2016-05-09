@@ -212,8 +212,8 @@ class TestField(object):
                                              f.n[cs[1]],
                                              f.dim)
 
-                    for j in xrange(f.n[cs[0]]):
-                        for k in xrange(f.n[cs[1]]):
+                    for j in range(f.n[cs[0]]):
+                        for k in range(f.n[cs[1]]):
                             c = list(f.domain_centre())
                             c[cs[0]] = a1[j]
                             c[cs[1]] = a2[k]

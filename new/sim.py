@@ -7,15 +7,11 @@ from field import Field
 
 
 class Sim(object):
-    def __init__(self, cmin, cmax, d, Ms, name=None):
-        self.cmin = cmin
-        self.cmax = cmax
-        self.d = d
+    def __init__(self, mesh, Ms, name=None):
+        self.mesh = mesh
+        self.atlas = mesh.atlas
         self.Ms = Ms
         self.name = name
-
-        self.atlas = BoxAtlas(cmin, cmax)
-        self.mesh = RectangularMesh(d)
 
         self.energies = []
 
@@ -41,7 +37,8 @@ class Sim(object):
         if isinstance(m0, (list, tuple, str)):
             self.m0 = m0
         elif hasattr(m0, '__call__'):
-            m0field = Field(self.cmin, self.cmax, self.d, dim=3, value=m0)
+            m0field = Field(self.atlas.cmin, self.atlas.cmax, self.mesh.d,
+                            dim=3, value=m0)
             m0field.normalise(norm=self.Ms)
             m0field.write_oommf_file('m0file.omf')
             self.m0 = 'm0file.omf'

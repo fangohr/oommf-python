@@ -22,19 +22,19 @@ class TestBoxAtlas(object):
         for arg in self.args1:
             cmin = arg[0]
             cmax = arg[1]
-            atlasname = arg[2]
+            name = arg[2]
             regionname = arg[3]
 
-            ba = BoxAtlas(cmin, cmax, atlasname, regionname)
+            ba = BoxAtlas(cmin, cmax, name, regionname)
 
             assert ba.cmin == cmin
             assert ba.cmax == cmax
-            assert ba.atlasname == atlasname
+            assert ba.name == name
             assert ba.regionname == regionname
 
             assert isinstance(ba.cmin, tuple)
             assert isinstance(ba.cmax, tuple)
-            assert isinstance(ba.atlasname, str)
+            assert isinstance(ba.name, str)
             assert isinstance(ba.regionname, str)
 
     def test_init_exceptions(self):
@@ -43,19 +43,19 @@ class TestBoxAtlas(object):
             with pytest.raises(ValueError):
                 cmin = arg[0]
                 cmax = arg[1]
-                atlasname = arg[2]
+                name = arg[2]
                 regionname = arg[3]
 
-                ba = BoxAtlas(cmin, cmax, atlasname, regionname)
+                ba = BoxAtlas(cmin, cmax, name, regionname)
 
     def test_get_mif(self):
         for arg in self.args1:
             cmin = arg[0]
             cmax = arg[1]
-            atlasname = arg[2]
+            name = arg[2]
             regionname = arg[3]
 
-            ba = BoxAtlas(cmin, cmax, atlasname, regionname)
+            ba = BoxAtlas(cmin, cmax, name, regionname)
 
             mif = ba.get_mif()
             mif_lines = ba.get_mif().split('\n')
@@ -69,7 +69,7 @@ class TestBoxAtlas(object):
             l = mif_lines[1].split()
             assert l[0] == 'Specify'
             assert l[1].split(':')[0] == 'Oxs_BoxAtlas'
-            assert l[1].split(':')[1] == atlasname
+            assert l[1].split(':')[1] == name
             assert l[2] == '{'
 
             # Assert range lines.

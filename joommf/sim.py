@@ -34,84 +34,6 @@ field_outputs = ['UniformExchange', 'Demag', 'FixedZeeman', 'UZeeman',
                  'Exchange6Ngbr']
 
 
-"""
-Outputs from OOMMF:
-
-DataTable contains ALL Scalar Outputs for the given Simulation
-
-Energies:
-Oxs_UniformExchange::Energy density
-Oxs_UniformExchange::Field
-Oxs_UniformExchange::Max Spin Ang
-Oxs_UniformExchange::Stage Max Spin Ang
-Oxs_UniformExchange::Run Max Spin Ang
-Oxs_UniformExchange::Energy
-
-Oxs_Demag::Energy density
-Oxs_Demag::Field
-Oxs_Demag::Energy
-
-Oxs_FixedZeeman::Energy density
-Oxs_FixedZeeman::Field
-Oxs_FixedZeeman::Energy
-
-Oxs_UniaxialAnisotropy::Field
-Oxs_UniaxialAnisotropy::Energy density
-Oxs_UniaxialAnisotropy::Energy
-
-Oxs_CubicAnisotropy::Energy density
-Oxs_CubicAnisotropy::Field
-Oxs_CubicAnisotropy::Energy
-
-Oxs_ExchangePtwise::Energy density
-Oxs_ExchangePtwise::Field
-Oxs_ExchangePtwise::Energy
-
-Oxs_UZeeman::Energy density
-Oxs_UZeeman::Field
-Oxs_UZeeman::Energy
-Oxs_UZeeman::B
-Oxs_UZeeman::Bx
-Oxs_UZeeman::By
-Oxs_UZeeman::Bz
-
-Oxs_Exchange6Ngbr:Field
-Oxs_Exchange6Ngbr:Energy density
-Oxs_Exchange6Ngbr:Energy
-
-Time Evolvers:
-Oxs RungeKuttaEvolve:evolver:Total energy
-Oxs_RungeKuttaEvolve:evolver:Energy calc count
-Oxs_RungeKuttaEvolve:evolver:Max dm/dt
-Oxs_RungeKuttaEvolve:evolver:dE/dt
-Oxs_RungeKuttaEvolve:evolver:Delta E
-Oxs_RungeKuttaEvolve:evolver:Total energy density
-Oxs_RungeKuttaEvolve:evolver:Total field
-Oxs_RungeKuttaEvolve:evolver:dm/dt
-Oxs_RungeKuttaEvolve:evolver:mxH
-
-
-Oxs_TimeDriver::Magnetization
-Oxs_TimeDriver::Spin
-Oxs_TimeDriver::Last time step
-Oxs_TimeDriver::Simulation time
-Oxs_TimeDriver::mx
-Oxs_TimeDriver::my
-Oxs_TimeDriver::mz
-Oxs_TimeDriver::Iteration
-Oxs_TimeDriver::Stage iteration
-Oxs_TimeDriver::Stage
-
-Minimisation Evolvers:
-Oxs_CGEvolve::H
-Oxs_CGEvolve::Total energy density
-Oxs_CGEvolve::mxHxm
-Oxs_MinDriver::Magnetization
-Oxs_MinDriver::Spin
-
-"""
-
-
 class Sim(object):
 
     def __init__(self, mesh, Ms, name=None, debug=False):
@@ -127,13 +49,6 @@ class Sim(object):
         self._oommf_stdout = b''
         self._oommf_stderr = b''
         self.debug = debug
-
-    def __repr__(self):
-        string = "Joommf Sim Object - Mesh: {}\n Ms: {}\n ".format(
-                 self.mesh.__repr__(), self.Ms)
-        if self.evolver:
-            string += "Evolver: {}".format(self.evolver.__repr__())
-        return string
 
     def add_energy(self, energy):
         self.energies.append(energy)
@@ -198,9 +113,8 @@ class Sim(object):
         mif_file.write(self._schedule_outputs())
         mif_file.close()
 
-    def run(self, stages=1):
+    def run(self):
         if isinstance(self.evolver, LLG):
-            self.stages = stages
             self.create_mif()
             self.execute_mif()
         else:

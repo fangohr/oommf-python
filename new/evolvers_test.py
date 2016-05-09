@@ -1,5 +1,5 @@
 import pytest
-from evolvers import RungeKuttaEvolve
+from evolvers import RungeKuttaEvolve, CGEvolve
 
 
 class TestRungeKuttaEvolve(object):
@@ -100,3 +100,26 @@ class TestRungeKuttaEvolve(object):
 
             # Assert new lines at the end of the string.
             assert mif[-2:] == '\n\n'
+
+
+class TestCGEvolve(object):
+    def test_get_mif(self):
+        evolver = CGEvolve()
+
+        mif = evolver.get_mif()
+        mif_lines = evolver.get_mif().split('\n')
+
+        # Assert comment.
+        l = mif_lines[0].split()
+        assert l[0] == '#'
+        assert l[1] == 'CG'
+        assert l[2] == 'evolver'
+
+        # Assert Specify line.
+        l = mif_lines[1].split()
+        assert l[0] == 'Specify'
+        assert l[1].split(':')[0] == 'Oxs_CGEvolve'
+        assert l[2] == '{}'
+
+        # Assert new lines at the end of the string.
+        assert mif[-2:] == '\n\n'

@@ -114,6 +114,4 @@ class MinDriver(object):
         mif += '\tvector_field_output_format {text %\#.8g}\n'
         mif += '}\n\n'
 
-        print mif
-
         return mif

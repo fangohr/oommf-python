@@ -1,8 +1,8 @@
 import os
 from atlases import BoxAtlas
 from meshes import RectangularMesh
-from evolvers import RungeKuttaEvolve
-from drivers import TimeDriver
+from evolvers import RungeKuttaEvolve, CGEvolve
+from drivers import TimeDriver, MinDriver
 from field import Field
 
 
@@ -25,18 +25,22 @@ class Sim(object):
         self.evolver = RungeKuttaEvolve(self.alpha)
         self.driver = TimeDriver('evolver', stopping_time, 1, 'mesh',
                                  self.Ms, self.m0, basename=self.name)
+        self.relaxation = False
         self.execute_mif()
 
     def run_multiple_stages(self, time_step, stages):
         self.evolver = RungeKuttaEvolve(self.alpha)
         self.driver = TimeDriver('evolver', time_step, stages, 'mesh',
                                  self.Ms, self.m0, basename=self.name)
+        self.relaxation = False
         self.execute_mif()
 
     def relax(self, stopping_mxHxm=0.01):
         self.evolver = CGEvolve()
         self.driver = MinDriver('evolver', stopping_mxHxm, 'mesh',
                                 self.Ms, self.m0, basename=self.name)
+        self.relaxation = True
+        self.execute_mif()
 
     def set_m(self, m0):
         if isinstance(m0, (list, tuple, str)):
@@ -62,7 +66,10 @@ class Sim(object):
         mif += self.evolver.get_mif()
         mif += self.driver.get_mif()
         mif += 'Destination mags mmArchive\n'
-        mif += 'Schedule Oxs_TimeDriver::Spin mags Stage 1'
+        if self.relaxation:
+            mif += 'Schedule Oxs_MinDriver::Spin mags Stage 1'
+        else:
+            mif += 'Schedule Oxs_TimeDriver::Spin mags Stage 1'
 
         return mif
 

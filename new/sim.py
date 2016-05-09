@@ -65,7 +65,9 @@ class Sim(object):
             mif += i.get_mif()
         mif += self.evolver.get_mif()
         mif += self.driver.get_mif()
-        mif += 'Destination mags mmArchive\n'
+        mif += 'Destination table mmArchive\n'
+        mif += 'Destination mags mmArchive\n\n'
+        mif += 'Schedule DataTable table Stage 1\n'
         if self.relaxation:
             mif += 'Schedule Oxs_MinDriver::Spin mags Stage 1'
         else:

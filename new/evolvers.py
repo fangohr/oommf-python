@@ -32,3 +32,14 @@ class RungeKuttaEvolve(object):
         mif += '}\n\n'
 
         return mif
+
+
+class CGEvolve(object):
+    def __init__(self):
+        pass
+
+    def get_mif(self):
+        mif = '# CG evolver\n'
+        mif += 'Specify Oxs_CGEvolve {}\n\n'
+
+        return mif

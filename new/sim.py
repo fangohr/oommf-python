@@ -33,6 +33,11 @@ class Sim(object):
                                  self.Ms, self.m0, basename=self.name)
         self.execute_mif()
 
+    def relax(self, stopping_mxHxm=0.01):
+        self.evolver = CGEvolve()
+        self.driver = MinDriver('evolver', stopping_mxHxm, 'mesh',
+                                self.Ms, self.m0, basename=self.name)
+
     def set_m(self, m0):
         if isinstance(m0, (list, tuple, str)):
             self.m0 = m0

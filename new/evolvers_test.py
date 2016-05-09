@@ -119,6 +119,7 @@ class TestCGEvolve(object):
         l = mif_lines[1].split()
         assert l[0] == 'Specify'
         assert l[1].split(':')[0] == 'Oxs_CGEvolve'
+        assert l[1].split(':')[1] == 'evolver'
         assert l[2] == '{}'
 
         # Assert new lines at the end of the string.

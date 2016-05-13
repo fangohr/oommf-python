@@ -6,6 +6,7 @@ from evolvers import RungeKuttaEvolve, CGEvolve
 from drivers import TimeDriver, MinDriver
 from field import Field, load_oommf_file
 from energies.zeeman import FixedZeeman
+from odtfile import ODTFile
 
 
 class Sim(object):
@@ -100,12 +101,23 @@ class Sim(object):
         miffile.close()
 
     def last_omf_file(self):
-        newest = max(glob.iglob(self.dirname+'*.omf'), key=os.path.getctime)
-        return newest
+        newest_omf = max(glob.iglob(self.dirname+'*.omf'), key=os.path.getctime)
+        return newest_omf
+
+    def last_odt_file(self):
+        newest_odt = max(glob.iglob(self.dirname+'*.odt'), key=os.path.getctime)
+        return newest_odt
 
     def update_self(self):
-        newest = self.last_omf_file()
-        self.m = load_oommf_file(newest)
+        newest_omf = self.last_omf_file()
+        self.m = load_oommf_file(newest_omf)
+
+        newest_odt = self.last_odt_file()
+        self.odt_file = ODTFile(newest_odt)
+        self.data = self.odt_file.last_row()
+
+    def total_energy(self):
+        return self.data['Totalenergy']
 
     def execute_mif(self):
         self.create_mif()

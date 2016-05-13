@@ -176,7 +176,7 @@ class Field(object):
 
         return axis1_coords, axis2_coords, field_slice, coord_system
 
-    def plot_slice(self, axis, point):
+    def plot_slice(self, axis, point, xsize=10):
         a1, a2, field_slice, coord_system = self.slice_field(axis, point)
 
         if self.dim == 1:
@@ -192,7 +192,6 @@ class Field(object):
             if np.allclose(pm[:, 2], 0) and np.allclose(pm[:, 3], 0):
                 raise ValueError('Vector plane components are zero.')
             else:
-                xsize = 12
                 ysize = xsize*(self.l[coord_system[1]]/self.l[coord_system[0]])
                 plt.figure(figsize=(xsize, ysize))
                 plt.quiver(pm[:, 0], pm[:, 1], pm[:, 2], pm[:, 3], pm[:, 4])

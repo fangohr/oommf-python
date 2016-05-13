@@ -1,5 +1,5 @@
 from atlases import BoxAtlas
-
+from textwrap import dedent
 
 class RectangularMesh(object):
     def __init__(self, atlas, d, meshname='mesh'):
@@ -22,12 +22,14 @@ class RectangularMesh(object):
 
     def get_mif(self):
         # Create mif string.
-        mif = '# RectangularMesh\n'
-        mif += 'Specify Oxs_RectangularMesh:{}'.format(self.meshname) + ' {\n'
-        mif += '\tcellsize {'
-        mif += ' {} {} {} '.format(self.d[0], self.d[1], self.d[2])
-        mif += '}\n'
-        mif += '\tatlas {}\n'.format(self.atlas.name)
-        mif += '}\n\n'
+        mif = dedent("""\
+        # RectangularMesh
+        Specify Oxs_RectangularMesh:{} {{
+        	cellsize {{ {} {} {} }}
+        	atlas {}
+        }}
 
+        """)
+        mif = mif.format(self.meshname, self.d[0], self.d[1], self.d[2],
+                         self.atlas.name)
         return mif

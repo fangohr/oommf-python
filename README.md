@@ -1,3 +1,11 @@
+# This repository
+
+is outdated. The results of this work are available at https://ubermag.github.io and the sources at https://github.com/ubermag (November 2022).
+
+
+
+
+
 # OOMMF-python
 
 [![Circle CI](https://circleci.com/gh/fangohr/oommf-python.svg?style=svg)](https://circleci.com/gh/fangohr/oommf-python) [![Coverage Status](https://coveralls.io/repos/github/fangohr/oommf-python/badge.svg?branch=master)](https://coveralls.io/github/fangohr/oommf-python?branch=master)
